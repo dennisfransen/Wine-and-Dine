@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         wishListFragment = new WishListFragment();
         addFragment = new AddFragment();
 
+        // TODO: Delete when LoginActivity sends you to SearchFragment after checked current user status.
+        // Set so it will start the SearchFragment and not MainActivity when logged in.
+        setFragment(searchFragment);
+
         // Setup all navigation buttons to redirect to chosen fragment.
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
