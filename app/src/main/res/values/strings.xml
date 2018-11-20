@@ -22,6 +22,8 @@
     </string>
     <string name="already_have_an_account_login">Already have an account? Login</string>
     <string name="sign_up">Sign Up</string>
-    <string name="password">password</string>
-    <string name="email">email</string>
+    <string name="password">Password ...</string>
+    <string name="email">Email ...</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>
