@@ -31,4 +31,7 @@
     <string name="lastname">Lastname ...</string>
     <string name="finish">Finish</string>
     <string name="phone_number">Phone number ...</string>
+    <string name="change_password">Change Password</string>
+    <string name="sign_out">Sign out</string>
+    <string name="user_profile_picture">User profile picture</string>
 </resources>
