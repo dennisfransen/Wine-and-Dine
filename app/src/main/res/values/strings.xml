@@ -26,4 +26,9 @@
     <string name="email">Email ...</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="username">Username ...</string>
+    <string name="firstname">Firstname ...</string>
+    <string name="lastname">Lastname ...</string>
+    <string name="finish">Finish</string>
+    <string name="phone_number">Phone number ...</string>
 </resources>

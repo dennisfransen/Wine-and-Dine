@@ -108,12 +108,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // User is successfully registered and logged in.
-                    Toast.makeText(LoginActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Nice, let's complete the registration.", Toast.LENGTH_LONG).show();
+                    // Go to Registration Activity to complete registration with user information.
+                    Intent gotoRegActivity = new Intent(LoginActivity.this, RegistrationActivity.class);
+                    startActivity(gotoRegActivity);
                 } else {
-                    Toast.makeText(LoginActivity.this, "Failed registration", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Sorry, registration failed. Please try again.", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+
     }
 
     /**
