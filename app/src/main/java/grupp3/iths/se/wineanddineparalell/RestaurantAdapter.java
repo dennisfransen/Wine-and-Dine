@@ -25,16 +25,28 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
         super(options);
     }
 
+    /**
+     * Connects database to recyclerview
+     * @param holder fields in item_list.xml
+     * @param position where data will be set
+     * @param model helper from FirestoreRecyclerAdapter to get info from fields in database
+     */
     @Override
     protected void onBindViewHolder(@NonNull RestaurantHolder holder, int position, @NonNull ItemInfo model) {
 
         holder.imgView.setImageResource(R.drawable.restaurant);
-        holder.textName.setText(String.valueOf(model.getNameOfRest()));
-        holder.textDistance.setText(String.valueOf(model.getDist()));
-        holder.textPrice.setText(String.valueOf(model.getPrice()));
-        holder.textScore.setText(String.valueOf(model.getScore()));
+        holder.textName.setText(model.getName());
+        holder.textDistance.setText(model.getDistance());
+        holder.textPrice.setText(model.getCost());
+        holder.textScore.setText(model.getStar());
     }
 
+    /**
+     * Inflates a new item in recyclerview
+     * @param viewGroup
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public RestaurantHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -45,6 +57,9 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
         return new RestaurantHolder(view);
     }
 
+    /**
+     * Helps to connect textview in item_list.xml with recyclerview
+     */
     class RestaurantHolder extends RecyclerView.ViewHolder {
 
         public ImageView imgView;

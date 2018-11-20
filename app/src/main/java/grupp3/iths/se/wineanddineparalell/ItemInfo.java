@@ -5,21 +5,29 @@ import android.widget.ImageView;
 
 public class ItemInfo {
     public ImageView image;
-    public String nameOfRest;
-    public String dist;
-    public String price;
-    public String score;
+    private String name;
+    private String distance;
+    private String cost;
+    private String star;
 
     public ItemInfo(){
         // empty constructor needed
     }
 
-    public ItemInfo(ImageView image, String nameOfRest, String dist, String price, String score) {
+    /**
+     * constructor for FirestoreRecyclerAdapter
+     * @param image
+     * @param name
+     * @param distance
+     * @param cost
+     * @param star
+     */
+    public ItemInfo(ImageView image, String name, String distance, String cost, String star) {
         this.image = image;
-        this.nameOfRest = nameOfRest;
-        this.dist = dist;
-        this.price = price;
-        this.score = score;
+        this.name = name;
+        this.distance = distance;
+        this.cost = cost;
+        this.star = star;
     }
 
     /**
@@ -30,19 +38,19 @@ public class ItemInfo {
         return image;
     }
 
-    public String getNameOfRest() {
-        return nameOfRest;
+    public String getName() {
+        return name;
     }
 
-    public String getDist() {
-        return dist;
+    public String getDistance() {
+        return distance;
     }
 
-    public String getPrice() {
-        return price;
+    public String getCost() {
+        return cost;
     }
 
-    public String getScore() {
-        return score;
+    public String getStar() {
+        return star;
     }
 }

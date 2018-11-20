@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/image_view"
+        android:src="@drawable/ic_restaurant"
         android:layout_width="97dp"
         android:layout_height="94dp" />
 
