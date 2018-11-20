@@ -1,5 +1,6 @@
 package grupp3.iths.se.wineanddineparalell;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,7 +26,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mEmail, mPassword;
-    private Button mLogin;
+    private Button mLogin, mRegister;
+
+    private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
 
@@ -34,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Instance of progressbar.
+        progressBar = new ProgressBar(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -53,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        // Login to user account.
+        // Login to user account button.
         mLogin = findViewById(R.id.login_btn);
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +70,50 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Register user button.
+        mRegister = findViewById(R.id.register_btn);
+        mRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerUser();
+            }
+        });
+
+    }
+
+    private void registerUser() {
+        String email = mEmail.getText().toString().trim();
+        String password = mPassword.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email)) {
+            // Email is empty.
+            Toast.makeText(LoginActivity.this, "Email field is blank.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            // Password is empty.
+            Toast.makeText(LoginActivity.this, "Password field is blank", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // TODO: Check what google have instead of progressDialog.
+        // Validation OK. Progress bar is showing.
+        // progressDialog.setMessage("Registration in progress ...");
+        // progressDialog.show();
+
+        // Adding user to database.
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // User is successfully registered and logged in.
+                    Toast.makeText(LoginActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Failed registration", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     /**
