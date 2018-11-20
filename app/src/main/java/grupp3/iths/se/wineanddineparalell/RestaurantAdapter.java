@@ -29,7 +29,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
     protected void onBindViewHolder(@NonNull RestaurantHolder holder, int position, @NonNull ItemInfo model) {
 
         holder.imgView.setImageResource(R.drawable.restaurant);
-        holder.textName.setText(model.getNameOfRest());
+        holder.textName.setText(String.valueOf(model.getNameOfRest()));
         holder.textDistance.setText(String.valueOf(model.getDist()));
         holder.textPrice.setText(String.valueOf(model.getPrice()));
         holder.textScore.setText(String.valueOf(model.getScore()));

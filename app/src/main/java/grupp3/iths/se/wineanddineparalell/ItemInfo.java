@@ -14,7 +14,6 @@ public class ItemInfo {
         // empty constructor needed
     }
 
-
     public ItemInfo(ImageView image, String nameOfRest, String dist, String price, String score) {
         this.image = image;
         this.nameOfRest = nameOfRest;
