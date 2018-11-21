@@ -61,6 +61,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 userMap.put("lastname", lastName);
                 userMap.put("phonenumber", phoneNumber);
 
+                // Add Document to database under users collection. Set document id to current user id
                 firebaseFirestore.collection("users").document(user.getUid()).set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
