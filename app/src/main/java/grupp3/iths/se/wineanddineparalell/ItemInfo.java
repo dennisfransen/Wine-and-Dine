@@ -2,13 +2,14 @@ package grupp3.iths.se.wineanddineparalell;
 
 
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 public class ItemInfo {
     public ImageView image;
     private String name;
     private String distance;
     private String cost;
-    private String star;
+    private int star;
 
     public ItemInfo(){
         // empty constructor needed
@@ -22,7 +23,7 @@ public class ItemInfo {
      * @param cost
      * @param star
      */
-    public ItemInfo(ImageView image, String name, String distance, String cost, String star) {
+    public ItemInfo(ImageView image, String name, String distance, String cost, int star) {
         this.image = image;
         this.name = name;
         this.distance = distance;
@@ -50,7 +51,7 @@ public class ItemInfo {
         return cost;
     }
 
-    public String getStar() {
+    public int getStar() {
         return star;
     }
 }

@@ -4,6 +4,7 @@ package grupp3.iths.se.wineanddineparalell;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,10 +34,12 @@ public class WishListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
 
-        Query query = restaurantRef.orderBy("distance", Query.Direction.ASCENDING);
+        Query query = restaurantRef.whereEqualTo("wishlist",true);
+        query.orderBy("distance", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ItemInfo> options = new FirestoreRecyclerOptions.Builder<ItemInfo>()
                 .setQuery(query, ItemInfo.class)
+      //          .setQuery(query, ItemInfo.class)
                 .build();
 
         adapter = new RestaurantAdapter(options);
@@ -58,6 +62,7 @@ public class WishListFragment extends Fragment {
                 adapter.removeItem(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(recyclerView);
+
 
         return view;
     }

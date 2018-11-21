@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -38,7 +39,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
         holder.textName.setText(model.getName());
         holder.textDistance.setText(model.getDistance());
         holder.textPrice.setText(model.getCost());
-        holder.textScore.setText(model.getStar());
+        holder.textScore.setRating(model.getStar());
     }
 
     /**
@@ -74,7 +75,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
         public TextView textName;
         public TextView textDistance;
         public TextView textPrice;
-        public TextView textScore;
+        public RatingBar textScore;
 
         public RestaurantHolder(@NonNull View itemView) {
             super(itemView);

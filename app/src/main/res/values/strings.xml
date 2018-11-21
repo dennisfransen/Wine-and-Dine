@@ -39,4 +39,5 @@
     <string name="profile_lastname">Last name:&#032;</string>
     <string name="profile_phonenumber">Phone number:&#032;</string>
     <string name="profile_email">Email:&#032;</string>
+    <string name="reviews">Reviews</string>
 </resources>
