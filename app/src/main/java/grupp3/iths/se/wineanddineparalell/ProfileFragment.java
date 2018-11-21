@@ -66,11 +66,11 @@ public class ProfileFragment extends Fragment {
                 String email = user.getEmail();
 
                 // Print out end user credentials in profile_fragment text views.
-                mUsername.setText(getString(R.string.profile_username) + userName);
-                mFirstname.setText(getString(R.string.profile_firstname) + firstName);
-                mLastname.setText(getString(R.string.profile_lastname) + lastName);
-                mPhonenumber.setText(getString(R.string.profile_phonenumber) + phoneNumber);
-                mEmail.setText(getString(R.string.profile_email) + email);
+                mUsername.append(" "  + userName);
+                mFirstname.append(" " + firstName);
+                mLastname.append(" " + lastName);
+                mPhonenumber.append(" " + phoneNumber);
+                mEmail.append(" " + email);
             }
         });
 

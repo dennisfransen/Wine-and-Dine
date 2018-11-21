@@ -25,7 +25,7 @@
         android:layout_below="@+id/user_avatar_im"
         android:layout_alignStart="@+id/user_avatar_im"
         android:layout_marginTop="24dp"
-        tools:text="Username" />
+        android:text="@string/profile_username" />
 
     <TextView
         android:id="@+id/firstname_display_tv"
@@ -34,7 +34,7 @@
         android:layout_below="@+id/username_display_tv"
         android:layout_alignStart="@+id/user_avatar_im"
         android:layout_marginTop="24dp"
-        tools:text="Firstname" />
+        android:text="@string/profile_firstname" />
 
     <TextView
         android:id="@+id/lastname_display_tv"
@@ -43,7 +43,7 @@
         android:layout_below="@+id/firstname_display_tv"
         android:layout_alignParentStart="true"
         android:layout_marginTop="24dp"
-        tools:text="Lastname" />
+        android:text="@string/profile_lastname" />
 
     <TextView
         android:id="@+id/email_display_tv"
@@ -52,7 +52,7 @@
         android:layout_below="@+id/phone_number_display_tv"
         android:layout_alignStart="@+id/user_avatar_im"
         android:layout_marginTop="24dp"
-        tools:text="Email adress" />
+        android:text="@string/profile_email" />
 
     <Button
         android:id="@+id/change_pw_btn"
@@ -79,5 +79,5 @@
         android:layout_below="@+id/lastname_display_tv"
         android:layout_alignParentStart="true"
         android:layout_marginTop="24dp"
-        android:text="@string/phone_number_" />
+        android:text="@string/profile_phonenumber" />
 </RelativeLayout>
