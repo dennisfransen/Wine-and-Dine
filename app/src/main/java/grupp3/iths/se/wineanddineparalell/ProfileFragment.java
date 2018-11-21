@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
 
         // Get current end user ID
         mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mFirestore.collection("users").document("ayP5M34vRbozcmvZCvBi").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        mFirestore.collection("users").document(mUserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 // OnSuccess, get credentials from database in document fields.
