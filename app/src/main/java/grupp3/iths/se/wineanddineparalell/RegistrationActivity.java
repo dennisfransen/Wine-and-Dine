@@ -25,14 +25,14 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button mFinish;
     //private Number mPhoneNumber;
 
-    private FirebaseFirestore mFirestore;
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        mFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         mUserName = findViewById(R.id.user_name_pt);
         mFirstName = findViewById(R.id.first_name_pt);
@@ -55,7 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 userMap.put("lastname", lastName);
                 userMap.put("phonenumber", phoneNumber);
 
-                mFirestore.collection("users").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                firebaseFirestore.collection("users").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
 
