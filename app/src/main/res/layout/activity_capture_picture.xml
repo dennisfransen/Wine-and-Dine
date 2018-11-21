@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CapturePictureActivity">
+
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/pricerange_Text"
         android:layout_width="176dp"
         android:layout_height="46dp"
         android:layout_marginTop="8dp"
@@ -18,68 +19,69 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/distance_Text" />
 
     <ImageView
-        android:id="@+id/photo_iv"
+        android:id="@+id/image_restaurant_IV"
         android:layout_width="197dp"
         android:layout_height="196dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.106"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/name_Restaurant_Text"
         android:layout_width="177dp"
         android:layout_height="53dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="Name Restaurant"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Name Restaurant" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/distance_Text"
         android:layout_width="176dp"
         android:layout_height="46dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPostalAddress"
+        android:text="Distance / Address"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        tools:text="Distance?" />
+        app:layout_constraintTop_toBottomOf="@+id/name_Restaurant_Text" />
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_width="244dp"
+        android:layout_width="242dp"
         android:layout_height="56dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="280dp"
         android:layout_marginEnd="8dp"
         android:isIndicator="false"
         android:numStars="5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.143"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/distance_Text" />
 
     <Button
         android:id="@+id/share_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="113dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -92,18 +94,18 @@
 
     <Button
         android:id="@+id/upload_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_width="116dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginBottom="28dp"
         android:text="Upload"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/capture_picture_btn" />
+        app:layout_constraintEnd_toStartOf="@+id/capture_btn" />
 
     <Button
-        android:id="@+id/capture_picture_btn"
+        android:id="@+id/capture_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="28dp"
         android:text="Take picture"
@@ -111,18 +113,18 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="243dp"
+        android:id="@+id/comments_Text"
+        android:layout_width="394dp"
         android:layout_height="166dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="Be the first to leave a review"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photo_iv" />
+        app:layout_constraintTop_toBottomOf="@+id/image_restaurant_IV" />
 
 </android.support.constraint.ConstraintLayout>
