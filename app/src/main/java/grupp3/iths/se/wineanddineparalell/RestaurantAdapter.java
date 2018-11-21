@@ -58,6 +58,14 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
     }
 
     /**
+     * Method that deltes item in recyclerlist by swiping
+     * @param position
+     */
+    public void removeItem(int position){
+        getSnapshots().getSnapshot(position).getReference().delete();
+    }
+
+    /**
      * Helps to connect textview in item_list.xml with recyclerview
      */
     class RestaurantHolder extends RecyclerView.ViewHolder {
