@@ -7,4 +7,14 @@
     <!-- Bottom navigation bar colors -->
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteTransparent">#80ffffff</color>
+
+    <!-- Playing with background colors -->
+    <color name="coolBackground">#2AABE4</color>
+    <color name="coolTextColor">#FFCD24</color>
+    <color name="coolSofterBlue">#9DC8E4</color>
+
+    <!-- Another playing exampel -->
+    <color name="darkerSoftBackgorundColor">#0067b6</color>
+    <color name="softBackgroundColor">#668EB9</color>
+    <color name="softButtonColor">#FF8800</color>
 </resources>

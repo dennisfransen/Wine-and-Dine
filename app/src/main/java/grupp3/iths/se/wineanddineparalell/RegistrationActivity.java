@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
+    private ImageView mUserAvatar;
     private EditText mUserName, mFirstName, mLastName, mPhoneNumber;
     private Button mFinish;
 
@@ -36,6 +38,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        mUserAvatar = findViewById(R.id.user_avatar_im);
         mUserName = findViewById(R.id.user_name_pt);
         mFirstName = findViewById(R.id.first_name_pt);
         mLastName = findViewById(R.id.last_name_pt);
@@ -47,6 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // TODO: Check if username is already in use.
                 String userName = mUserName.getText().toString();
                 String firstName = mFirstName.getText().toString();
                 String lastName = mLastName.getText().toString();

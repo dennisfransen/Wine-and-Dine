@@ -57,7 +57,7 @@ public class ProfileFragment extends Fragment {
         mFirestore.collection("users").document(mUserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                // OnSuccess, get credentials from database in document fields.
+                // OnSuccess, get credentials from database in document field.
                 String userName = documentSnapshot.getString("username");
                 String firstName = documentSnapshot.getString("firstname");
                 String lastName = documentSnapshot.getString("lastname");
