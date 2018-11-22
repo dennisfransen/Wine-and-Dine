@@ -2,6 +2,7 @@ package grupp3.iths.se.wineanddineparalell;
 
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,8 @@ import android.widget.TextView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, RestaurantAdapter.RestaurantHolder> {
-
+public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, RestaurantAdapter.RestaurantHolder> {
+    private int expandedPosition = -1;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -28,22 +29,35 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
 
     /**
      * Connects database to recyclerview
-     * @param holder fields in item_list.xml
+     *
+     * @param holder   fields in item_list.xml
      * @param position where data will be set
-     * @param model helper from FirestoreRecyclerAdapter to get info from fields in database
+     * @param model    helper from FirestoreRecyclerAdapter to get info from fields in database
      */
     @Override
-    protected void onBindViewHolder(@NonNull RestaurantHolder holder, int position, @NonNull ItemInfo model) {
+    protected void onBindViewHolder(@NonNull final RestaurantHolder holder, final int position, @NonNull final ItemInfo model) {
 
         holder.imgView.setImageResource(R.drawable.restaurant);
         holder.textName.setText(model.getName());
         holder.textDistance.setText(model.getDistance());
         holder.textPrice.setText(model.getCost());
         holder.textScore.setRating(model.getStar());
+
+        final boolean isExpanded = position==expandedPosition;
+        holder.expandCard.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+        holder.itemView.setActivated(isExpanded);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandedPosition = isExpanded ? -1:position;
+                notifyItemChanged(position);
+            }
+        });
     }
 
     /**
      * Inflates a new item in recyclerview
+     *
      * @param viewGroup
      * @param viewType
      * @return
@@ -52,7 +66,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
     @Override
     public RestaurantHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
-        View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list, viewGroup, false);
 
 
         return new RestaurantHolder(view);
@@ -60,9 +74,10 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
 
     /**
      * Method that deltes item in recyclerlist by swiping
+     *
      * @param position
      */
-    public void removeItem(int position){
+    public void removeItem(int position) {
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
@@ -71,20 +86,27 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter <ItemInfo, Resta
      */
     class RestaurantHolder extends RecyclerView.ViewHolder {
 
+        //fields for textviews in cardview
         public ImageView imgView;
         public TextView textName;
         public TextView textDistance;
         public TextView textPrice;
         public RatingBar textScore;
 
+        public ConstraintLayout expandCard;
+
+
         public RestaurantHolder(@NonNull View itemView) {
             super(itemView);
 
+            // connect fields in cardview
             imgView = itemView.findViewById(R.id.image_view);
             textName = itemView.findViewById(R.id.rest_name_tv);
             textDistance = itemView.findViewById(R.id.distance_tv);
             textPrice = itemView.findViewById(R.id.avr_price_tv);
-            textScore = itemView.findViewById(R.id.avr_score_tv);
+            textScore = itemView.findViewById(R.id.avr_score_rb);
+            expandCard = itemView.findViewById(R.id.more_info_expand_constraintlayout);
+
         }
     }
 }
