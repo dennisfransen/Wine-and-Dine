@@ -83,4 +83,18 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="24dp"
         android:text="@string/profile_phonenumber" />
+
+    <ImageButton
+        android:id="@+id/change_avatar_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="122dp"
+        android:background="@drawable/button_bg_round"
+        android:src="@drawable/baseline_camera_alt_white_18dp"
+        android:contentDescription="@string/change_avatar_button" />
+
+
 </RelativeLayout>
