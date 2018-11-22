@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class ProfileFragment extends Fragment {
 
     private TextView mUsername, mFirstname, mLastname, mPhonenumber, mEmail;
     private Button mSignout, mChangePassword;
+    private ImageButton mChangeAvatar;
 
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -98,6 +100,15 @@ public class ProfileFragment extends Fragment {
                                 }
                             }
                         });
+            }
+        });
+
+        // Change avatar image on fragment_profile.xml
+        mChangeAvatar = view.findViewById(R.id.change_avatar_btn);
+        mChangeAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

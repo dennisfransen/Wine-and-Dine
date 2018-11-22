@@ -67,7 +67,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Welcome the end user. Registration complete.
-                        Toast.makeText(RegistrationActivity.this, "You successfully added your account, welcome!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistrationActivity.this, "You successfully added your account, welcome!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
