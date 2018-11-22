@@ -3,128 +3,133 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
     tools:context=".CapturePictureActivity">
-
-    <EditText
-        android:id="@+id/pricerange_Text"
-        android:layout_width="176dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:text="Review cost"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/distance_Text" />
 
     <ImageView
         android:id="@+id/image_restaurant_IV"
-        android:layout_width="197dp"
-        android:layout_height="196dp"
+        android:layout_width="135dp"
+        android:layout_height="165dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:contentDescription="picture of restaurant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/name_restaurant_ET"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
-
-    <EditText
-        android:id="@+id/name_Restaurant_Text"
-        android:layout_width="177dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
         android:inputType="textPersonName"
         android:text="Name Restaurant"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/distance_Text"
-        android:layout_width="176dp"
-        android:layout_height="46dp"
+        android:id="@+id/distance_ET"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
         android:inputType="textPostalAddress"
         android:text="Distance / Address"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_Restaurant_Text" />
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
+        app:layout_constraintTop_toBottomOf="@+id/name_restaurant_ET" />
+
+    <EditText
+        android:id="@+id/pricerange_ET"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:inputType="textPostalAddress"
+        android:text="Review cost"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
+        app:layout_constraintTop_toBottomOf="@+id/distance_ET" />
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_width="242dp"
-        android:layout_height="56dp"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:isIndicator="false"
-        android:numStars="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
+        app:layout_constraintTop_toBottomOf="@+id/pricerange_ET" />
+
+    <EditText
+        android:id="@+id/comments_ET"
+        android:layout_width="560dp"
+        android:layout_height="109dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="Be the first to leave a review"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/distance_Text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/share_btn"
-        android:layout_width="113dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
-        android:text="Share"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/upload_btn"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal|center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/comments_ET">
 
-    <Button
-        android:id="@+id/upload_btn"
-        android:layout_width="116dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="28dp"
-        android:text="Upload"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/capture_btn" />
+        <Button
+            android:id="@+id/share_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="149dp"
+            android:layout_height="50dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Add to favorites"
+            android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/capture_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="28dp"
-        android:text="Take picture"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/upload_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="78dp"
+            android:layout_height="50dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Upload"
+            android:textAlignment="center" />
 
-    <EditText
-        android:id="@+id/comments_Text"
-        android:layout_width="394dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="Be the first to leave a review"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_restaurant_IV" />
+        <Button
+            android:id="@+id/capture_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="118dp"
+            android:layout_height="50dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Take picture"
+            android:textAlignment="center" />
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
+
+
