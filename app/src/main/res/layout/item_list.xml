@@ -84,7 +84,7 @@
             android:id="@+id/more_info_expand_constraintlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <RatingBar
                 android:id="@+id/user_score_rb"
