@@ -26,4 +26,7 @@
     <string name="email">Email ...</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="wine_n_dine">Wine N Dine</string>
+    <string name="wine_dine"><![CDATA[Wine & Dine]]></string>
+    <string name="company_logo">company logo</string>
 </resources>
