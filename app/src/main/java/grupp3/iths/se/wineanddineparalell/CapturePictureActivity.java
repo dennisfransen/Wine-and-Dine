@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -15,17 +14,14 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +39,7 @@ public class CapturePictureActivity extends AppCompatActivity {
     private FloatingActionButton mCaptureBtn;
     private FloatingActionButton mUploadBtn;
     private FloatingActionButton mCheckInBtn;
-    private FloatingActionButton mAddToFavoritesBtn;
+    private FloatingActionButton mImageGalleryBtn;
     private ProgressBar mProgress;
 
     //TODO Store in Firestore Database?
@@ -94,7 +90,7 @@ public class CapturePictureActivity extends AppCompatActivity {
             }
         });
 
-        // TODO Setup CheckInBtn.
+        // TODO Setup CheckInBtn if time.
         mCheckInBtn = findViewById(R.id.check_in_btn);
         mCheckInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,18 +99,9 @@ public class CapturePictureActivity extends AppCompatActivity {
             }
         });
 
-        // TODO Setup adding to favorites?
-        mAddToFavoritesBtn = findViewById(R.id.add_to_favorites_btn);
-        mAddToFavoritesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "My favorite place", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //TODO Not visible for the users yet that they can choose a picture from gallery
         // Setup ImageView to redirect to chosen Method to get image from Photo gallery.
-        mImageRestaurant.setOnClickListener(new View.OnClickListener() {
+        mImageGalleryBtn = findViewById(R.id.image_gallery_btn);
+        mImageGalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenFileChooser();
@@ -254,41 +241,5 @@ public class CapturePictureActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-    private void uploadImage() {
-
-        if(mImageUri != null)
-        {
-            final ProgressBar progressBar = new ProgressBar(this);
-            progressBar.setVisibility(View.VISIBLE);
-
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-        }
-        */
-    }
-
+    */
+}

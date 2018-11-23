@@ -9,12 +9,14 @@
     android:layout_marginEnd="8dp"
     tools:context=".CapturePictureActivity">
 
+
     <ImageView
         android:id="@+id/image_restaurant_IV"
         android:layout_width="135dp"
         android:layout_height="165dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/ic_photo_camera_black_24dp"
         android:contentDescription="picture of restaurant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,8 +28,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:hint="Name Restaurant"
         android:inputType="textPersonName"
-        android:text="Name Restaurant"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
@@ -40,29 +42,28 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:hint="Address"
         android:inputType="textPostalAddress"
-        android:text="Distance / Address"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
         app:layout_constraintTop_toBottomOf="@+id/name_restaurant_ET" />
 
-    <EditText
-        android:id="@+id/pricerange_ET"
-        android:layout_width="0dp"
+    <RatingBar
+        android:id="@+id/ratingBar_price"
+        style="Ratingbarprice"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:inputType="textPostalAddress"
-        android:text="Review cost"
-        android:textSize="14sp"
+        android:isIndicator="false"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
         app:layout_constraintTop_toBottomOf="@+id/distance_ET" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/ratingBar_stars"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_restaurant_IV"
-        app:layout_constraintTop_toBottomOf="@+id/pricerange_ET" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar_price" />
 
     <EditText
         android:id="@+id/comments_ET"
@@ -91,13 +92,15 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/upload_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="93dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_gallery_btn"
         app:layout_constraintStart_toEndOf="@+id/check_in_btn"
         app:layout_constraintTop_toBottomOf="@+id/comments_ET"
         app:layout_constraintVertical_bias="0.0"
@@ -106,49 +109,52 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/check_in_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/add_to_favorites_btn"
+        app:layout_constraintEnd_toStartOf="@+id/upload_btn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comments_ET"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_place_black_24dp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_to_favorites_btn"
+        android:id="@+id/image_gallery_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/check_in_btn"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/capture_btn"
+        app:layout_constraintStart_toEndOf="@+id/upload_btn"
         app:layout_constraintTop_toBottomOf="@+id/comments_ET"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/baseline_favorite_black_24dp" />
+        app:srcCompat="@drawable/ic_insert_photo_black_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/capture_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/upload_btn"
+        app:layout_constraintStart_toEndOf="@+id/image_gallery_btn"
         app:layout_constraintTop_toBottomOf="@+id/comments_ET"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
@@ -162,11 +168,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar_price"
         app:layout_constraintVertical_bias="0.222" />
 
 
