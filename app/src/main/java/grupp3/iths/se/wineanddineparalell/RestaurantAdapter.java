@@ -1,6 +1,5 @@
 package grupp3.iths.se.wineanddineparalell;
 
-
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -105,6 +104,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             textDistance = itemView.findViewById(R.id.distance_tv);
             textPrice = itemView.findViewById(R.id.avr_price_tv);
             textScore = itemView.findViewById(R.id.avr_score_rb);
+
             expandCard = itemView.findViewById(R.id.more_info_expand_constraintlayout);
 
         }
