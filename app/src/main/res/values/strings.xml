@@ -16,8 +16,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="already_have_an_account_login">Already have an account? Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="password">Password...</string>
@@ -41,4 +40,7 @@
     <string name="reviews">Reviews</string>
     <string name="or">Or</string>
     <string name="change_avatar_button">Change avatar button</string>
+    <string name="wine_n_dine">Wine N Dine</string>
+    <string name="wine_dine"><![CDATA[Wine & Dine]]></string>
+    <string name="company_logo">company logo</string>
 </resources>
