@@ -3,30 +3,36 @@ package grupp3.iths.se.wineanddineparalell;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.util.Map;
+import java.io.File;
 
-import static android.content.ContentValues.TAG;
+import static android.app.Activity.RESULT_OK;
+import static grupp3.iths.se.wineanddineparalell.CapturePictureActivity.IMAGE_GALLERY_REQUEST;
 
 public class ProfileFragment extends Fragment {
 
@@ -35,12 +41,21 @@ public class ProfileFragment extends Fragment {
     }
 
     private TextView mUsername, mFirstname, mLastname, mPhonenumber, mEmail;
+    private ImageView mProfilePicture;
     private Button mSignout, mChangePassword;
     private ImageButton mChangeAvatar;
 
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    private StorageReference mStorageRef;
+
+    private DatabaseReference mDatabaseRef;
+    // private StorageReference pathReference;
+
+    private static final int GALLERY_INTENT = 2;
+
     private String mUserId;
 
     @Override
@@ -103,15 +118,67 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        // Change avatar image on fragment_profile.xml
+        // Creating instance of StorageReference
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+
+        // Bind mProfilePicture to image view on profile_fragment.xml
+        mProfilePicture = view.findViewById(R.id.profil_pic_img);
+
+        // Open gallery on phone to pick user profile picture that you want to upload to database.
         mChangeAvatar = view.findViewById(R.id.change_avatar_btn);
         mChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openGalleryOnPhone();
             }
         });
 
         return view;
     }
+
+
+    // Upload file that are picked in gallery to storage database under UserPhotos location.
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+
+            Uri uri = data.getData();
+
+            // Get user Id and place in imageName String variable.
+            String imageName = user.getUid();
+
+            // Upload image to UserPhotos collection and name the file the same as current user id.
+            StorageReference filepath = mStorageRef.child("UserPhotos").child(imageName);
+
+            // Check if file was uploaded successfully. Prompt the user with a Toast message saying: "Upload successful".
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Toast.makeText(getActivity(), "Upload Successful", Toast.LENGTH_SHORT).show();
+                }
+
+                // If the upload fails. Prompt the user with a Toast message saying: "Error: + error message type".
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    String error = e.getMessage();
+                    Toast.makeText(getActivity(), "Error" + error, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void openGalleryOnPhone() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, GALLERY_INTENT);
+    }
 }
+
+
+
+
