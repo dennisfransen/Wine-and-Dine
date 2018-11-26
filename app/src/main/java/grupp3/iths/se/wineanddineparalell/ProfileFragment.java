@@ -1,9 +1,9 @@
 package grupp3.iths.se.wineanddineparalell;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,11 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.io.File;
+import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
-import static grupp3.iths.se.wineanddineparalell.CapturePictureActivity.IMAGE_GALLERY_REQUEST;
 
 public class ProfileFragment extends Fragment {
 
@@ -40,19 +38,16 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private TextView mUsername, mFirstname, mLastname, mPhonenumber, mEmail;
+    private TextView mUsername, mFirstName, mLastName, mPhoneNumber, mEmail;
     private ImageView mProfilePicture;
-    private Button mSignout, mChangePassword;
+    private Button mSignOut, mChangePassword;
     private ImageButton mChangeAvatar;
 
-    private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+    private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     private StorageReference mStorageRef;
-
-    private DatabaseReference mDatabaseRef;
-    // private StorageReference pathReference;
 
     private static final int GALLERY_INTENT = 2;
 
@@ -64,14 +59,14 @@ public class ProfileFragment extends Fragment {
 
         // Connect profile_fragment Text views with ProfileFragment
         mUsername = view.findViewById(R.id.username_display_tv);
-        mFirstname = view.findViewById(R.id.firstname_display_tv);
-        mLastname = view.findViewById(R.id.lastname_display_tv);
-        mPhonenumber = view.findViewById(R.id.phone_number_display_tv);
+        mFirstName = view.findViewById(R.id.firstname_display_tv);
+        mLastName = view.findViewById(R.id.lastname_display_tv);
+        mPhoneNumber = view.findViewById(R.id.phone_number_display_tv);
         mEmail = view.findViewById(R.id.email_display_tv);
 
         // Get current end user ID
         mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mFirestore.collection("users").document(mUserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        mFireStore.collection("users").document(mUserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 // OnSuccess, get credentials from database in document field.
@@ -84,16 +79,16 @@ public class ProfileFragment extends Fragment {
 
                 // Print out end user credentials in profile_fragment text views.
                 mUsername.append(" "  + userName);
-                mFirstname.append(" " + firstName);
-                mLastname.append(" " + lastName);
-                mPhonenumber.append(" " + phoneNumber);
+                mFirstName.append(" " + firstName);
+                mLastName.append(" " + lastName);
+                mPhoneNumber.append(" " + phoneNumber);
                 mEmail.append(" " + email);
             }
         });
 
         // Sign out button. Send end user to LoginActivity if button is pressed.
-        mSignout = view.findViewById(R.id.signout_btn);
-        mSignout.setOnClickListener(new View.OnClickListener() {
+        mSignOut = view.findViewById(R.id.signout_btn);
+        mSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -121,9 +116,8 @@ public class ProfileFragment extends Fragment {
         // Creating instance of StorageReference
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-
         // Bind mProfilePicture to image view on profile_fragment.xml
-        mProfilePicture = view.findViewById(R.id.profil_pic_img);
+        mProfilePicture = view.findViewById(R.id.user_avatar_im);
 
         // Open gallery on phone to pick user profile picture that you want to upload to database.
         mChangeAvatar = view.findViewById(R.id.change_avatar_btn);
@@ -151,13 +145,15 @@ public class ProfileFragment extends Fragment {
             String imageName = user.getUid();
 
             // Upload image to UserPhotos collection and name the file the same as current user id.
-            StorageReference filepath = mStorageRef.child("UserPhotos").child(imageName);
+            final StorageReference filepath = mStorageRef.child("UserPhotos").child(imageName + ".jpg");
+            final Context context = getContext();
+            final ImageView imageView = mProfilePicture;
 
             // Check if file was uploaded successfully. Prompt the user with a Toast message saying: "Upload successful".
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                    Glide.with(context).load(filepath).into(imageView).onLoadFailed(context.getDrawable(R.drawable.app_logo));
                     Toast.makeText(getActivity(), "Upload Successful", Toast.LENGTH_SHORT).show();
                 }
 
@@ -170,6 +166,8 @@ public class ProfileFragment extends Fragment {
                 }
             });
         }
+
+
     }
 
     private void openGalleryOnPhone() {
