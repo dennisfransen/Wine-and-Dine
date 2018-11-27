@@ -55,13 +55,12 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         holder.reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // ReviewFragment reviewFragment = new ReviewFragment();
                 MakeReviewFragment makeReviewFragment = new MakeReviewFragment();
 
                 FragmentTransaction fragmentTransaction = holder.mcontext.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame, makeReviewFragment);
                 fragmentTransaction.commit();
-                Toast.makeText(v.getContext(), "CLICK WORKS!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "CLICK WORKS!", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -69,13 +68,12 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // ReviewFragment reviewFragment = new ReviewFragment();
-                MakeReviewFragment makeReviewFragment = new MakeReviewFragment();
+                ReviewFragment reviewFragment = new ReviewFragment();
 
                 FragmentTransaction fragmentTransaction = holder.mcontext.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame, makeReviewFragment);
+                fragmentTransaction.replace(R.id.main_frame, reviewFragment);
                 fragmentTransaction.commit();
-                Toast.makeText(v.getContext(), "CLICK WORKS!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "CLICK WORKS!", Toast.LENGTH_SHORT).show();
             }
         });
     }

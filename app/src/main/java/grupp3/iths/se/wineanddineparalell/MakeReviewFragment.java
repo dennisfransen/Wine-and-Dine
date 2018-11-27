@@ -34,7 +34,7 @@ public class MakeReviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_make_review, container, false);
 
-        Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);
+/*        Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ReviewInfo> options = new FirestoreRecyclerOptions.Builder<ReviewInfo>()
                 .setQuery(query, ReviewInfo.class)
@@ -45,7 +45,7 @@ public class MakeReviewFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.full_reviews_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(reviewAdapter);
+        recyclerView.setAdapter(reviewAdapter);*/
 
         return view;
     }
