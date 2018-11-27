@@ -75,8 +75,6 @@ public class AddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
-        //storage = FirebaseStorage.getInstance();
-        //mStorageRef = storage.getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         searchFragment = new SearchFragment();
 
@@ -104,26 +102,41 @@ public class AddFragment extends Fragment {
                 String restaurantAdress = mAddress.getText().toString();
                 String phoneNumber = mPhoneNumber.getText().toString();
                 String webSite = mWebsite.getText().toString();
-                int star = mStar.getNumStars(); // TODO: Fix the number so it does not set as 5 in database
-                int cost = mCost.getNumStars();
+                float star = mStar.getNumStars(); // TODO: Fix the number so it does not set as 5 in database
+                float cost = mCost.getNumStars();
                 boolean food = mFood.isChecked();
                 boolean drink = mDrink.isChecked();
                 String review = mReview.getText().toString();
 
-                Map<String, Object> userMap = new HashMap<>();
-                userMap.put("restaurant_name", restaurantName);
-                userMap.put("restaurant_adress", restaurantAdress);
-                userMap.put("restaurant_phone_number", phoneNumber);
-                userMap.put("restaurant_website", webSite);
-                userMap.put("restaurant_star_rating", star);
-                userMap.put("restaurant_cost_rating", cost);
-                userMap.put("restaurant_food_type", food);
-                userMap.put("restaurant_drink_type", drink);
-                userMap.put("user_name", user.getEmail());
-                userMap.put("user_review", review);
+                Map<String, Object> restaurantMap = new HashMap<>();
+                restaurantMap.put("restaurant_name", restaurantName);
+                restaurantMap.put("restaurant_adress", restaurantAdress);
+                restaurantMap.put("restaurant_phone_number", phoneNumber);
+                restaurantMap.put("restaurant_website", webSite);
+                restaurantMap.put("restaurant_star_rating", star);
+                restaurantMap.put("restaurant_cost_rating", cost);
+                restaurantMap.put("restaurant_food_type", food);
+                restaurantMap.put("restaurant_drink_type", drink);
+
+                firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        String error = e.getMessage();
+                        Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                Map<String, Object> reviewMap = new HashMap<>();
+                reviewMap.put("user_name", user.getEmail());
+                reviewMap.put("user_review", review);
 
                 firebaseFirestore.collection("restaurant").document(restaurantName)
-                        .collection("reviews").document().set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        .collection("reviews").document().set(reviewMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
 
@@ -137,6 +150,7 @@ public class AddFragment extends Fragment {
                         Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
         });
 
@@ -167,7 +181,6 @@ public class AddFragment extends Fragment {
 
         return view;
     }
-
 
     /**
      * Take picture with camera
@@ -297,5 +310,5 @@ public class AddFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
-    }
+    } // TODO: See if we can use this after add to database function is done. (On Success)
 }

@@ -52,15 +52,30 @@
             app:layout_constraintTop_toBottomOf="@+id/rest_name_tv"
             tools:text="0,5 KM" />
 
-        <TextView
+        <!--<TextView-->
+            <!--android:id="@+id/avr_price_tv"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="18dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/image_view"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/distance_tv"-->
+            <!--tools:text="SSS price" />-->
+
+
+        <RatingBar
             android:id="@+id/avr_price_tv"
-            android:layout_width="0dp"
-            android:layout_height="18dp"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/image_view"
-            app:layout_constraintTop_toBottomOf="@+id/distance_tv"
-            tools:text="SSS price" />
+            app:layout_constraintTop_toBottomOf="@+id/distance_tv" />
 
         <RatingBar
             android:id="@+id/avr_score_rb"
@@ -72,8 +87,7 @@
             android:layout_marginEnd="8dp"
             android:isIndicator="true"
             android:numStars="5"
-            android:rating="4"
-            android:stepSize="1"
+            android:stepSize="0.5"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/rest_name_tv"

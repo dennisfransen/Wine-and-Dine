@@ -1,11 +1,7 @@
 package grupp3.iths.se.wineanddineparalell;
 
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -15,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firestore.admin.v1beta1.Progress;
 
 public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, RestaurantAdapter.RestaurantHolder> {
     private FragmentManager mcontext;
@@ -51,10 +49,9 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
       //  final ReviewFragment reviewFragment = new ReviewFragment();
 
         holder.imgView.setImageResource(R.drawable.restaurant);
-        holder.textName.setText(model.getName());
-        holder.textDistance.setText(model.getDistance());
-        holder.textPrice.setText(model.getCost());
-        holder.textScore.setRating(model.getStar());
+        holder.textName.setText(model.getRestaurant_name());
+        holder.textPrice.setRating(model.getRestaurant_cost_rating());
+        holder.textScore.setRating(model.getRestaurant_star_rating());
         holder.reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,8 +112,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         //fields for textviews in cardview
         private ImageView imgView;
         private TextView textName;
-        private TextView textDistance;
-        private TextView textPrice;
+        private RatingBar textPrice;
         private RatingBar textScore;
         private Button reviewBtn;
         private FragmentManager mcontext;
@@ -131,9 +127,9 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             // connect fields in cardview
             imgView = itemView.findViewById(R.id.image_view);
             textName = itemView.findViewById(R.id.rest_name_tv);
-            textDistance = itemView.findViewById(R.id.distance_tv);
             textPrice = itemView.findViewById(R.id.avr_price_tv);
             textScore = itemView.findViewById(R.id.avr_score_rb);
+
             reviewBtn = itemView.findViewById(R.id.review_btn);
             mcontext = context;
             cardview = itemView.findViewById(R.id.restaurang_cv);

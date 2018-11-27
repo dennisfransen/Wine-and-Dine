@@ -34,10 +34,10 @@ public class WishListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
 
-        Query query = restaurantRef.orderBy("distance", Query.Direction.ASCENDING);
+        Query query = restaurantRef.orderBy("restaurant_name", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ItemInfo> options = new FirestoreRecyclerOptions.Builder<ItemInfo>()
-                .setQuery(query, ItemInfo.class)
+               .setQuery(query, ItemInfo.class)
                 //          .setQuery(query, ItemInfo.class)
                 .build();
 
