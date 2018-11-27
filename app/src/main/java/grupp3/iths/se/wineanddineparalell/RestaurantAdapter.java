@@ -14,11 +14,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, RestaurantAdapter.RestaurantHolder> {
+
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -40,11 +42,20 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
     @Override
     protected void onBindViewHolder(@NonNull final RestaurantHolder holder, final int position, @NonNull final ItemInfo model) {
 
+        final ReviewFragment reviewFragment = new ReviewFragment();
+        final FragmentManager fragmentManager;
+
         holder.imgView.setImageResource(R.drawable.restaurant);
         holder.textName.setText(model.getName());
         holder.textDistance.setText(model.getDistance());
         holder.textPrice.setText(model.getCost());
         holder.textScore.setRating(model.getStar());
+        holder.reviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "CLICK WORKS!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -98,16 +109,16 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             textScore = itemView.findViewById(R.id.avr_score_rb);
             reviewBtn = itemView.findViewById(R.id.review_btn);
 
-            reviewFragment = new ReviewFragment();
-
-            reviewBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.main_frame, reviewFragment);
-                    fragmentTransaction.commit();
-                }
-            });
+//            reviewFragment = new ReviewFragment();
+//
+//            reviewBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                    fragmentTransaction.replace(R.id.main_frame, reviewFragment);
+//                    fragmentTransaction.commit();
+//                }
+//            });
 
 
         }
