@@ -3,10 +3,14 @@ package grupp3.iths.se.wineanddineparalell;
 
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -15,7 +19,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, RestaurantAdapter.RestaurantHolder> {
-    private int expandedPosition = -1;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -42,17 +45,6 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         holder.textDistance.setText(model.getDistance());
         holder.textPrice.setText(model.getCost());
         holder.textScore.setRating(model.getStar());
-
-        final boolean isExpanded = position==expandedPosition;
-        holder.expandCard.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.itemView.setActivated(isExpanded);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                expandedPosition = isExpanded ? -1:position;
-                notifyItemChanged(position);
-            }
-        });
     }
 
     /**
@@ -65,9 +57,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
     @NonNull
     @Override
     public RestaurantHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list, viewGroup, false);
-
 
         return new RestaurantHolder(view);
     }
@@ -87,14 +77,15 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
     class RestaurantHolder extends RecyclerView.ViewHolder {
 
         //fields for textviews in cardview
-        public ImageView imgView;
-        public TextView textName;
-        public TextView textDistance;
-        public TextView textPrice;
-        public RatingBar textScore;
+        private ImageView imgView;
+        private TextView textName;
+        private TextView textDistance;
+        private TextView textPrice;
+        private RatingBar textScore;
+        private Button reviewBtn;
 
-        public ConstraintLayout expandCard;
-
+        ReviewFragment reviewFragment;
+        
 
         public RestaurantHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,8 +96,21 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             textDistance = itemView.findViewById(R.id.distance_tv);
             textPrice = itemView.findViewById(R.id.avr_price_tv);
             textScore = itemView.findViewById(R.id.avr_score_rb);
-            expandCard = itemView.findViewById(R.id.more_info_expand_constraintlayout);
+            reviewBtn = itemView.findViewById(R.id.review_btn);
+
+            reviewFragment = new ReviewFragment();
+
+            reviewBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.main_frame, reviewFragment);
+                    fragmentTransaction.commit();
+                }
+            });
+
 
         }
     }
+
 }
