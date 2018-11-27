@@ -19,12 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +81,7 @@ public class CapturePictureActivity extends AppCompatActivity {
         });
 
         // Setup UploadBtn to redirect to upload to Firebase Storage.
-        mUploadBtn = findViewById(R.id.upload_btn);
+        mUploadBtn = findViewById(R.id.save_btn);
         mUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
