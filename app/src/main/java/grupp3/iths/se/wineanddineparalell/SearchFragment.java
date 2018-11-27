@@ -45,64 +45,64 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-
-        mEditText = view.findViewById(R.id.editText);
-        mListView = view.findViewById(R.id.listView);
-        mListOfPredictions = new ArrayList<>();
-        mListOfPredictions.add("HELLO WORLD");
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mListOfPredictions);
-        mListView.setAdapter(arrayAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AutocompletePrediction MyAutocompletePrediction=mAutocompletePredictions.get(position);
-
-                mGeoDataClient.getPlaceById(MyAutocompletePrediction.getPlaceId()).addOnSuccessListener(new OnSuccessListener<PlaceBufferResponse>() {
-                    @Override
-                    public void onSuccess(PlaceBufferResponse places) {
-                        Log.d("MY LOG","" + places.toString());
-
-
-                    }
-                });
-
-            }
-        });
-
-        mGeoDataClient = Places.getGeoDataClient(getActivity());
-        final AutocompleteFilter countryFilter = new AutocompleteFilter.Builder().setCountry("SE").build();
-
-        mEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mGeoDataClient.getAutocompletePredictions(s.toString(), null, countryFilter).addOnSuccessListener(new OnSuccessListener<AutocompletePredictionBufferResponse>() {
-                    @Override
-                    public void onSuccess(AutocompletePredictionBufferResponse autocompletePredictions) {
-                        mListOfPredictions.clear();
-                        mAutocompletePredictions.clear();
-                        for (int i = 0; i < autocompletePredictions.getCount(); i++) {
-                            mAutocompletePredictions.add(autocompletePredictions.get(i));
-
-                            mListOfPredictions.add(autocompletePredictions.get(i).getFullText(null).toString());
-                        }
-                        arrayAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-
-            }
-        });
+//
+//        mEditText = view.findViewById(R.id.editText);
+//        mListView = view.findViewById(R.id.listView);
+//        mListOfPredictions = new ArrayList<>();
+//        mListOfPredictions.add("HELLO WORLD");
+//
+//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mListOfPredictions);
+//        mListView.setAdapter(arrayAdapter);
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                AutocompletePrediction MyAutocompletePrediction=mAutocompletePredictions.get(position);
+//
+//                mGeoDataClient.getPlaceById(MyAutocompletePrediction.getPlaceId()).addOnSuccessListener(new OnSuccessListener<PlaceBufferResponse>() {
+//                    @Override
+//                    public void onSuccess(PlaceBufferResponse places) {
+//                        Log.d("MY LOG","" + places.toString());
+//
+//
+//                    }
+//                });
+//
+//            }
+//        });
+//
+//        mGeoDataClient = Places.getGeoDataClient(getActivity());
+//        final AutocompleteFilter countryFilter = new AutocompleteFilter.Builder().setCountry("SE").build();
+//
+//        mEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                mGeoDataClient.getAutocompletePredictions(s.toString(), null, countryFilter).addOnSuccessListener(new OnSuccessListener<AutocompletePredictionBufferResponse>() {
+//                    @Override
+//                    public void onSuccess(AutocompletePredictionBufferResponse autocompletePredictions) {
+//                        mListOfPredictions.clear();
+//                        mAutocompletePredictions.clear();
+//                        for (int i = 0; i < autocompletePredictions.getCount(); i++) {
+//                            mAutocompletePredictions.add(autocompletePredictions.get(i));
+//
+//                            mListOfPredictions.add(autocompletePredictions.get(i).getFullText(null).toString());
+//                        }
+//                        arrayAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//
+//            }
+//    });
 
         return view;
     }

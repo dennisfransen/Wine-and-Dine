@@ -30,7 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistrationActivity"/>
-        <activity android:name=".CapturePictureActivity"></activity>
 
         <!-- define Fileprovider for storage pictures -->
         <provider

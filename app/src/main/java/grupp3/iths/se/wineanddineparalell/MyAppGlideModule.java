@@ -11,7 +11,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.InputStream;
 
-@GlideModule
+//@com.bumptech.glide.annotation.MyAppGlideModule
 public class MyAppGlideModule extends AppGlideModule {
 
     @Override

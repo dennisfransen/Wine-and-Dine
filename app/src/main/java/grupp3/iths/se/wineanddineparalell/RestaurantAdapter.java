@@ -109,19 +109,17 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             textScore = itemView.findViewById(R.id.avr_score_rb);
             reviewBtn = itemView.findViewById(R.id.review_btn);
 
-//            reviewFragment = new ReviewFragment();
-//
-//            reviewBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
+            reviewFragment = new ReviewFragment();
+
+            reviewBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 //                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //                    fragmentTransaction.replace(R.id.main_frame, reviewFragment);
 //                    fragmentTransaction.commit();
-//                }
-//            });
-
+                }
+            });
 
         }
     }
-
 }
