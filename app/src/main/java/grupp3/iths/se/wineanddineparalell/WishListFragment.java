@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -33,15 +34,14 @@ public class WishListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
 
-        Query query = restaurantRef.whereEqualTo("wishlist", true);
-        query.orderBy("distance", Query.Direction.ASCENDING);
+        Query query = restaurantRef.orderBy("distance", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ItemInfo> options = new FirestoreRecyclerOptions.Builder<ItemInfo>()
                 .setQuery(query, ItemInfo.class)
                 //          .setQuery(query, ItemInfo.class)
                 .build();
 
-        adapter = new RestaurantAdapter(options);
+        adapter = new RestaurantAdapter(options, getActivity().getSupportFragmentManager());
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

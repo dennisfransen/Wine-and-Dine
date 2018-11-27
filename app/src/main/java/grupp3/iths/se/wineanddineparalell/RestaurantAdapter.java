@@ -1,11 +1,14 @@
 package grupp3.iths.se.wineanddineparalell;
 
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, RestaurantAdapter.RestaurantHolder> {
+    private FragmentManager mcontext;
 
 
     /**
@@ -27,9 +31,12 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
      * FirestoreRecyclerOptions} for configuration options.
      *
      * @param options
+     * @param context
      */
-    public RestaurantAdapter(@NonNull FirestoreRecyclerOptions<ItemInfo> options) {
+    public RestaurantAdapter(@NonNull FirestoreRecyclerOptions<ItemInfo> options, FragmentManager context) {
         super(options);
+        mcontext = context;
+
     }
 
     /**
@@ -41,9 +48,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
      */
     @Override
     protected void onBindViewHolder(@NonNull final RestaurantHolder holder, final int position, @NonNull final ItemInfo model) {
-
-        final ReviewFragment reviewFragment = new ReviewFragment();
-        final FragmentManager fragmentManager;
+      //  final ReviewFragment reviewFragment = new ReviewFragment();
 
         holder.imgView.setImageResource(R.drawable.restaurant);
         holder.textName.setText(model.getName());
@@ -53,6 +58,26 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         holder.reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // ReviewFragment reviewFragment = new ReviewFragment();
+                MakeReviewFragment makeReviewFragment = new MakeReviewFragment();
+
+                FragmentTransaction fragmentTransaction = holder.mcontext.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, makeReviewFragment);
+                fragmentTransaction.commit();
+                Toast.makeText(v.getContext(), "CLICK WORKS!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // ReviewFragment reviewFragment = new ReviewFragment();
+                MakeReviewFragment makeReviewFragment = new MakeReviewFragment();
+
+                FragmentTransaction fragmentTransaction = holder.mcontext.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame, makeReviewFragment);
+                fragmentTransaction.commit();
                 Toast.makeText(v.getContext(), "CLICK WORKS!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -70,7 +95,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
     public RestaurantHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list, viewGroup, false);
 
-        return new RestaurantHolder(view);
+        return new RestaurantHolder(view,mcontext);
     }
 
     /**
@@ -94,11 +119,13 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         private TextView textPrice;
         private RatingBar textScore;
         private Button reviewBtn;
+        private FragmentManager mcontext;
+        private CardView cardview;
 
         ReviewFragment reviewFragment;
         
 
-        public RestaurantHolder(@NonNull View itemView) {
+        public RestaurantHolder(@NonNull View itemView, FragmentManager context) {
             super(itemView);
 
             // connect fields in cardview
@@ -108,6 +135,8 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             textPrice = itemView.findViewById(R.id.avr_price_tv);
             textScore = itemView.findViewById(R.id.avr_score_rb);
             reviewBtn = itemView.findViewById(R.id.review_btn);
+            mcontext = context;
+            cardview = itemView.findViewById(R.id.restaurang_cv);
 
             reviewFragment = new ReviewFragment();
 
