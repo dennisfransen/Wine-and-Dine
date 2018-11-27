@@ -25,15 +25,15 @@ import com.google.firebase.firestore.Query;
  */
 public class WishListFragment extends Fragment {
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+  /*  private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference restaurantRef = db.collection("restaurant");
 
-    private RestaurantAdapter adapter;
+    private RestaurantAdapter adapter;*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
-
+/*
         Query query = restaurantRef.orderBy("restaurant_name", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ItemInfo> options = new FirestoreRecyclerOptions.Builder<ItemInfo>()
@@ -60,12 +60,12 @@ public class WishListFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 adapter.removeItem(viewHolder.getAdapterPosition());
             }
-        }).attachToRecyclerView(recyclerView);
+        }).attachToRecyclerView(recyclerView);*/
 
         return view;
     }
 
-    //Starts to listen for changes in database
+   /* //Starts to listen for changes in database
     @Override
     public void onStart() {
         super.onStart();
@@ -77,13 +77,6 @@ public class WishListFragment extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    }*/
 }
 

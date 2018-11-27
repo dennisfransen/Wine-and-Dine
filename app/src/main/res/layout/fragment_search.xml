@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wishlist_background_screen"
     tools:context=".SearchFragment">
 
 
@@ -14,14 +15,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="#c8ebf2"
         android:ems="10"
         android:hint="Search here..."
+        android:textColorHint="@android:color/black"
         android:inputType="textPersonName"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listView"
         android:layout_width="0dp"
         android:layout_height="0dp"
