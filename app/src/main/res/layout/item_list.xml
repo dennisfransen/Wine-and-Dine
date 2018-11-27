@@ -9,7 +9,9 @@
     android:layout_marginEnd="8dp"
     app:cardCornerRadius="5dp"
     app:cardElevation="3dp"
-    app:contentPadding="8dp">
+    app:contentPadding="8dp"
+    android:clickable="true"
+    android:id="@+id/restaurang_cv">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
