@@ -30,7 +30,7 @@
             android:src="@drawable/ic_restaurant" />
 
         <TextView
-            android:id="@+id/rest_name_tv"
+            android:id="@+id/restuarant_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -41,7 +41,7 @@
             tools:text="RESTAURANT NAME" />
 
         <RatingBar
-            android:id="@+id/avr_price_rb"
+            android:id="@+id/average_price_rb"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
@@ -57,15 +57,15 @@
             android:visibility="visible" />
 
         <RatingBar
-            android:id="@+id/avr_score_rb"
+            android:id="@+id/average_score_rb"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/avr_price_rb"
+            android:layout_below="@+id/average_price_rb"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="137dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="127dp"
             android:isIndicator="true"
             android:numStars="5"
@@ -76,7 +76,7 @@
             android:id="@+id/address_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rest_name_tv"
+            android:layout_below="@+id/restuarant_name_tv"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/img_view"
@@ -96,9 +96,10 @@
             android:id="@+id/food_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/rest_name_tv"
+            android:layout_marginEnd="8dp"
             tools:text="Food" />
 
         <CheckBox
@@ -106,10 +107,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/food_cb"
-            android:layout_alignBottom="@+id/phone_nr_tv"
-            android:layout_marginStart="28dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/rest_name_tv"
+            android:layout_marginEnd="8dp"
             tools:text="Drink" />
 
         <TextView

@@ -64,19 +64,5 @@ public class WishListFragment extends Fragment {
 
         return view;
     }
-
-   /* //Starts to listen for changes in database (added/removed items in database)
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    //Stops listening for changes in database (added/removed items in database)
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }*/
 }
 

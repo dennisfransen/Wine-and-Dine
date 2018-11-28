@@ -2,7 +2,7 @@ package grupp3.iths.se.wineanddineparalell;
 
 
 import android.widget.ImageView;
-
+// Model class for Restaurant
 public class ItemInfo {
     public ImageView image;
     private String restaurant_name, restaurant_address, restaurant_phone_number, restaurant_website;
@@ -13,6 +13,7 @@ public class ItemInfo {
         // empty constructor needed
     }
 
+    //Constructor needed for FirebaseRecyclerAdapter to add these directly in each card
     public ItemInfo(ImageView image, String restaurant_name, float restaurant_star_rating, float restaurant_cost_rating) {
         this.image = image;
         this.restaurant_name = restaurant_name;
@@ -32,16 +33,13 @@ public class ItemInfo {
         this.restaurant_drink_type = restaurant_drink_type;
     }
 
+    // Getters
     public ImageView getImage() {
         return image;
     }
 
     public String getRestaurant_name() {
         return restaurant_name;
-    }
-
-    public String getRestaurant_adress() {
-        return restaurant_address;
     }
 
     public String getRestaurant_phone_number() {
