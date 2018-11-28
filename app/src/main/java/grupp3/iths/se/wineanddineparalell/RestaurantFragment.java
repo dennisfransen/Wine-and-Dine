@@ -7,20 +7,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.storage.StorageReference;
 
-public class ReviewFragment extends Fragment {
+public class RestaurantFragment extends Fragment {
+    private ImageView restaurantImg;
 
-    public ReviewFragment() {
+    private TextView restaurantName;
+    private TextView restaurantAddress;
+    private TextView phoneNumber;
+    private TextView webbsite;
+
+    private RatingBar ratingStar;
+    private RatingBar ratingDollar;
+
+    private CheckBox foodCB;
+    private CheckBox drinkCB;
+
+    public RestaurantFragment() {
         // Required empty public constructor
     }
 
@@ -33,8 +44,28 @@ public class ReviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_review, container, false);
 
-      //  final RecyclerView reviewRecyclerView = view.findViewById(R.id.review_rv);
+        String restName = getArguments().getString("REST_NAME");
 
+        restaurantImg = view.findViewById(R.id.image_view);
+
+        restaurantName = view.findViewById(R.id.rest_name_tv);
+        restaurantAddress = view.findViewById(R.id.address_tv);
+        phoneNumber = view.findViewById(R.id.phone_nr_tv);
+        webbsite = view.findViewById(R.id.webbsite_tv);
+
+        ratingStar = view.findViewById(R.id.avr_score_rb);
+        ratingDollar = view.findViewById(R.id.avr_price_rb);
+
+        foodCB = view.findViewById(R.id.food_cb);
+        drinkCB = view.findViewById(R.id.drink_cb);
+
+        restaurantName.setText(restName);
+
+     //   restAdapter.getName((restaurantName.getText());
+     //   restAdapter = new RestaurantAdapter()
+
+
+        //Asks from database in wich order we want to display our reviews
         Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ReviewInfo> options = new FirestoreRecyclerOptions.Builder<ReviewInfo>()
@@ -47,6 +78,7 @@ public class ReviewFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(reviewAdapter);
+
 
 
 //        mFireStore.collection("restaurant").document("0OdsOgY7wAh0mAYwgyMR").collection("reviews")
@@ -67,13 +99,13 @@ public class ReviewFragment extends Fragment {
 
         return view;
     }
-
+    //Starts to listen for changes in database (added/removed items in database)
     @Override
     public void onStart() {
         super.onStart();
         reviewAdapter.startListening();
     }
-
+    //Stops to listen for changes in database (added/removed items in database)
     @Override
     public void onStop() {
         super.onStop();

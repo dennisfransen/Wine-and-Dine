@@ -1,18 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wishlist_background_screen"
+    android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".ReviewFragment"
-    android:background="@drawable/wishlist_background_screen">
+    tools:context=".RestaurantFragment">
 
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="12dp">
+
+
+        <ImageView
+            android:id="@+id/img_view"
+            android:layout_width="97dp"
+            android:layout_height="94dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_restaurant" />
+
+        <TextView
+            android:id="@+id/rest_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/img_view"
+            app:layout_constraintHorizontal_bias="0.0"
+            tools:text="RESTAURANT NAME" />
+
+        <RatingBar
+            android:id="@+id/avr_price_rb"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_below="@+id/webbsite_tv"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="127dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:visibility="visible" />
+
+        <RatingBar
+            android:id="@+id/avr_score_rb"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/avr_price_rb"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="127dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/address_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rest_name_tv"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/img_view"
+            tools:text="Address" />
+
+        <TextView
+            android:id="@+id/phone_nr_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address_tv"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/img_view"
+            tools:text="Phone Number" />
+
+        <CheckBox
+            android:id="@+id/food_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rest_name_tv"
+            tools:text="Food" />
+
+        <CheckBox
+            android:id="@+id/drink_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/food_cb"
+            android:layout_alignBottom="@+id/phone_nr_tv"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rest_name_tv"
+            tools:text="Drink" />
+
+        <TextView
+            android:id="@+id/webbsite_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_nr_tv"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/img_view"
+            tools:text="Webbsite" />
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/review_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relative_layout" />
+</android.support.constraint.ConstraintLayout>
