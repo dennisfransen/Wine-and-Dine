@@ -42,10 +42,6 @@ public class ItemInfo {
         return restaurant_name;
     }
 
-    public String getRestaurant_adress() {
-        return restaurant_address;
-    }
-
     public String getRestaurant_phone_number() {
         return restaurant_phone_number;
     }

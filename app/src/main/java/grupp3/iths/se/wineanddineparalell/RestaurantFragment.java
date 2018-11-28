@@ -42,13 +42,19 @@ public class RestaurantFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_review, container, false);
+        final View view = inflater.inflate(R.layout.fragment_restaurant, container, false);
 
-        //Recieved Bundled information from RestaurantAdapter
+        //TODO: connect boolean/image values to RestaurantFragment/Checkbox
+
+        //Handle Bundled information from RestaurantAdapter
         String restName = getArguments().getString("REST_NAME");
         String resAdr = getArguments().getString("REST_ADDRESS");
-        float ratStar = getArguments().getFloat("RATING_STAR");
-        float ratDollar = getArguments().getFloat("RATING_DOLLAR");
+        String phone = getArguments().getString("REST_PHONE");
+        String webSite = getArguments().getString("REST_WEBBSITE");
+
+        float ratStar = getArguments().getFloat("REST_RATING_STAR");
+        float ratDollar = getArguments().getFloat("REST_RATING_DOLLAR");
+
 
         //All fields in RestaurantFragment connected to xml fields
         restaurantImg = view.findViewById(R.id.img_view);
@@ -64,12 +70,15 @@ public class RestaurantFragment extends Fragment {
         foodCB = view.findViewById(R.id.food_cb);
         drinkCB = view.findViewById(R.id.drink_cb);
 
+        //Set data to the different fields in Fragment_review.xml
         restaurantName.setText(restName);
-       // restaurantAddress.setText(resAdr);
+        //TODO: Check Address getter, doesn't work!
+        restaurantAddress.setText(resAdr);
+        phoneNumber.setText(phone);
+        webbsite.setText(webSite);
+
         ratingStar.setRating(ratStar);
         ratingDollar.setRating(ratDollar);
-
-
 
         //Asks from database in wich order we want to display our reviews
         Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);

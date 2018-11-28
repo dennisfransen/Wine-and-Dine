@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -30,8 +29,8 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
     private String restaurantWebbbsite;
     private float restaurantAvrStar;
     private float restaurangAvrPrice;
-    private boolean foodCB;
-    private boolean drinkCB;
+    private boolean restaurantFoodCB;
+    private boolean restaurantDrinkCB;
 
 
     /**
@@ -48,10 +47,10 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
     }
 
 
-     // Connects database to recyclerview
-     // holder: fields in item_list.xml
-     // position: where data will be set in recyclerview
-     // model: helper from FirestoreRecyclerAdapter to get info from fields in database
+    // Connects database to recyclerview
+    // holder: fields in item_list.xml
+    // position: where data will be set in recyclerview
+    // model: helper from FirestoreRecyclerAdapter to get info from fields in database
     @Override
     protected void onBindViewHolder(@NonNull final RestaurantHolder holder, final int position, @NonNull final ItemInfo model) {
 
@@ -60,10 +59,6 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         holder.textName.setText(model.getRestaurant_name());
         holder.textPrice.setRating(model.getRestaurant_cost_rating());
         holder.textScore.setRating(model.getRestaurant_star_rating());
-
-        //Holders for remaining info that shows in RestaurantFragment
-        holder.restaurantAddress.setText(model.getRestaurant_address());
-
 
         holder.reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,19 +77,30 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             @Override
             public void onClick(View v) {
                 RestaurantFragment restaurantFragment = new RestaurantFragment();
+
+                //TODO: connect boolean/Image values from firestore to RestaurantFragments checkbox
+
                 restaurantName = holder.textName.getText().toString();
-                restaurantAddress = holder.restaurantAddress.getText().toString();//model.getRestaurant_address();
+                //TODO: Check Address getter, doesn't work!
+                restaurantAddress = model.getRestaurant_address();
+                restaurantPhoneNumber = model.getRestaurant_phone_number();
+                restaurantWebbbsite = model.getRestaurant_website();
+
                 restaurantAvrStar = holder.textPrice.getRating();
                 restaurangAvrPrice = holder.textScore.getRating();
+
 
                 //Bundles information from adapter and so it can be sent to new Fragment
                 Bundle data = new Bundle();
 
                 data.putString("REST_NAME", restaurantName);
                 data.putString("REST_ADDRESS", restaurantAddress);
+                data.putString("REST_PHONE", restaurantPhoneNumber);
+                data.putString("REST_WEBBSITE", restaurantWebbbsite);
 
-                data.putFloat("RATING_STAR", restaurantAvrStar);
-                data.putFloat("RATING_DOLLAR", restaurangAvrPrice);
+                data.putFloat("REST_RATING_STAR", restaurantAvrStar);
+                data.putFloat("REST_RATING_DOLLAR", restaurangAvrPrice);
+
 
                 restaurantFragment.setArguments(data);
 
@@ -106,7 +112,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         });
     }
 
-     //Inflates a new item in recyclerview
+    //Inflates a new item in recyclerview
     @NonNull
     @Override
     public RestaurantHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -135,17 +141,6 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         private FragmentManager mcontext;
         private CardView cardview;
 
-        //fields to fill in RestaurantFragment
-        private ImageView restaurantImg;
-        private TextView restaurantName;
-        private TextView restaurantAddress;
-        private TextView phoneNumber;
-        private TextView webbsite;
-        private RatingBar ratingStar;
-        private RatingBar ratingDollar;
-        private CheckBox foodCB;
-        private CheckBox drinkCB;
-
 
         public RestaurantHolder(@NonNull View itemView, FragmentManager context) {
             super(itemView);
@@ -160,23 +155,6 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
 
             reviewBtn = itemView.findViewById(R.id.review_btn);
             cardview = itemView.findViewById(R.id.restaurang_cv);
-
-
-
-            //Connect fields in RestaurantFragment
-            restaurantImg = itemView.findViewById(R.id.img_view);
-
-            restaurantName = itemView.findViewById(R.id.restuarant_name_tv);
-            restaurantAddress = itemView.findViewById(R.id.address_tv);
-            phoneNumber = itemView.findViewById(R.id.phone_nr_tv);
-            webbsite = itemView.findViewById(R.id.webbsite_tv);
-
-            ratingStar = itemView.findViewById(R.id.average_score_rb);
-            ratingDollar = itemView.findViewById(R.id.average_price_rb);
-
-            foodCB = itemView.findViewById(R.id.food_cb);
-            drinkCB = itemView.findViewById(R.id.drink_cb);
-
         }
     }
 }
