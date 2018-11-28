@@ -44,25 +44,31 @@ public class RestaurantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_review, container, false);
 
+        //Recieved Bundled information from RestaurantAdapter
         String restName = getArguments().getString("REST_NAME");
+        String resAdr = getArguments().getString("REST_ADDRESS");
+        float ratStar = getArguments().getFloat("RATING_STAR");
+        float ratDollar = getArguments().getFloat("RATING_DOLLAR");
 
-        restaurantImg = view.findViewById(R.id.image_view);
+        //All fields in RestaurantFragment connected to xml fields
+        restaurantImg = view.findViewById(R.id.img_view);
 
-        restaurantName = view.findViewById(R.id.rest_name_tv);
+        restaurantName = view.findViewById(R.id.restuarant_name_tv);
         restaurantAddress = view.findViewById(R.id.address_tv);
         phoneNumber = view.findViewById(R.id.phone_nr_tv);
         webbsite = view.findViewById(R.id.webbsite_tv);
 
-        ratingStar = view.findViewById(R.id.avr_score_rb);
-        ratingDollar = view.findViewById(R.id.avr_price_rb);
+        ratingStar = view.findViewById(R.id.average_score_rb);
+        ratingDollar = view.findViewById(R.id.average_price_rb);
 
         foodCB = view.findViewById(R.id.food_cb);
         drinkCB = view.findViewById(R.id.drink_cb);
 
         restaurantName.setText(restName);
+       // restaurantAddress.setText(resAdr);
+        ratingStar.setRating(ratStar);
+        ratingDollar.setRating(ratDollar);
 
-     //   restAdapter.getName((restaurantName.getText());
-     //   restAdapter = new RestaurantAdapter()
 
 
         //Asks from database in wich order we want to display our reviews
