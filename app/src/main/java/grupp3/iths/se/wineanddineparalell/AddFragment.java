@@ -259,6 +259,7 @@ public class AddFragment extends Fragment {
     }
 
     /**
+     * Upload file that are picked in gallery or direct from camera to show in Imageview.
      * @param requestCode
      * @param resultCode
      * @param data
