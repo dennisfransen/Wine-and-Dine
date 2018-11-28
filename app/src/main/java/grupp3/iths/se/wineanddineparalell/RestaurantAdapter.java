@@ -98,9 +98,9 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
                 data.putString("REST_PHONE", restaurantPhoneNumber);
                 data.putString("REST_WEBBSITE", restaurantWebbbsite);
 
+                //TODO: Something wrong with ratingbar, showing more than five in Fragment
                 data.putFloat("REST_RATING_STAR", restaurantAvrStar);
                 data.putFloat("REST_RATING_DOLLAR", restaurangAvrPrice);
-
 
                 restaurantFragment.setArguments(data);
 
@@ -120,14 +120,6 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
 
         return new RestaurantHolder(view, mcontext);
     }
-
-
-    //Method that deletes item in recyclerlist by swiping
-    /*
-    public void removeItem(int position) {
-        getSnapshots().getSnapshot(position).getReference().delete();
-    } */
-
 
     //Helps to connect textview in item_list.xml with recyclerview
     class RestaurantHolder extends RecyclerView.ViewHolder {
