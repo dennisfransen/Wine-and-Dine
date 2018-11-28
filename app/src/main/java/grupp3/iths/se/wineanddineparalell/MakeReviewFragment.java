@@ -27,14 +27,10 @@ import com.google.firebase.firestore.Query;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MakeReviewFragment extends Fragment {
 
-    private FirebaseFirestore firebaseFirestore;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseFirestore firebaseFirestore;
 
     private RatingBar mStar;
     private EditText mReview;
@@ -42,21 +38,16 @@ public class MakeReviewFragment extends Fragment {
 
     private ReviewAdapter reviewAdapter;
 
-
     public MakeReviewFragment() {
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_make_review, container, false);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        final DocumentReference restaurantDocumentRef = firebaseFirestore.collection("restaurant")
-                .document("Glenns");
+
 
         // Bound Variables from MakeReviewFragment
         mReview = view.findViewById(R.id.write_review_et);
@@ -68,7 +59,7 @@ public class MakeReviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                float star = mStar.getNumStars(); // TODO: Fix the number so it does not set as 5 in database
+                float star = mStar.getNumStars();
                 String review = mReview.getText().toString();
 
                 Map<String, Object> reviewMap = new HashMap<>();
@@ -76,7 +67,10 @@ public class MakeReviewFragment extends Fragment {
                 reviewMap.put("restaurant_star_rating", star);
                 reviewMap.put("user_review", review);
 
-                restaurantDocumentRef.collection("reviews").document().set(reviewMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                String restName = getArguments().getString("REST_NAME");
+
+                firebaseFirestore.collection("restaurant").document(restName)
+                        .collection("reviews").document().set(reviewMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity(), "Review successfully added", Toast.LENGTH_SHORT).show();
@@ -90,18 +84,6 @@ public class MakeReviewFragment extends Fragment {
                 });
             }
         });
-/*        Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);
-
-        FirestoreRecyclerOptions<ReviewInfo> options = new FirestoreRecyclerOptions.Builder<ReviewInfo>()
-                .setQuery(query, ReviewInfo.class)
-                .build();
-
-        reviewAdapter = new ReviewAdapter(options);
-
-        RecyclerView recyclerView = view.findViewById(R.id.full_reviews_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(reviewAdapter);*/
 
         return view;
     }

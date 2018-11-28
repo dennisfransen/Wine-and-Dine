@@ -58,6 +58,13 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             public void onClick(View v) {
                 MakeReviewFragment makeReviewFragment = new MakeReviewFragment();
 
+                name = holder.textName.getText().toString();
+
+                Bundle data = new Bundle();
+                data.putString("REST_NAME", name);
+
+                makeReviewFragment.setArguments(data);
+
                 FragmentTransaction fragmentTransaction = holder.mcontext.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame, makeReviewFragment);
                 fragmentTransaction.commit();
@@ -70,10 +77,12 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             @Override
             public void onClick(View v) {
                 RestaurantFragment restaurantFragment = new RestaurantFragment();
+
                 name = holder.textName.getText().toString();
 
                 Bundle data = new Bundle();
                 data.putString("REST_NAME", name);
+
                 restaurantFragment.setArguments(data);
 
                 FragmentTransaction fragmentTransaction = holder.mcontext.beginTransaction();
@@ -172,9 +181,5 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             drinkCB = itemView.findViewById(R.id.drink_cb);
 
         }
-    }
-
-    public String getName() {
-        return this.name;
     }
 }
