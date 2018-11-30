@@ -65,6 +65,15 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             public void onClick(View v) {
                 MakeReviewFragment makeReviewFragment = new MakeReviewFragment();
 
+                //Bundles restaurant name from adapter and so it can be sent to new Fragment
+                Bundle data = new Bundle();
+
+                //Get the name of restaurant your are on when clicking revview btn
+                restaurantName = holder.textName.getText().toString();
+                data.putString("REST_NAME", restaurantName);
+
+                makeReviewFragment.setArguments(data);
+
                 //Transaction to MakeReviewFragment on button click
                 FragmentTransaction fragmentTransaction = holder.mcontext.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame, makeReviewFragment);
