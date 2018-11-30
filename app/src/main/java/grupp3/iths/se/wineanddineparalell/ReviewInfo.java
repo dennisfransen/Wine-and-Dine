@@ -4,39 +4,24 @@ import android.widget.ImageView;
 
 public class ReviewInfo {
 
-    private ImageView profilePic;
-    private int ratingStar;
-    private String userName, commet, commetDate;
+   // private ImageView profilePic;
+   // private int ratingStar;
+    private String user_name, user_review;
 
     public ReviewInfo() {
 
     }
 
-    public ReviewInfo(ImageView profilePic, int ratingStar, String userName, String commet, String commetDate) {
-        this.profilePic = profilePic;
-        this.ratingStar = ratingStar;
-        this.userName = userName;
-        this.commet = commet;
-        this.commetDate = commetDate;
+    public ReviewInfo(String user_name, String user_review) {
+        this.user_name = user_name;
+        this.user_review = user_review;
     }
 
-    public ImageView getProfilePic() {
-        return profilePic;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public int getRatingStar() {
-        return ratingStar;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getCommet() {
-        return commet;
-    }
-
-    public String getCommetDate() {
-        return commetDate;
+    public String getUser_review() {
+        return user_review;
     }
 }

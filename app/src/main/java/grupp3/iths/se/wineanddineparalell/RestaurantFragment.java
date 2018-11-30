@@ -16,8 +16,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class RestaurantFragment extends Fragment {
 
@@ -30,7 +33,7 @@ public class RestaurantFragment extends Fragment {
     private RatingBar mStarRating, mPriceRating;
 
     private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
-    private CollectionReference restaurantRef = mFireStore.collection("reviews");
+    private CollectionReference restaurantRef;
     private ReviewAdapter reviewAdapter;
 
 
@@ -53,6 +56,8 @@ public class RestaurantFragment extends Fragment {
         mFood = view.findViewById(R.id.food_cb);
         mStarRating = view.findViewById(R.id.average_score_rb);
         mPriceRating = view.findViewById(R.id.average_price_rb);
+
+        restaurantRef = mFireStore.collection("restaurant/" + restName + "/reviews");
 
 
         mFireStore.collection("restaurant").document(restName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -82,7 +87,7 @@ public class RestaurantFragment extends Fragment {
         });
 
         //Asks from database in wich order we want to display our reviews
-        Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);
+        Query query = restaurantRef.orderBy("user_name", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<ReviewInfo> options = new FirestoreRecyclerOptions.Builder<ReviewInfo>()
                 .setQuery(query, ReviewInfo.class)
@@ -102,6 +107,8 @@ public class RestaurantFragment extends Fragment {
     public void onStart() {
         super.onStart();
         reviewAdapter.startListening();
+
+
     }
     //Stops to listen for changes in database (added/removed items in database)
     @Override
