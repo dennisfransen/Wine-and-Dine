@@ -39,6 +39,10 @@ public class SearchFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference restaurantRef = db.collection("restaurant");
 
+    public static final String TAG = "SearchFragment";
+
+    private EditText mSearchEditText;
+
     private RestaurantAdapter adapter;
 
     public SearchFragment() {
@@ -49,6 +53,25 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        mSearchEditText = view.findViewById(R.id.editText_search);
+
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.d(TAG, s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         Query query = restaurantRef.orderBy("restaurant_name", Query.Direction.ASCENDING);
 
