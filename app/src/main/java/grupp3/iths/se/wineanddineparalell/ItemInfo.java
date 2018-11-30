@@ -21,10 +21,10 @@ public class ItemInfo {
         this.restaurant_cost_rating = restaurant_cost_rating;
     }
 
-    public ItemInfo(ImageView image, String restaurant_name, String restaurant_adress, String restaurant_phone_number, String restaurant_website, int restaurant_star_rating, int restaurant_cost_rating, boolean restaurant_food_type, boolean restaurant_drink_type) {
+    public ItemInfo(ImageView image, String restaurant_name, String restaurant_address, String restaurant_phone_number, String restaurant_website, int restaurant_star_rating, int restaurant_cost_rating, boolean restaurant_food_type, boolean restaurant_drink_type) {
         this.image = image;
         this.restaurant_name = restaurant_name;
-        this.restaurant_address = restaurant_adress;
+        this.restaurant_address = restaurant_address;
         this.restaurant_phone_number = restaurant_phone_number;
         this.restaurant_website = restaurant_website;
         this.restaurant_star_rating = restaurant_star_rating;

@@ -55,6 +55,10 @@ public class RestaurantFragment extends Fragment {
         float ratStar = getArguments().getFloat("REST_RATING_STAR");
         float ratDollar = getArguments().getFloat("REST_RATING_DOLLAR");
 
+        //TODO: connect booleans to checkbox in card
+        boolean foodBool = getArguments().getBoolean("REST_FOOD");
+        boolean drinkBool = getArguments().getBoolean("REST_DRINK");
+
 
         //All fields in RestaurantFragment connected to xml fields
         restaurantImg = view.findViewById(R.id.img_view);
@@ -72,13 +76,15 @@ public class RestaurantFragment extends Fragment {
 
         //Set data to the different fields in Fragment_review.xml
         restaurantName.setText(restName);
-        //TODO: Check Address getter, doesn't work!
         restaurantAddress.setText(resAdr);
         phoneNumber.setText(phone);
         webbsite.setText(webSite);
 
         ratingStar.setRating(ratStar);
         ratingDollar.setRating(ratDollar);
+
+
+
 
         //Asks from database in wich order we want to display our reviews
         Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);

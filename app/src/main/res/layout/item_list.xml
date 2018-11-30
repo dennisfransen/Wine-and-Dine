@@ -40,42 +40,33 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="RESTAURANT NAME" />
 
-        <TextView
-            android:id="@+id/distance_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_view"
-            app:layout_constraintTop_toBottomOf="@+id/restuarant_name_tv"
-            tools:text="0,5 KM" />
-
         <!--<TextView-->
-            <!--android:id="@+id/avr_price_tv"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="18dp"-->
-            <!--android:layout_marginStart="8dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--app:layout_constraintStart_toEndOf="@+id/image_view"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/distance_tv"-->
-            <!--tools:text="SSS price" />-->
+        <!--android:id="@+id/avr_price_tv"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="18dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/image_view"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/distance_tv"-->
+        <!--tools:text="SSS price" />-->
 
 
         <RatingBar
             android:id="@+id/avr_price_rb"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="16dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.5"
             android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_view"
-            app:layout_constraintTop_toBottomOf="@+id/distance_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/rest_name_tv"
+            app:layout_constraintVertical_bias="0.116" />
 
         <RatingBar
             android:id="@+id/avr_score_rb"
@@ -85,26 +76,32 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.5"
             android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/restuarant_name_tv"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/image_view"
+            app:layout_constraintTop_toBottomOf="@+id/avr_price_rb"
+            app:layout_constraintVertical_bias="0.428" />
 
 
         <Button
             android:id="@+id/review_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="84dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Review"
+            android:layout_marginBottom="2dp"
+            android:text="@string/review"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/avr_price_rb"
-            app:layout_constraintTop_toBottomOf="@+id/distance_tv" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.727" />
 
     </android.support.constraint.ConstraintLayout>
 

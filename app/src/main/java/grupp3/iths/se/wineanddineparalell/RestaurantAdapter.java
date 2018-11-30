@@ -78,16 +78,16 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             public void onClick(View v) {
                 RestaurantFragment restaurantFragment = new RestaurantFragment();
 
-                //TODO: connect boolean/Image values from firestore to RestaurantFragments checkbox
-
                 restaurantName = holder.textName.getText().toString();
-                //TODO: Check Address getter, doesn't work!
                 restaurantAddress = model.getRestaurant_address();
                 restaurantPhoneNumber = model.getRestaurant_phone_number();
                 restaurantWebbbsite = model.getRestaurant_website();
 
                 restaurantAvrStar = holder.textPrice.getRating();
                 restaurangAvrPrice = holder.textScore.getRating();
+                //TODO: connect boolean/Image values from firestore to RestaurantFragments checkbox
+                restaurantFoodCB = model.isRestaurant_food_type();
+                restaurantDrinkCB = model.isRestaurant_drink_type();
 
 
                 //Bundles information from adapter and so it can be sent to new Fragment
@@ -101,6 +101,8 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
                 //TODO: Something wrong with ratingbar, showing more than five in Fragment
                 data.putFloat("REST_RATING_STAR", restaurantAvrStar);
                 data.putFloat("REST_RATING_DOLLAR", restaurangAvrPrice);
+                data.putBoolean("REST_FOOD", restaurantFoodCB);
+                data.putBoolean("REST_DRINK", restaurantDrinkCB);
 
                 restaurantFragment.setArguments(data);
 
