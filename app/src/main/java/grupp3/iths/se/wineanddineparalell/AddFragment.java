@@ -110,7 +110,7 @@ public class AddFragment extends Fragment {
 
                 Map<String, Object> restaurantMap = new HashMap<>();
                 restaurantMap.put("restaurant_name", restaurantName);
-                restaurantMap.put("restaurant_adress", restaurantAdress);
+                restaurantMap.put("restaurant_address", restaurantAdress);
                 restaurantMap.put("restaurant_phone_number", phoneNumber);
                 restaurantMap.put("restaurant_website", webSite);
                 restaurantMap.put("restaurant_star_rating", star);
