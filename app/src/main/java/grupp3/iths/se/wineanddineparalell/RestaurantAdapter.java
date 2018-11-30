@@ -99,8 +99,8 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
                 data.putString("REST_WEBBSITE", restaurantWebbbsite);
 
                 //TODO: Something wrong with ratingbar, showing more than five in Fragment
-                data.putFloat("REST_RATING_STAR", restaurantAvrStar);
-                data.putFloat("REST_RATING_DOLLAR", restaurangAvrPrice);
+                data.putFloat("STAR_RATING", restaurantAvrStar);
+                data.putFloat("PRICE_RATING", restaurangAvrPrice);
                 data.putBoolean("REST_FOOD", restaurantFoodCB);
                 data.putBoolean("REST_DRINK", restaurantDrinkCB);
 
