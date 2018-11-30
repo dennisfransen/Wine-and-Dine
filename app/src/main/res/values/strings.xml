@@ -43,13 +43,4 @@
     <string name="wine_n_dine">Wine N Dine</string>
     <string name="wine_dine"><![CDATA[Wine & Dine]]></string>
     <string name="company_logo">company logo</string>
-    <string name="review">Review</string>
-    <string name="drink">Drink</string>
-    <string name="name_restaurant">Name Restaurant</string>
-    <string name="picture_of_restaurant">picture of restaurant</string>
-    <string name="food">Food</string>
-    <string name="be_the_first_to_leave_a_review">Be the first to leave a review</string>
-    <string name="address">Address</string>
-    <string name="phonenumber">phonenumber</string>
-    <string name="website">website</string>
 </resources>
