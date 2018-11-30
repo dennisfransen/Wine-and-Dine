@@ -20,12 +20,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class RestaurantFragment extends Fragment {
-    private ImageView restaurantImg;
 
     public RestaurantFragment() {
         // Required empty public constructor
     }
-
 
     private TextView mRestaurantName, mRestaurantAddress, mRestaurantNumber, mRestaurantWeb;
     private CheckBox mDrink, mFood;
@@ -43,7 +41,9 @@ public class RestaurantFragment extends Fragment {
         //TODO: connect boolean/image values to RestaurantFragment/Checkbox
 
         //Handle Bundled information from RestaurantAdapter
-        String restName = getArguments().getString("REST_NAME");
+        final String restName = getArguments().getString("REST_NAME");
+        final float starRating = getArguments().getFloat("STAR_RATING");
+        final float priceRating = getArguments().getFloat("PRICE_RATING");
 
         mRestaurantName = view.findViewById(R.id.restuarant_name_tv);
         mRestaurantAddress = view.findViewById(R.id.address_tv);
@@ -55,10 +55,6 @@ public class RestaurantFragment extends Fragment {
         mPriceRating = view.findViewById(R.id.average_price_rb);
 
 
-
-
-
-
         mFireStore.collection("restaurant").document(restName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -68,12 +64,14 @@ public class RestaurantFragment extends Fragment {
                 String restaurantNumber = documentSnapshot.getString("restaurant_phone_number");
                 String restaurantWeb = documentSnapshot.getString("restaurant_website");
 
-
                 // Print out company user profile from database
                 mRestaurantName.append(restaurantName);
                 mRestaurantAddress.append(restaurantAddress);
                 mRestaurantNumber.append(restaurantNumber);
                 mRestaurantWeb.append(restaurantWeb);
+                mStarRating.setRating(starRating);
+                mPriceRating.setRating(priceRating);
+
 
                 if (documentSnapshot.getBoolean("restaurant_drink_type").equals(true))
                     mDrink.setChecked(true);
@@ -82,64 +80,6 @@ public class RestaurantFragment extends Fragment {
                     mFood.setChecked(true);
             }
         });
-
-//        mDrink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String restaurantName = mRestaurantName.getText().toString();
-//                boolean value = mDrink.isChecked();
-//                mFireStore.collection("restaurant").document(restaurantName).update("restaurant_drink_type", value);
-//            }
-//        });
-//
-//        mFood.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-
-
-
-
-
-//        String resAdr = getArguments().getString("REST_ADDRESS");
-//        String phone = getArguments().getString("REST_PHONE");
-//        String webSite = getArguments().getString("REST_WEBBSITE");
-//
-//        float ratStar = getArguments().getFloat("REST_RATING_STAR");
-//        float ratDollar = getArguments().getFloat("REST_RATING_DOLLAR");
-//
-//        //TODO: connect booleans to checkbox in card
-//        boolean foodBool = getArguments().getBoolean("REST_FOOD");
-//        boolean drinkBool = getArguments().getBoolean("REST_DRINK");
-//
-//
-//        //All fields in RestaurantFragment connected to xml fields
-//        restaurantImg = view.findViewById(R.id.img_view);
-//
-//        restaurantAddress = view.findViewById(R.id.address_tv);
-//        phoneNumber = view.findViewById(R.id.phone_nr_tv);
-//        webbsite = view.findViewById(R.id.webbsite_tv);
-//
-//        ratingStar = view.findViewById(R.id.average_score_rb);
-//        ratingDollar = view.findViewById(R.id.average_price_rb);
-//
-//        foodCB = view.findViewById(R.id.food_cb);
-//        drinkCB = view.findViewById(R.id.drink_cb);
-
-        //Set data to the different fields in Fragment_review.xml
-//        restaurantName.setText(restName);
-//        restaurantAddress.setText(resAdr);
-//        phoneNumber.setText(phone);
-//        webbsite.setText(webSite);
-//
-//        ratingStar.setRating(ratStar);
-//        ratingDollar.setRating(ratDollar);
-
-
-
 
         //Asks from database in wich order we want to display our reviews
         Query query = restaurantRef.orderBy("ratingStar", Query.Direction.ASCENDING);
@@ -154,24 +94,6 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(reviewAdapter);
-
-
-
-//        mFireStore.collection("restaurant").document("0OdsOgY7wAh0mAYwgyMR").collection("reviews")
-//                .document("0OdsOgY7wAh0mAYwgyMR").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                FirestoreRecyclerOptions<ReviewInfo> options = new FirestoreRecyclerOptions.Builder<ReviewInfo>().build();
-//
-//                reviewAdapter = new ReviewAdapter(options);
-//
-//                RecyclerView reviewRecyclerView = view.findViewById(R.id.review_rv);
-//
-//                reviewRecyclerView.setHasFixedSize(true);
-//                reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                reviewRecyclerView.setAdapter(reviewAdapter);
-//            }
-//        });
 
         return view;
     }
