@@ -102,8 +102,8 @@ public class AddFragment extends Fragment {
                 String restaurantAdress = mAddress.getText().toString();
                 String phoneNumber = mPhoneNumber.getText().toString();
                 String webSite = mWebsite.getText().toString();
-                float star = mStar.getNumStars(); // TODO: Fix the number so it does not set as 5 in database
-                float cost = mCost.getNumStars();
+                float star = mStar.getRating();
+                float cost = mCost.getRating();
                 boolean food = mFood.isChecked();
                 boolean drink = mDrink.isChecked();
                 String review = mReview.getText().toString();
