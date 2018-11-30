@@ -43,4 +43,6 @@
     <string name="wine_n_dine">Wine N Dine</string>
     <string name="wine_dine"><![CDATA[Wine & Dine]]></string>
     <string name="company_logo">company logo</string>
+    <string name="review">Review</string>
+    <string name="application_logo">Application Logo</string>
 </resources>
