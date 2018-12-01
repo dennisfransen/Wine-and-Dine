@@ -21,11 +21,11 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewInfo, ReviewAd
     @Override
     protected void onBindViewHolder(@NonNull ReviewHolder holder, int position, @NonNull ReviewInfo model) {
 
-        holder.profilePic.setImageResource(R.drawable.profile);
-        holder.ratingStar.setRating(model.getRatingStar());
-        holder.userName.setText(model.getUserName());
-        holder.commet.setText(model.getCommet());
-        holder.commetDate.setText(model.getCommetDate());
+     //   holder.profilePic.setImageResource(R.drawable.profile);
+     //   holder.ratingStar.setRating(model.getRatingStar());
+        holder.userName.setText(model.getUser_name());
+        holder.commet.setText(model.getUser_review());
+     //   holder.commetDate.setText(model.getCommetDate());
 
     }
 
@@ -47,11 +47,11 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewInfo, ReviewAd
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
 
-            profilePic = itemView.findViewById(R.id.profile_pic_img);
-            ratingStar = itemView.findViewById(R.id.user_score_rb);
+         //   profilePic = itemView.findViewById(R.id.profile_pic_img);
+          //  ratingStar = itemView.findViewById(R.id.user_score_rb);
             userName = itemView.findViewById(R.id.username_review_tv);
             commet = itemView.findViewById(R.id.review_tv);
-            commetDate = itemView.findViewById(R.id.date_tv);
+          //  commetDate = itemView.findViewById(R.id.date_tv);
         }
     }
 }
