@@ -59,12 +59,12 @@ public class MakeReviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                float star = mStar.getNumStars();
+                float star = mStar.getRating();
                 String review = mReview.getText().toString();
 
                 Map<String, Object> reviewMap = new HashMap<>();
                 reviewMap.put("user_name", user.getEmail());
-                reviewMap.put("restaurant_star_rating", star);
+                reviewMap.put("user_rating", star);
                 reviewMap.put("user_review", review);
 
                 String restName = getArguments().getString("REST_NAME");
