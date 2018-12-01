@@ -152,6 +152,7 @@ public class AddFragment extends Fragment {
 
                 Map<String, Object> reviewMap = new HashMap<>();
                 reviewMap.put("user_name", user.getEmail());
+                reviewMap.put("user_rating", star);
                 reviewMap.put("user_review", review);
 
                 firebaseFirestore.collection("restaurant").document(restaurantName)

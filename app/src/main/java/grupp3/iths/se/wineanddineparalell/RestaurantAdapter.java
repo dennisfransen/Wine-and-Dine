@@ -94,7 +94,6 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
 
                 restaurantAvrStar = holder.textPrice.getRating();
                 restaurangAvrPrice = holder.textScore.getRating();
-                //TODO: connect boolean/Image values from firestore to RestaurantFragments checkbox
                 restaurantFoodCB = model.isRestaurant_food_type();
                 restaurantDrinkCB = model.isRestaurant_drink_type();
 
@@ -107,7 +106,6 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
                 data.putString("REST_PHONE", restaurantPhoneNumber);
                 data.putString("REST_WEBBSITE", restaurantWebbbsite);
 
-                //TODO: Something wrong with ratingbar, showing more than five in Fragment
                 data.putFloat("STAR_RATING", restaurantAvrStar);
                 data.putFloat("PRICE_RATING", restaurangAvrPrice);
                 data.putBoolean("REST_FOOD", restaurantFoodCB);
