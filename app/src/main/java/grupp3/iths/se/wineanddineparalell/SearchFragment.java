@@ -83,7 +83,6 @@ public class SearchFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                    Log.d(TAG, documentSnapshot.get("restaurant_name").toString());
                     ItemInfo itemInfo = documentSnapshot.toObject(ItemInfo.class);
                     mRestaurantList.add(itemInfo);
                     mFilteredList.add(itemInfo);

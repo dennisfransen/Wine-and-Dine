@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wishlist_background_screen"
-    tools:context=".SearchFragment">
+    tools:context=".SearchFragment"
+    android:focusableInTouchMode="true">
 
 
     <EditText
