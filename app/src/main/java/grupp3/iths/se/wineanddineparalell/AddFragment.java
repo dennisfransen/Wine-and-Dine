@@ -15,18 +15,33 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBufferResponse;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,10 +50,12 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
@@ -49,12 +66,14 @@ public class AddFragment extends Fragment {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int IMAGE_GALLERY_REQUEST = 2;
+    static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
+
 
     private ImageView mImageRestaurant;
     private EditText mNameRestaurant, mAddress, mPhoneNumber, mWebsite, mReview;
     private RatingBar mCost, mStar;
     private CheckBox mFood, mDrink;
-    private FloatingActionButton mCaptureBtn, mSaveBtn, mImageGalleryBtn;
+    private FloatingActionButton mGooglePlacesBtn, mCaptureBtn, mSaveBtn, mImageGalleryBtn;
 
     private Uri mImageUri = null;
     private String mCurrentPhotoPath;
@@ -179,6 +198,14 @@ public class AddFragment extends Fragment {
             }
         });
 
+        mGooglePlacesBtn = view.findViewById(R.id.fab_google_places);
+        mGooglePlacesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGooglePlaces();
+            }
+        });
+
         return view;
     }
 
@@ -271,15 +298,21 @@ public class AddFragment extends Fragment {
             mImageUri = data.getData();
             //Picasso.with(this).load(mImageUri).into(mImageRestaurant);
             mImageRestaurant.setImageURI(mImageUri);
-        }
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } else if  (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File imgFile = new File(mCurrentPhotoPath);
             if (imgFile.exists()) {
                 mImageRestaurant.setImageURI(mImageUri);
 
             }
+        } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK){
+            Place place = PlaceAutocomplete.getPlace(getActivity(), data);
+            mNameRestaurant.setText(place.getName());
+            mAddress.setText(place.getAddress());
+            mPhoneNumber.setText(place.getPhoneNumber());
+            mWebsite.setText(place.getWebsiteUri().toString());
+            mImageRestaurant.setImageResource(R.drawable.restaurant);
         }
+
     }
 
     private void upLoadImage() {
@@ -312,4 +345,19 @@ public class AddFragment extends Fragment {
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     } // TODO: See if we can use this after add to database function is done. (On Success)
+
+    void openGooglePlaces(){
+        try {
+            AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("SE").build();
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                    .setFilter(filter)
+                    .build(getActivity());
+
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e){
+
+        } catch (GooglePlayServicesNotAvailableException e){
+
+        }
+    }
 }

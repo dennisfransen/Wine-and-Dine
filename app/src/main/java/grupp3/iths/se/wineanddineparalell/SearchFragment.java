@@ -26,10 +26,14 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBufferResponse;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,63 +48,68 @@ public class SearchFragment extends Fragment {
     private EditText mSearchEditText;
 
     private RestaurantAdapter adapter;
+    private SearchAdapter mSearchAdapter;
+    private List<ItemInfo> mRestaurantList;
+    private List<ItemInfo> mFilteredList;
+    private RecyclerView recyclerView;
 
-    public SearchFragment() {
-        // Required empty public constructor
-    }
+    public SearchFragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-
         mSearchEditText = view.findViewById(R.id.editText_search);
 
-        mSearchEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    Log.d(TAG, s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        Query query = restaurantRef.orderBy("restaurant_name", Query.Direction.ASCENDING);
-
-        FirestoreRecyclerOptions<ItemInfo> options = new FirestoreRecyclerOptions.Builder<ItemInfo>()
-                .setQuery(query, ItemInfo.class)
-                .build();
-
-        adapter = new RestaurantAdapter(options, getActivity().getSupportFragmentManager());
-
-        RecyclerView recyclerView = view.findViewById(R.id.listView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-
+        setUpRecyclerView(view);
+        populateRestaurantList();
+        setUpFiltering();
 
         return view;
     }
 
-    //Starts to listen for changes in database (added/removed items in database)
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
+    void setUpRecyclerView(View view){
+        mFilteredList = new ArrayList<ItemInfo>();
+        mSearchAdapter = new SearchAdapter(getActivity(), mFilteredList);
+        recyclerView = view.findViewById(R.id.listView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mSearchAdapter);
     }
 
-    //Stops listening for changes in database (added/removed items in database)
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
+    void populateRestaurantList(){
+        mRestaurantList = new ArrayList<ItemInfo>();
+        restaurantRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                    ItemInfo itemInfo = documentSnapshot.toObject(ItemInfo.class);
+                    mRestaurantList.add(itemInfo);
+                    mFilteredList.add(itemInfo);
+                }
+                mSearchAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    void setUpFiltering(){
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mFilteredList.clear();
+                for (ItemInfo itemInfo : mRestaurantList) {
+                    if(itemInfo.getRestaurant_name().toLowerCase().startsWith(s.toString())){
+                        mFilteredList.add(itemInfo);
+                    }
+                }
+                mSearchAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 }
