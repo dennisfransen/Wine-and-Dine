@@ -1,5 +1,6 @@
 package grupp3.iths.se.wineanddineparalell;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -46,15 +48,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         customViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle args = createBundle(restaurantObj);
-                RestaurantFragment restaurantFragment = new RestaurantFragment();
-                restaurantFragment.setArguments(args);
-                MainActivity mainActivity = (MainActivity)mContext;
-                FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_frame, restaurantFragment);
-                transaction.commit();
+                showDetail(restaurantObj);
             }
         });
+
+        customViewHolder.mReviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addReview(restaurantObj);
+            }
+        });
+
     }
 
     @Override
@@ -62,7 +66,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         return mRestaurantList.size();
     }
 
-    private Bundle createBundle(ItemInfo restaurant){
+    private Bundle createBundleForRestaurantFrag(ItemInfo restaurant){
             Bundle data = new Bundle();
 
             data.putString("REST_NAME", restaurant.getRestaurant_name());
@@ -77,6 +81,33 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             return data;
     }
 
+    private Bundle createBundleForReviewFrag(ItemInfo restaurant){
+        Bundle data = new Bundle();
+        data.putString("REST_NAME", restaurant.getRestaurant_name());
+        return data;
+    }
+
+    private void showDetail(ItemInfo restaurantObj){
+        Bundle args = createBundleForRestaurantFrag(restaurantObj);
+        RestaurantFragment restaurantFragment = new RestaurantFragment();
+        restaurantFragment.setArguments(args);
+        MainActivity mainActivity = (MainActivity)mContext;
+        FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_frame, restaurantFragment);
+        transaction.commit();
+    }
+
+
+    private void addReview(ItemInfo restaurantObj) {
+        Bundle args = createBundleForReviewFrag(restaurantObj);
+        MakeReviewFragment makeReviewFragment = new MakeReviewFragment();
+        makeReviewFragment.setArguments(args);
+        MainActivity mainActivity = (MainActivity)mContext;
+        FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_frame, makeReviewFragment);
+        transaction.commit();
+    }
+
     public class CustomViewHolder extends RecyclerView.ViewHolder{
 
         private TextView mTextView;
@@ -84,6 +115,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         private RatingBar mTextScore;
         private ImageView mImageView;
         private CardView mCardView;
+        private Button mReviewBtn;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +128,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             mTextScore = itemView.findViewById(R.id.avr_score_rb);
             mImageView = itemView.findViewById(R.id.image_view);
             mCardView = itemView.findViewById(R.id.restaurang_cv);
+            mReviewBtn = itemView.findViewById(R.id.review_btn);
         }
     }
 }
