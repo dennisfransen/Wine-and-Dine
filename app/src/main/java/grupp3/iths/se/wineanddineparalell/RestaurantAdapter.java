@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -59,6 +60,15 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         holder.textName.setText(model.getRestaurant_name());
         holder.textPrice.setRating(model.getRestaurant_cost_rating());
         holder.textScore.setRating(model.getRestaurant_star_rating());
+
+        holder.favHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                holder.favHeart.setImageResource(R.drawable.ic_favorite_full);
+                Toast.makeText(v.getContext(), "Restaurant added too your Wishlist!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         holder.reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +145,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
 
         //fields for textviews in recyclerview SearchFragment
         private ImageView imgView;
+        private ImageView favHeart;
         private TextView textName;
         private RatingBar textPrice;
         private RatingBar textScore;
@@ -149,6 +160,7 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
 
             // connect fields in cardview/SearchFragment
             imgView = itemView.findViewById(R.id.image_view);
+            favHeart = itemView.findViewById(R.id.favourite_heart_img);
 
             textName = itemView.findViewById(R.id.rest_name_tv);
             textPrice = itemView.findViewById(R.id.avr_price_rb);
