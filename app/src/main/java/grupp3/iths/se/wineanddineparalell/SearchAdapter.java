@@ -16,12 +16,22 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomViewHolder> {
 
     private List<ItemInfo> mRestaurantList;
     private Context mContext;
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     public SearchAdapter(Context context, List<ItemInfo> restaurantList){
         mRestaurantList = restaurantList;
@@ -60,13 +70,27 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
 
         customViewHolder.mFavHeart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
                 if(customViewHolder.mFavHeart.getTag() == null || customViewHolder.mFavHeart.getTag().toString().equals("ic_favorite_border")){
                     customViewHolder.mFavHeart.setImageResource(R.drawable.ic_favorite_full);
                     customViewHolder.mFavHeart.setTag("ic_favorite_full");
 
-                    Toast.makeText(v.getContext(), "Restaurant added too your Wishlist!", Toast.LENGTH_SHORT).show();
+                    String favRestaurant = customViewHolder.mTextView.getText().toString();
+
+                    Map<String, String> userFavourite = new HashMap<>();
+                    userFavourite.put("fav_restaurant", favRestaurant);
+
+                    firebaseFirestore.collection("users").document(user.getUid())
+                            .collection("users favourites").document().
+                            set(userFavourite).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(v.getContext(), "Restaurant added too your Wishlist!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
                 } else {
                     customViewHolder.mFavHeart.setImageResource(R.drawable.ic_favorite_border);
                     Toast.makeText(v.getContext(), "Restaurant removed from your Wishlist!", Toast.LENGTH_SHORT).show();
