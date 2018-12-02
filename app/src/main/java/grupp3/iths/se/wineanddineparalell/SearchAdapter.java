@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final CustomViewHolder customViewHolder, int i) {
         final ItemInfo restaurantObj = mRestaurantList.get(i);
 
         customViewHolder.mTextView.setText(restaurantObj.getRestaurant_name());
@@ -53,6 +54,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
                 FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_frame, restaurantFragment);
                 transaction.commit();
+            }
+        });
+
+
+        customViewHolder.mFavHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(customViewHolder.mFavHeart.getTag() == null || customViewHolder.mFavHeart.getTag().toString().equals("ic_favorite_border")){
+                    customViewHolder.mFavHeart.setImageResource(R.drawable.ic_favorite_full);
+                    customViewHolder.mFavHeart.setTag("ic_favorite_full");
+
+                    Toast.makeText(v.getContext(), "Restaurant added too your Wishlist!", Toast.LENGTH_SHORT).show();
+                } else {
+                    customViewHolder.mFavHeart.setImageResource(R.drawable.ic_favorite_border);
+                    Toast.makeText(v.getContext(), "Restaurant removed from your Wishlist!", Toast.LENGTH_SHORT).show();
+                    customViewHolder.mFavHeart.setTag("ic_favorite_border");
+
+                    Toast.makeText(v.getContext(), "Restaurant removed from your Wishlist!", Toast.LENGTH_SHORT).show();
+
+
+                }
             }
         });
     }
@@ -85,6 +108,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         private ImageView mImageView;
         private CardView mCardView;
 
+        private ImageView mFavHeart;
+
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             initializeViews(itemView);
@@ -96,6 +121,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             mTextScore = itemView.findViewById(R.id.avr_score_rb);
             mImageView = itemView.findViewById(R.id.image_view);
             mCardView = itemView.findViewById(R.id.restaurang_cv);
+            mFavHeart = itemView.findViewById(R.id.favourite_heart_img);
         }
     }
 }
