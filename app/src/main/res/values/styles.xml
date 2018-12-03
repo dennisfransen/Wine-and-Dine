@@ -22,7 +22,7 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
     
-    <style name="dollarSignBar" parent="Widget.AppCompat.RatingBar.Small">
+    <style name="dollarSignBar" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/progress_ratingbar_price</item>
         <item name="android:minHeight">24dip</item>
         <item name="android:maxHeight">24dip</item>
