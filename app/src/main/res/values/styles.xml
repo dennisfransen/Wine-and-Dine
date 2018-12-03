@@ -21,5 +21,14 @@
         <item name="colorButtonNormal">@color/softButtonColor</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+    
+    <style name="dollarSignBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/progress_ratingbar_price</item>
+        <item name="android:minHeight">24dip</item>
+        <item name="android:maxHeight">24dip</item>
+
+
+
+</style>
 
 </resources>

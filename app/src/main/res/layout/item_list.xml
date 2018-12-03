@@ -55,14 +55,14 @@
 
         <RatingBar
             android:id="@+id/avr_price_rb"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            style="@style/dollarSignBar"
+            android:layout_width="115dp"
+            android:layout_height="27dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:isIndicator="true"
+            android:layout_marginEnd="60dp"
+            android:isIndicator="false"
             android:numStars="5"
+<<<<<<< HEAD
             android:rating="5"
             android:stepSize="0.5"
             android:visibility="visible"
@@ -70,6 +70,12 @@
             app:layout_constraintStart_toEndOf="@+id/image_view"
             app:layout_constraintTop_toBottomOf="@+id/rest_name_tv"
             app:layout_constraintVertical_bias="0.116" />
+=======
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            app:layout_constraintEnd_toStartOf="@+id/review_btn"
+            app:layout_constraintTop_toBottomOf="@+id/rest_name_tv" />
+>>>>>>> RatingbarPriceAdded
 
         <RatingBar
             android:id="@+id/avr_score_rb"
@@ -79,17 +85,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.5"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/image_view"
-            app:layout_constraintTop_toBottomOf="@+id/avr_price_rb"
-            app:layout_constraintVertical_bias="0.428" />
+            app:layout_constraintTop_toBottomOf="@+id/avr_price_rb" />
 
 
         <Button
