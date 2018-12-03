@@ -13,12 +13,12 @@
         android:id="@+id/relative_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="64dp"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteX="12dp"
-        android:padding="8dp">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
@@ -44,15 +44,17 @@
 
         <RatingBar
             android:id="@+id/average_price_rb"
-            style="@style/Widget.AppCompat.RatingBar.Small"
+            style="@style/dollarSignBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/webbsite_tv"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="13dp"
             android:isIndicator="true"
             android:numStars="5"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
             android:stepSize="0.5"
             android:visibility="visible" />
 
@@ -62,9 +64,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/average_price_rb"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_alignStart="@+id/img_view"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="84dp"
+            android:layout_toStartOf="@+id/drink_cb"
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.5"
@@ -92,12 +96,13 @@
 
         <CheckBox
             android:id="@+id/food_cb"
-            android:layout_width="wrap_content"
+            android:layout_width="74dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/average_price_rb"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="66dp"
+            android:layout_marginEnd="48dp"
+            android:layout_toEndOf="@+id/average_price_rb"
             android:clickable="false"
             android:text="Food" />
 
@@ -106,9 +111,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/food_cb"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_alignStart="@+id/food_cb"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="7dp"
             android:clickable="false"
             android:text="Drink" />
 
