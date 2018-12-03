@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class AddFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int IMAGE_GALLERY_REQUEST = 2;
     static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
+    static final String TAG = "AddFragment";
 
 
     private ImageView mImageRestaurant;
@@ -307,11 +309,16 @@ public class AddFragment extends Fragment {
             }
         } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK){
             Place place = PlaceAutocomplete.getPlace(getActivity(), data);
-            mNameRestaurant.setText(place.getName());
-            mAddress.setText(place.getAddress());
-            mPhoneNumber.setText(place.getPhoneNumber());
-            mWebsite.setText(place.getWebsiteUri().toString());
-            mImageRestaurant.setImageResource(R.drawable.restaurant);
+
+            if(place.getPlaceTypes().contains(79)){
+                mNameRestaurant.setText(place.getName());
+                mAddress.setText(place.getAddress());
+                mPhoneNumber.setText(place.getPhoneNumber());
+                mWebsite.setText(place.getWebsiteUri().toString());
+                mImageRestaurant.setImageResource(R.drawable.restaurant);
+            } else {
+                Toast.makeText(getActivity(), "Please select a restaurant!", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
