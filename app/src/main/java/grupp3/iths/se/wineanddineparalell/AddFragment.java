@@ -125,6 +125,9 @@ public class AddFragment extends Fragment {
                 float cost = mCost.getRating();
                 boolean food = mFood.isChecked();
                 boolean drink = mDrink.isChecked();
+
+                boolean wishList = false;
+
                 String review = mReview.getText().toString();
 
                 Map<String, Object> restaurantMap = new HashMap<>();
@@ -136,6 +139,21 @@ public class AddFragment extends Fragment {
                 restaurantMap.put("restaurant_cost_rating", cost);
                 restaurantMap.put("restaurant_food_type", food);
                 restaurantMap.put("restaurant_drink_type", drink);
+
+                Map<String, Object> wishListMap = new HashMap<>();
+                wishListMap.put("restaurant_name", restaurantName);
+                wishListMap.put("restaurant_address", restaurantAdress);
+                wishListMap.put("restaurant_phone_number", phoneNumber);
+                wishListMap.put("restaurant_website", webSite);
+                wishListMap.put("restaurant_star_rating", star);
+                wishListMap.put("restaurant_cost_rating", cost);
+                wishListMap.put("restaurant_food_type", food);
+                wishListMap.put("restaurant_drink_type", drink);
+                wishListMap.put("restaurant_add_to_wishlist", wishList);
+
+                firebaseFirestore.collection("users").document()
+                        .collection("favourites").document().
+                        set(wishListMap);
 
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
