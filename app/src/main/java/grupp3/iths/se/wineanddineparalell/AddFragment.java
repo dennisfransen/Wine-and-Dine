@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -46,6 +47,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -82,8 +84,6 @@ public class AddFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-    private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
     private StorageReference mStorageRef;
 
     SearchFragment searchFragment;
@@ -97,6 +97,8 @@ public class AddFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
         searchFragment = new SearchFragment();
 
         // Bound Variables from AddFragment
@@ -116,7 +118,6 @@ public class AddFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 // TODO: Check if username is already in use.
                 String restaurantName = mNameRestaurant.getText().toString();
@@ -141,6 +142,7 @@ public class AddFragment extends Fragment {
                 restaurantMap.put("restaurant_cost_rating", cost);
                 restaurantMap.put("restaurant_food_type", food);
                 restaurantMap.put("restaurant_drink_type", drink);
+
 
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -176,12 +178,29 @@ public class AddFragment extends Fragment {
                     }
                 });
 
+                final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
+                final Context context = getContext();
+                final ImageView imageView = mImageRestaurant;
+
+                filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Glide.with(context).load(filepath).into(imageView).onLoadFailed(context.getDrawable(R.drawable.app_logo));
+                        Toast.makeText(getActivity(), "Upload restaurant successful", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        String error = e.getMessage();
+                        Toast.makeText(getActivity(), "Error" + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
+        // Setup captureBtn to check if device has a camera, if camera is available redirect to take picture with camera.
+
         // Setup captureBtn to check if device has a camera.
-        Context context = getActivity();
-        //PackageManager packageManager = context.getPackageManager();
         mCaptureBtn = view.findViewById(R.id.capture_btn);
         mCaptureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,29 +279,6 @@ public class AddFragment extends Fragment {
     }
 
     /**
-     * The dimensions of the bitmap
-     */
-    private void setPic() {
-
-        int targetW = mImageRestaurant.getWidth();
-        int targetH = mImageRestaurant.getHeight();
-
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mImageRestaurant.setImageBitmap(bitmap);
-
-    }
-
-    /**
      * Choose picture from gallery when clicked on mImageRestaurant
      */
     private void openPhoneGallery() {
@@ -302,7 +298,6 @@ public class AddFragment extends Fragment {
 
         if (requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
-            //Picasso.with(this).load(mImageUri).into(mImageRestaurant);
             mImageRestaurant.setImageURI(mImageUri);
         } else if  (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File imgFile = new File(mCurrentPhotoPath);

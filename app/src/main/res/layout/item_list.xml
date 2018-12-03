@@ -62,20 +62,17 @@
             android:layout_marginEnd="60dp"
             android:isIndicator="false"
             android:numStars="5"
-<<<<<<< HEAD
             android:rating="5"
             android:stepSize="0.5"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_view"
             app:layout_constraintTop_toBottomOf="@+id/rest_name_tv"
-            app:layout_constraintVertical_bias="0.116" />
-=======
+            app:layout_constraintVertical_bias="0.116"
             android:scaleX="0.6"
             android:scaleY="0.6"
-            app:layout_constraintEnd_toStartOf="@+id/review_btn"
-            app:layout_constraintTop_toBottomOf="@+id/rest_name_tv" />
->>>>>>> RatingbarPriceAdded
+            app:layout_constraintEnd_toStartOf="@+id/review_btn" />
+
 
         <RatingBar
             android:id="@+id/avr_score_rb"
