@@ -17,9 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -78,28 +81,25 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
                 //If heart don't have a tag or have the tag ic_favorite_border
                 // (that heart image is not filled) we want to add restaurant too wishlist with click
                 if(customViewHolder.mFavHeart.getTag() == null || customViewHolder.mFavHeart.getTag().toString().equals("not added")){
-                    updateWishlistCollection(customViewHolder, v, true, "Restaurant added too your Wishlist!");
-
-                    Toast.makeText(mContext, "ADDED", Toast.LENGTH_SHORT).show();
+                    addFavoriteToWishlist(customViewHolder, v);
 
                     // If the heart already has been clicked and saved to wishlist, then we want the
                     // click to delete restaurant from wishlist
                 } else {
-                    updateWishlistCollection(customViewHolder, v, false, "Restaurant removed from Wishlist!");
-                    Toast.makeText(mContext, "REMOVED", Toast.LENGTH_SHORT).show();
+                    removeFromWishlist(customViewHolder, v);
 
                 }
             }
         });
     }
 
-    public void updateWishlistCollection(final CustomViewHolder customViewHolder, final View v, boolean favIsChecked, final String toastMessage){
+    public void addFavoriteToWishlist(final CustomViewHolder customViewHolder, final View v){
 
         //Change tag to added and change image to filled heart
         customViewHolder.mFavHeart.setTag("added");
-        customViewHolder.mFavHeart.setChecked(favIsChecked);
+        customViewHolder.mFavHeart.setChecked(true);
         String restaurantName = customViewHolder.mTextView.getText().toString();
-        boolean favChecked = favIsChecked;
+        boolean favChecked = true;
 
         HashMap<String, Object> wishListMap = new HashMap<>();
         wishListMap.put("favourite_restaurant", restaurantName);
@@ -109,9 +109,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
                 .collection("wishlist").document(restaurantName).set(wishListMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(v.getContext(), toastMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Restaurant added too your Wishlist!", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    private void removeFromWishlist(CustomViewHolder customViewHolder, View v) {
+
+        //Change tag to added and change image to filled heart
+        customViewHolder.mFavHeart.setTag("not added");
+        customViewHolder.mFavHeart.setChecked(false);
+        final String restaurantName = customViewHolder.mTextView.getText().toString();
+        boolean favChecked = false;
+
+        HashMap<String, Object> wishListMap = new HashMap<>();
+        wishListMap.put("favourite_restaurant", restaurantName);
+        wishListMap.put("favourite_is_checked", favChecked);
+
+        DocumentReference docRef = firebaseFirestore.collection("users").document(user.getUid())
+                .collection("wishlist").document(restaurantName);
+        docRef.delete();
+        Toast.makeText(v.getContext(), "Restaurant removed from your Wishlist!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
