@@ -15,7 +15,10 @@ import android.widget.Button;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.dynamic.SupportFragmentWrapper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -25,20 +28,20 @@ import com.google.firebase.firestore.Query;
  */
 public class WishListFragment extends Fragment {
 
-  /*  private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference restaurantRef = db.collection("restaurant");
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
+    private DocumentReference restaurantRef = db.collection("users").document(mAuth.getUid());
 
-    private RestaurantAdapter adapter;*/
+    private RestaurantAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
-/*
-        Query query = restaurantRef.orderBy("restaurant_name", Query.Direction.ASCENDING);
+
+        Query query = restaurantRef.collection("fav_restaurant");
 
         FirestoreRecyclerOptions<ItemInfo> options = new FirestoreRecyclerOptions.Builder<ItemInfo>()
                .setQuery(query, ItemInfo.class)
-                //          .setQuery(query, ItemInfo.class)
                 .build();
 
         adapter = new RestaurantAdapter(options, getActivity().getSupportFragmentManager());
@@ -47,20 +50,6 @@ public class WishListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
-        //ItemTouchHelper sets witch direction deletefunction will be, and helps us get the
-        // position(item) that are being deleted
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                adapter.removeItem(viewHolder.getAdapterPosition());
-            }
-        }).attachToRecyclerView(recyclerView);*/
 
         return view;
     }

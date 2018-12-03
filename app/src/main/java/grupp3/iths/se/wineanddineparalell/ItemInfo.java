@@ -7,7 +7,7 @@ public class ItemInfo {
     public ImageView image;
     private String restaurant_name, restaurant_address, restaurant_phone_number, restaurant_website;
     private float restaurant_star_rating, restaurant_cost_rating;
-    private boolean restaurant_food_type, restaurant_drink_type;
+    private boolean restaurant_food_type, restaurant_drink_type, restaurant_add_to_wishlist;
 
     public ItemInfo(){
         // empty constructor needed
@@ -68,5 +68,13 @@ public class ItemInfo {
 
     public boolean isRestaurant_drink_type() {
         return restaurant_drink_type;
+    }
+
+    public boolean isRestaurant_add_to_wishlist() {
+        return restaurant_add_to_wishlist;
+    }
+
+    public void setRestaurant_add_to_wishlist(boolean restaurant_add_to_wishlist) {
+        this.restaurant_add_to_wishlist = restaurant_add_to_wishlist;
     }
 }

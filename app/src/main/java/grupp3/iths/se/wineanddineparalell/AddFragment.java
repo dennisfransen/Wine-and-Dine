@@ -127,6 +127,9 @@ public class AddFragment extends Fragment {
                 float cost = mCost.getRating();
                 boolean food = mFood.isChecked();
                 boolean drink = mDrink.isChecked();
+
+                boolean wishList = false;
+
                 String review = mReview.getText().toString();
 
                 Map<String, Object> restaurantMap = new HashMap<>();

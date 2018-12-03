@@ -4,8 +4,6 @@ import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +14,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomViewHolder> {
 
     private List<ItemInfo> mRestaurantList;
     private Context mContext;
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     public SearchAdapter(Context context, List<ItemInfo> restaurantList){
         mRestaurantList = restaurantList;
@@ -37,7 +48,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final CustomViewHolder customViewHolder, final int i) {
         final ItemInfo restaurantObj = mRestaurantList.get(i);
 
         customViewHolder.mTextView.setText(restaurantObj.getRestaurant_name());
@@ -59,6 +70,48 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             }
         });
 
+        // Onclicklistener for the heart in restaurant item so user can add/remove restaurant to wishlist
+        customViewHolder.mFavHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                
+                //If heart don't have a tag or have the tag ic_favorite_border
+                // (that heart image is not filled) we want to add restaurant too wishlist with click
+                if(customViewHolder.mFavHeart.getTag() == null || customViewHolder.mFavHeart.getTag().toString().equals("not added")){
+                    updateWishlistCollection(customViewHolder, v, true, "Restaurant added too your Wishlist!");
+
+                    Toast.makeText(mContext, "ADDED", Toast.LENGTH_SHORT).show();
+
+                    // If the heart already has been clicked and saved to wishlist, then we want the
+                    // click to delete restaurant from wishlist
+                } else {
+                    updateWishlistCollection(customViewHolder, v, false, "Restaurant removed from Wishlist!");
+                    Toast.makeText(mContext, "REMOVED", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }
+
+    public void updateWishlistCollection(final CustomViewHolder customViewHolder, final View v, boolean favIsChecked, final String toastMessage){
+
+        //Change tag to added and change image to filled heart
+        customViewHolder.mFavHeart.setTag("added");
+        customViewHolder.mFavHeart.setChecked(favIsChecked);
+        String restaurantName = customViewHolder.mTextView.getText().toString();
+        boolean favChecked = favIsChecked;
+
+        HashMap<String, Object> wishListMap = new HashMap<>();
+        wishListMap.put("favourite_restaurant", restaurantName);
+        wishListMap.put("favourite_is_checked", favChecked);
+
+        firebaseFirestore.collection("users").document(user.getUid())
+                .collection("wishlist").document(restaurantName).set(wishListMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(v.getContext(), toastMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -117,6 +170,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         private CardView mCardView;
         private Button mReviewBtn;
 
+        private ToggleButton mFavHeart;
+
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             initializeViews(itemView);
@@ -129,6 +184,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             mImageView = itemView.findViewById(R.id.image_view);
             mCardView = itemView.findViewById(R.id.restaurang_cv);
             mReviewBtn = itemView.findViewById(R.id.review_btn);
+            mFavHeart = itemView.findViewById(R.id.favourite_heart_img);
         }
     }
 }
