@@ -18,6 +18,7 @@ import android.widget.ToggleButton;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -70,16 +71,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         customViewHolder.mFavHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-
+                
                 //If heart don't have a tag or have the tag ic_favorite_border
                 // (that heart image is not filled) we want to add restaurant too wishlist with click
                 if(customViewHolder.mFavHeart.getTag() == null || customViewHolder.mFavHeart.getTag().toString().equals("not added")){
                     addRestaurantToWishlist(customViewHolder, v);
 
+                    Toast.makeText(mContext, "ADDED", Toast.LENGTH_SHORT).show();
+
                     // If the heart already has been clicked and saved to wishlist, then we want the
                     // click to delete restaurant from wishlist
                 } else {
                     removeRestaurantFromWishlist(customViewHolder, v);
+                    Toast.makeText(mContext, "REMOVED", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -91,23 +95,43 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         //Change tag to added and change image to filled heart
         customViewHolder.mFavHeart.setTag("added");
         customViewHolder.mFavHeart.setChecked(true);
+        String restaurantName = customViewHolder.mTextView.getText().toString();
+        boolean favChecked = true;
 
-        ItemInfo itemInfo = new ItemInfo();
-        itemInfo.setRestaurant_add_to_wishlist(true);
+        HashMap<String, Object> wishListMap = new HashMap<>();
+        wishListMap.put("favourite_restaurant", restaurantName);
+        wishListMap.put("favourite_is_checked", favChecked);
+
+        firebaseFirestore.collection("users").document(user.getUid())
+                .collection("wishlist").document(restaurantName).set(wishListMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(v.getContext(), "Restaurant added too your Wishlist!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Sends toast message to end user that restaurant was added to wishlist
-        Toast.makeText(v.getContext(), "Restaurant added too your Wishlist!", Toast.LENGTH_SHORT).show();
+
     }
 
-    private void removeRestaurantFromWishlist(CustomViewHolder customViewHolder, final View v) {
+    private void removeRestaurantFromWishlist(final CustomViewHolder customViewHolder, final View v) {
 
-        //If heart already is added, change image to empty heart and change tag to not added
-        customViewHolder.mFavHeart.setTag("not added");
+        //Change tag to added and change image to filled heart
+        customViewHolder.mFavHeart.setTag("added");
         customViewHolder.mFavHeart.setChecked(false);
+        String restaurantName = customViewHolder.mTextView.getText().toString();
+        boolean favChecked = false;
 
+        HashMap<String, Object> wishListMap = new HashMap<>();
+        wishListMap.put("favourite_is_checked", favChecked);
 
-        //Sends toast message to end user that restaurant was removed from wishlist
-        Toast.makeText(v.getContext(), "Restaurant removed from your Wishlist!", Toast.LENGTH_SHORT).show();
+        firebaseFirestore.collection("users").document(user.getUid())
+                .collection("wishlist").document(restaurantName).set(wishListMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(v.getContext(), "Restaurant removed from Wishlist!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
