@@ -1,7 +1,5 @@
 package grupp3.iths.se.wineanddineparalell;
 
-import android.widget.ImageView;
-
 public class ReviewInfo {
 
    // private ImageView profilePic;
