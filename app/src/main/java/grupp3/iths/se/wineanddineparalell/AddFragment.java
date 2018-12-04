@@ -178,6 +178,7 @@ public class AddFragment extends Fragment {
                     }
                 });
 
+
                 final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
                 final Context context = getContext();
                 final ImageView imageView = mImageRestaurant;
@@ -199,8 +200,6 @@ public class AddFragment extends Fragment {
         });
 
         // Setup captureBtn to check if device has a camera, if camera is available redirect to take picture with camera.
-
-        // Setup captureBtn to check if device has a camera.
         mCaptureBtn = view.findViewById(R.id.capture_btn);
         mCaptureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,7 +209,7 @@ public class AddFragment extends Fragment {
                     mCaptureBtn.setEnabled(false);
                 } else
                     mCaptureBtn.setEnabled(true);
-                dispatchTakePictureIntent();
+                takePicture();
             }
         });
 
@@ -237,16 +236,12 @@ public class AddFragment extends Fragment {
     /**
      * Take picture with camera
      */
-    private void dispatchTakePictureIntent() {
+    private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
         //Ensure that there's a cameraActivity to handle the intent
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
             // Create the File where the photo should go
             File pictureFile = null;
-
             try {
                 pictureFile = createImageFile();
             } catch (IOException ex) {
@@ -299,11 +294,10 @@ public class AddFragment extends Fragment {
         if (requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
             mImageRestaurant.setImageURI(mImageUri);
-        } else if  (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File imgFile = new File(mCurrentPhotoPath);
             if (imgFile.exists()) {
                 mImageRestaurant.setImageURI(mImageUri);
-
             }
         } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK){
             Place place = PlaceAutocomplete.getPlace(getActivity(), data);
@@ -319,31 +313,6 @@ public class AddFragment extends Fragment {
             }
         }
 
-    }
-
-    private void upLoadImage() {
-        Uri file = Uri.fromFile(new File("path/to/images/uploads.jpg"));
-
-        StorageReference imagesRef = mStorageRef.child("images");
-
-        StorageTask<UploadTask.TaskSnapshot> taskSnapshotStorageTask = imagesRef.putFile(mImageUri).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Handle unsuccessful uploads
-                Toast.makeText(getActivity(),
-                        "Failed to upload picture to cloud storage",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity(),
-                        "Image has been uploaded to cloud storage",
-                        Toast.LENGTH_SHORT).show();
-                // Get a URL to the uploaded content
-
-            }
-        });
     }
 
     public void setFragment(Fragment fragment) {
