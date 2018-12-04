@@ -38,10 +38,10 @@
         android:id="@+id/info_contact_Tv"
         android:layout_width="372dp"
         android:layout_height="21dp"
+        android:layout_below="@+id/info_text_Tv"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="9dp"
-        android:layout_marginBottom="272dp"
+        android:layout_marginTop="31dp"
         android:text="@string/kontakta_oss"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -51,14 +51,24 @@
         android:id="@+id/info_mail_Tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/info_contact_Tv"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="235dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="28dp"
         android:autoLink="all"
         android:clickable="true"
         android:text="@string/wine_dine_gmail_com"
         android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/info_sign_out_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info_mail_Tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="100dp"
+        android:text="Sign out" />
 
 
 </RelativeLayout>

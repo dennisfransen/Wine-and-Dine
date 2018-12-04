@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574b</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#083B66</color>
+    <color name="colorPrimaryDark">#083B66</color>
+    <color name="colorAccent">#668EB9</color>
+    <color name="colorStars">#FF8800</color>
+    <color name="colorDollar">#85bb65</color>
+
+
+    <!--<color name="colorPrimary">#008577</color>-->
+    <!--<color name="colorPrimaryDark">#00574b</color>-->
+    <!--<color name="colorAccent">#D81B60</color>-->
 
     <!-- Bottom navigation bar colors -->
     <color name="colorWhite">#ffffff</color>

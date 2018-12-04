@@ -17,18 +17,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/softButtonColor</item>
-        <item name="android:textColor">@color/colorWhite</item>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/colorStars</item>
     </style>
-    
+
     <style name="dollarSignBar" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/progress_ratingbar_price</item>
         <item name="android:minHeight">24dip</item>
         <item name="android:maxHeight">24dip</item>
-
-
-
-</style>
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/colorDollar</item>
+    </style>
 
 </resources>
