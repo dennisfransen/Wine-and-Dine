@@ -178,7 +178,7 @@ public class AddFragment extends Fragment {
                     }
                 });
 
-               /* final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
+                final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
                 final Context context = getContext();
                 final ImageView imageView = mImageRestaurant;
 
@@ -194,13 +194,11 @@ public class AddFragment extends Fragment {
                         String error = e.getMessage();
                         Toast.makeText(getActivity(), "Error" + error, Toast.LENGTH_SHORT).show();
                     }
-                }); */
+                });
             }
         });
 
         // Setup captureBtn to check if device has a camera, if camera is available redirect to take picture with camera.
-
-        // Setup captureBtn to check if device has a camera.
         mCaptureBtn = view.findViewById(R.id.capture_btn);
         mCaptureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,8 +240,6 @@ public class AddFragment extends Fragment {
 
         //Ensure that there's a cameraActivity to handle the intent
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
             // Create the File where the photo should go
             File pictureFile = null;
 
@@ -289,6 +285,7 @@ public class AddFragment extends Fragment {
 
     /**
      * Upload file that are picked in gallery or direct from camera to show in Imageview.
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -299,16 +296,16 @@ public class AddFragment extends Fragment {
         if (requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
             mImageRestaurant.setImageURI(mImageUri);
-        } else if  (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File imgFile = new File(mCurrentPhotoPath);
             if (imgFile.exists()) {
                 mImageRestaurant.setImageURI(mImageUri);
 
             }
-        } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK){
+        } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(getActivity(), data);
 
-            if(place.getPlaceTypes().contains(79)){
+            if (place.getPlaceTypes().contains(79)) {
                 mNameRestaurant.setText(place.getName());
                 mAddress.setText(place.getAddress());
                 mPhoneNumber.setText(place.getPhoneNumber());
@@ -321,38 +318,13 @@ public class AddFragment extends Fragment {
 
     }
 
-    private void upLoadImage() {
-        Uri file = Uri.fromFile(new File("path/to/images/uploads.jpg"));
-
-        StorageReference imagesRef = mStorageRef.child("images");
-
-        StorageTask<UploadTask.TaskSnapshot> taskSnapshotStorageTask = imagesRef.putFile(mImageUri).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Handle unsuccessful uploads
-                Toast.makeText(getActivity(),
-                        "Failed to upload picture to cloud storage",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity(),
-                        "Image has been uploaded to cloud storage",
-                        Toast.LENGTH_SHORT).show();
-                // Get a URL to the uploaded content
-
-            }
-        });
-    }
-
     public void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     } // TODO: See if we can use this after add to database function is done. (On Success)
 
-    void openGooglePlaces(){
+    void openGooglePlaces() {
         try {
             AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("SE").build();
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
@@ -360,9 +332,9 @@ public class AddFragment extends Fragment {
                     .build(getActivity());
 
             startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e){
+        } catch (GooglePlayServicesRepairableException e) {
 
-        } catch (GooglePlayServicesNotAvailableException e){
+        } catch (GooglePlayServicesNotAvailableException e) {
 
         }
     }
