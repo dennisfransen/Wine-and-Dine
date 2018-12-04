@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background_screen"
+    tools:context=".AppInfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/infoTitle_Tv"
+        android:layout_width="242dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/om_wine_dine"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/info_text_Tv"
+        android:layout_width="321dp"
+        android:layout_height="162dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="81dp"
+        android:text="@string/med_wine_dine_hittar_du_dem_b_sta_matst_llen_i_staden_du_befinner_dig_i_dem_restaurangen_du_diggar_mest_kan_du_l_gga_till_i_din_favoritlista_och_ge_platsen_betyg_du_kan_sj_lv_l_gga_till_en_restaurang_som_du_kan_dela_med_dina_v_nner"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/info_contact_Tv"
+        android:layout_width="372dp"
+        android:layout_height="21dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginBottom="272dp"
+        android:text="@string/kontakta_oss"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/info_mail_Tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="235dp"
+        android:autoLink="all"
+        android:clickable="true"
+        android:text="@string/wine_dine_gmail_com"
+        android:textColor="#000000" />
+
+
+</RelativeLayout>

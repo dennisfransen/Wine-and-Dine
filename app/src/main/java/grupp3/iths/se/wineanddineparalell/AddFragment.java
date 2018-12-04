@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -46,6 +47,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -82,8 +84,6 @@ public class AddFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-    private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
     private StorageReference mStorageRef;
 
     SearchFragment searchFragment;
@@ -97,6 +97,8 @@ public class AddFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
         searchFragment = new SearchFragment();
 
         // Bound Variables from AddFragment
@@ -117,7 +119,6 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-
                 // TODO: Check if username is already in use.
                 String restaurantName = mNameRestaurant.getText().toString();
                 String restaurantAdress = mAddress.getText().toString();
@@ -127,6 +128,9 @@ public class AddFragment extends Fragment {
                 float cost = mCost.getRating();
                 boolean food = mFood.isChecked();
                 boolean drink = mDrink.isChecked();
+
+                boolean wishList = false;
+
                 String review = mReview.getText().toString();
 
                 Map<String, Object> restaurantMap = new HashMap<>();
@@ -138,6 +142,7 @@ public class AddFragment extends Fragment {
                 restaurantMap.put("restaurant_cost_rating", cost);
                 restaurantMap.put("restaurant_food_type", food);
                 restaurantMap.put("restaurant_drink_type", drink);
+
 
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -173,12 +178,27 @@ public class AddFragment extends Fragment {
                     }
                 });
 
+                final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
+                final Context context = getContext();
+                final ImageView imageView = mImageRestaurant;
+
+                filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Glide.with(context).load(filepath).into(imageView).onLoadFailed(context.getDrawable(R.drawable.app_logo));
+                        Toast.makeText(getActivity(), "Upload restaurant successful", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        String error = e.getMessage();
+                        Toast.makeText(getActivity(), "Error" + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
-        // Setup captureBtn to check if device has a camera.
-        Context context = getActivity();
-        //PackageManager packageManager = context.getPackageManager();
+        // Setup captureBtn to check if device has a camera, if camera is available redirect to take picture with camera.
         mCaptureBtn = view.findViewById(R.id.capture_btn);
         mCaptureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +208,7 @@ public class AddFragment extends Fragment {
                     mCaptureBtn.setEnabled(false);
                 } else
                     mCaptureBtn.setEnabled(true);
-                dispatchTakePictureIntent();
+                takePicture();
             }
         });
 
@@ -215,16 +235,13 @@ public class AddFragment extends Fragment {
     /**
      * Take picture with camera
      */
-    private void dispatchTakePictureIntent() {
+    private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         //Ensure that there's a cameraActivity to handle the intent
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
             // Create the File where the photo should go
             File pictureFile = null;
-
             try {
                 pictureFile = createImageFile();
             } catch (IOException ex) {
@@ -257,29 +274,6 @@ public class AddFragment extends Fragment {
     }
 
     /**
-     * The dimensions of the bitmap
-     */
-    private void setPic() {
-
-        int targetW = mImageRestaurant.getWidth();
-        int targetH = mImageRestaurant.getHeight();
-
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mImageRestaurant.setImageBitmap(bitmap);
-
-    }
-
-    /**
      * Choose picture from gallery when clicked on mImageRestaurant
      */
     private void openPhoneGallery() {
@@ -290,6 +284,7 @@ public class AddFragment extends Fragment {
 
     /**
      * Upload file that are picked in gallery or direct from camera to show in Imageview.
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -299,18 +294,17 @@ public class AddFragment extends Fragment {
 
         if (requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
-            //Picasso.with(this).load(mImageUri).into(mImageRestaurant);
             mImageRestaurant.setImageURI(mImageUri);
-        } else if  (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File imgFile = new File(mCurrentPhotoPath);
             if (imgFile.exists()) {
                 mImageRestaurant.setImageURI(mImageUri);
 
             }
-        } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK){
+        } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(getActivity(), data);
 
-            if(place.getPlaceTypes().contains(79)){
+            if (place.getPlaceTypes().contains(79)) {
                 mNameRestaurant.setText(place.getName());
                 mAddress.setText(place.getAddress());
                 mPhoneNumber.setText(place.getPhoneNumber());
@@ -323,38 +317,13 @@ public class AddFragment extends Fragment {
 
     }
 
-    private void upLoadImage() {
-        Uri file = Uri.fromFile(new File("path/to/images/uploads.jpg"));
-
-        StorageReference imagesRef = mStorageRef.child("images");
-
-        StorageTask<UploadTask.TaskSnapshot> taskSnapshotStorageTask = imagesRef.putFile(mImageUri).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Handle unsuccessful uploads
-                Toast.makeText(getActivity(),
-                        "Failed to upload picture to cloud storage",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity(),
-                        "Image has been uploaded to cloud storage",
-                        Toast.LENGTH_SHORT).show();
-                // Get a URL to the uploaded content
-
-            }
-        });
-    }
-
     public void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     } // TODO: See if we can use this after add to database function is done. (On Success)
 
-    void openGooglePlaces(){
+    void openGooglePlaces() {
         try {
             AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("SE").build();
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
@@ -362,9 +331,9 @@ public class AddFragment extends Fragment {
                     .build(getActivity());
 
             startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e){
+        } catch (GooglePlayServicesRepairableException e) {
 
-        } catch (GooglePlayServicesNotAvailableException e){
+        } catch (GooglePlayServicesNotAvailableException e) {
 
         }
     }

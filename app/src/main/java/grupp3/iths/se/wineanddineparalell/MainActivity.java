@@ -1,5 +1,6 @@
 package grupp3.iths.se.wineanddineparalell;
 
+import android.icu.text.IDNA;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -7,7 +8,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,11 +19,16 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
     private WishListFragment wishListFragment;
     private AddFragment addFragment;
+    private AppInfoFragment appInfoFragment;
+
+
+    private ImageButton infoBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Bound BottomNavigationView & FrameLayout to variable.
         BottomNavigationView mMainNav;
@@ -64,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        appInfoFragment = new AppInfoFragment();
+
+        infoBtn = findViewById(R.id.info_ib);
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragment(appInfoFragment);
+            }
+        });
+
     }
 
     public void setFragment(Fragment fragment) {
