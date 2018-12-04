@@ -45,4 +45,19 @@
     <string name="company_logo">company logo</string>
     <string name="review">Review</string>
     <string name="application_logo">Application Logo</string>
+    <string name="info">Info</string>
+    <string name="om_wine_dine"><![CDATA[Om Wine & Dine]]></string>
+    <string name="p_wine_dine_kan_du_hitta_dem_b_sta_matst_llena_i_staden_du_befinner_dig_i"><![CDATA[På Wine & Dine kan du hitta dem bästa matställena i staden du befinner dig i.]]></string>
+    <string name="_0761650786">0761650786</string>
+    <string name="p_wine_dine_kan_du_hitta_dem_b_sta_matst_llen_i_staden_du_befinner_dig_i_n_r_du_hittat_en_resturang_s_kan_du_sedan_l_gga_till_den_i_favoriter_och_ge_platsen_betyg_och_en_recension_eller_varf_r_inte_sj_lv_l_gga_till_en_restaurang_som_du_kan_dela_med_dina_v_nner_och_andra"><![CDATA[På Wine & Dine kan du hitta dem bästa matställen i staden du befinner dig i. När du hittat en resturang så kan du sedan lägga till den i Favoriteroch ge platsen betyg och en recension eller varför inte själv lägga till en restaurang som du kan dela med dina vänner och andra]]></string>
+    <string name="vid_fr_gor_kontakta_oss_g_rna_via_mail_eller_telefon">Vid frågor kontakta oss gärna via mail eller telefon:</string>
+    <string name="wine_dine_gmail_com">wine_dine@gmail.com</string>
+    <string name="winendinev_gen_20_trollh_ttan_46160">Winendinevägen 20 Trollhättan 46160</string>
+    <string name="kontakta_oss">Kontakta oss:</string>
+    <string name="p_wine_dine_kan_du_hitta_dem_b_sta_matst_llen_i_staden_du_befinner_dig_i_n_r_du_hittat_en_resturang_s_kan_du_sedan_l_gga_till_den_i_favoriter_och_ge_platsen_betyg_och_en_recension_eller_varf_r_inte_sj_lv_l_gga_till_en_restaurang_som_du_kan_dela_med_dina_v_nner"><![CDATA[På Wine & Dine kan du hitta dem bästa matställen i staden du befinner dig i. När du hittat en resturang så kan du sedan lägga till den i Favoriteroch ge platsen betyg och en recension eller varför inte själv lägga till en restaurang som du kan dela med dina vänner.]]></string>
+    <string name="p_wine_dine_kan_du_hitta_dem_b_sta_matst_llen_i_staden_du_befinner_dig_i_n_r_du_hittat_en_resturang_s_kan_du_sedan_l_gga_till_den_i_favoriter_och_ge_platsen_betyg_och_en_recension_du_kan_ocks_varf_r_inte_sj_lv_l_gga_till_en_restaurang_som_du_kan_dela_med_dina_v_nner"><![CDATA[På Wine & Dine kan du hitta dem bästa matställen i staden du befinner dig i. När du hittat en resturang så kan du sedan lägga till den i Favoriteroch ge platsen betyg och en recension. Du kan ocksåvarför inte själv lägga till en restaurang som du kan dela med dina vänner.]]></string>
+    <string name="bes_k_g_rna_v_r_hemsida_f_r_mer_information">Besök gärna vår hemsida för mer information:</string>
+    <string name="www_google_com">www.google.com</string>
+    <string name="p_wine_dine_kan_du_hitta_dem_b_sta_matst_llen_i_staden_du_befinner_dig_i_n_r_du_hittat_en_restaurang_s_kan_du_sedan_l_gga_till_den_i_din_favoritlista_och_ge_platsen_betyg_och_en_recension_eller_varf_r_inte_sj_lv_l_gga_till_en_restaurang_som_du_kan_dela_med_dina_v_nner"><![CDATA[På Wine & Dine kan du hitta dem bästa matställen i staden du befinner dig i. När du hittat en restaurang så kan du sedan lägga till den i din favoritlista och ge platsen betyg och en recension eller varför inte själv lägga till en restaurang som du kan dela med dina vänner.]]></string>
+    <string name="med_wine_dine_hittar_du_dem_b_sta_matst_llen_i_staden_du_befinner_dig_i_dem_restaurangen_du_diggar_mest_kan_du_l_gga_till_i_din_favoritlista_och_ge_platsen_betyg_du_kan_sj_lv_l_gga_till_en_restaurang_som_du_kan_dela_med_dina_v_nner"><![CDATA[Med Wine & Dine hittar du dem bästa matställen i staden du befinner dig i. Dem restaurangen du diggar mest kan du lägga till i din favoritlista och ge platsen betyg. Du kan själv lägga till en restaurang som du kan dela med dina vänner.]]></string>
 </resources>
