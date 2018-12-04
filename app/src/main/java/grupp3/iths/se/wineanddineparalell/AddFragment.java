@@ -178,7 +178,7 @@ public class AddFragment extends Fragment {
                     }
                 });
 
-                final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
+               /* final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
                 final Context context = getContext();
                 final ImageView imageView = mImageRestaurant;
 
@@ -194,7 +194,7 @@ public class AddFragment extends Fragment {
                         String error = e.getMessage();
                         Toast.makeText(getActivity(), "Error" + error, Toast.LENGTH_SHORT).show();
                     }
-                });
+                }); */
             }
         });
 
