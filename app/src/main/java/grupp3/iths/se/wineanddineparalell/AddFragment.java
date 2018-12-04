@@ -315,7 +315,7 @@ public class AddFragment extends Fragment {
 
     }
 
-    private void upLoadImage() {
+/*    private void upLoadImage() {
         Uri file = Uri.fromFile(new File("path/to/images/uploads.jpg"));
 
         StorageReference imagesRef = mStorageRef.child("images");
@@ -338,7 +338,7 @@ public class AddFragment extends Fragment {
 
             }
         });
-    }
+    }*/
 
     public void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
