@@ -92,6 +92,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/img_view"
+            android:autoLink="all"
+            android:clickable="true"
+            android:textColorLink="#ffffff"
             tools:text="Phone Number" />
 
         <CheckBox
@@ -126,6 +129,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/img_view"
+            android:autoLink="all"
+            android:clickable="true"
+            android:textColorLink="#ffffff"
             tools:text="Webbsite" />
 
     </RelativeLayout>
