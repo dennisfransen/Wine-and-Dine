@@ -30,6 +30,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
@@ -40,12 +43,13 @@ public class ProfileFragment extends Fragment {
 
     private TextView mUsername, mFirstName, mLastName, mPhoneNumber, mEmail;
     private ImageView mProfilePicture;
-    private Button mSignOut, mChangePassword;
+    private Button mSaveChanges, mChangePassword;
     private ImageButton mChangeAvatar;
 
     private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseFirestore firebaseFirestore;
 
     private StorageReference mStorageRef;
 
@@ -57,12 +61,14 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         // Connect profile_fragment Text views with ProfileFragment
-        mUsername = view.findViewById(R.id.username_display_tv);
-        mFirstName = view.findViewById(R.id.firstname_display_tv);
-        mLastName = view.findViewById(R.id.lastname_display_tv);
-        mPhoneNumber = view.findViewById(R.id.phone_number_display_tv);
-        mEmail = view.findViewById(R.id.email_display_tv);
+        mUsername = view.findViewById(R.id.username_display_et);
+        mFirstName = view.findViewById(R.id.firstname_display_et);
+        mLastName = view.findViewById(R.id.lastname_display_et);
+        mPhoneNumber = view.findViewById(R.id.phone_number_display_et);
+        mEmail = view.findViewById(R.id.email_display_et);
 
         // Get current end user ID
         mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -78,21 +84,48 @@ public class ProfileFragment extends Fragment {
                 String email = user.getEmail();
 
                 // Print out end user credentials in profile_fragment text views.
-                mUsername.append(" "  + userName);
-                mFirstName.append(" " + firstName);
-                mLastName.append(" " + lastName);
-                mPhoneNumber.append(" " + phoneNumber);
-                mEmail.append(" " + email);
+                mUsername.setText(userName);
+                mFirstName.setText(firstName);
+                mLastName.setText(lastName);
+                mPhoneNumber.setText(phoneNumber);
+                mEmail.setText(email);
             }
         });
 
-        // Sign out button. Send end user to LoginActivity if button is pressed.
-        mSignOut = view.findViewById(R.id.signout_btn);
-        mSignOut.setOnClickListener(new View.OnClickListener() {
+        // Save changes in profile to database.
+        mSaveChanges = view.findViewById(R.id.save_changes_btn);
+        mSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+
+                String userName = mUsername.getText().toString();
+                String firstName = mFirstName.getText().toString();
+                String lastName = mLastName.getText().toString();
+                String phoneNumber = mPhoneNumber.getText().toString();
+
+                Map<String, String> userMap = new HashMap<>();
+                userMap.put("username", userName);
+                userMap.put("firstname", firstName);
+                userMap.put("lastname", lastName);
+                userMap.put("phonenumber", phoneNumber);
+
+                // Add Document to database under users collection. Set document id to current user id
+                firebaseFirestore.collection("users").document(user.getUid()).set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Welcome the end user. Registration complete.
+                        Toast.makeText(getActivity(), "You successfully updated your profile", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Get error message from application and display in toast for end user.
+                        String error = e.getMessage();
+                        Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
             }
         });
 

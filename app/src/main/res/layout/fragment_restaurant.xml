@@ -13,21 +13,22 @@
         android:id="@+id/relative_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/rest_round_corner"
         android:padding="8dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
             android:id="@+id/img_view"
-            android:layout_width="97dp"
-            android:layout_height="94dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:src="@drawable/ic_restaurant" />
+            android:src="@drawable/restaurant" />
 
         <TextView
             android:id="@+id/restuarant_name_tv"
@@ -37,18 +38,19 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/img_view"
+            android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.0"
             tools:text="RESTAURANT NAME" />
 
         <RatingBar
             android:id="@+id/average_price_rb"
             style="@style/dollarSignBar"
+            android:theme="@style/dollarSignBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/webbsite_tv"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:isIndicator="true"
             android:numStars="5"
             android:scaleX="0.8"
@@ -59,19 +61,18 @@
         <RatingBar
             android:id="@+id/average_score_rb"
             style="@style/Widget.AppCompat.RatingBar.Small"
+            android:theme="@style/RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/average_price_rb"
-            android:layout_alignStart="@+id/img_view"
-            android:layout_marginStart="42dp"
+            android:layout_below="@+id/webbsite_tv"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="90dp"
-            android:layout_toStartOf="@+id/drink_cb"
+            android:layout_toEndOf="@+id/average_price_rb"
             android:isIndicator="true"
             android:numStars="5"
-            android:stepSize="0.5"
             android:scaleX="1.3"
             android:scaleY="1.3"
+            android:stepSize="0.5"
             android:visibility="visible" />
 
         <TextView
@@ -91,6 +92,7 @@
             android:layout_below="@+id/address_tv"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_toStartOf="@+id/food_cb"
             android:layout_toEndOf="@+id/img_view"
             tools:text="Phone Number" />
 
@@ -98,12 +100,10 @@
             android:id="@+id/food_cb"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/average_price_rb"
+            android:layout_below="@+id/address_tv"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="-4dp"
-            android:layout_marginEnd="42dp"
-            android:layout_toEndOf="@+id/average_price_rb"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:clickable="false"
             android:text="Food" />
 
@@ -113,7 +113,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/food_cb"
             android:layout_alignStart="@+id/food_cb"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:clickable="false"
             android:text="Drink" />
@@ -122,6 +121,7 @@
             android:id="@+id/webbsite_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/food_cb"
             android:layout_below="@+id/phone_nr_tv"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"

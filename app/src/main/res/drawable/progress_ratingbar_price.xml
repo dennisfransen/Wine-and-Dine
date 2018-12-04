@@ -6,9 +6,9 @@
         android:drawable="@drawable/ic_dollar_sign"/>
     <item
         android:id="@android:id/secondaryProgress"
-        android:drawable="@drawable/ic_dollar_sign_pink"/>
+        android:drawable="@drawable/ic_dollar_sign_green"/>
     <item
         android:id="@android:id/progress"
-        android:drawable="@drawable/ic_dollar_sign_pink"/>
+        android:drawable="@drawable/ic_dollar_sign_green"/>
 
 </layer-list>

@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -187,7 +188,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         private RatingBar mTextScore;
         private ImageView mImageView;
         private CardView mCardView;
-        private Button mReviewBtn;
+        private FloatingActionButton mReviewBtn;
 
         private ToggleButton mFavHeart;
 

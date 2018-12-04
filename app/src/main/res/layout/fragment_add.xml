@@ -4,208 +4,205 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFragment"
-    android:background="@drawable/reg_background_screen">
+    android:background="@drawable/reg_background_screen"
+    tools:context=".AddFragment">
 
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
-    <ImageView
-        android:id="@+id/image_restaurant_IV"
-        android:layout_width="122dp"
-        android:layout_height="117dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/ic_photo_camera_black_24dp"
-        android:contentDescription="Picture of restaurant"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/website_ET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints=""
-        android:hint="Website"
-        android:inputType="textUri"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/phone_number_ET"
-        app:layout_constraintStart_toStartOf="@+id/phone_number_ET"
-        app:layout_constraintTop_toBottomOf="@+id/phone_number_ET" />
-
-    <EditText
-        android:id="@+id/phone_number_ET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints=""
-        android:hint="Phone number"
-        android:inputType="textPostalAddress|phone"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/location_ET"
-        app:layout_constraintStart_toStartOf="@+id/location_ET"
-        app:layout_constraintTop_toBottomOf="@+id/location_ET" />
-
-    <EditText
-        android:id="@+id/location_ET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints=""
-        android:hint="Address"
-        android:inputType="textPostalAddress"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/name_restaurant_ET"
-        app:layout_constraintStart_toStartOf="@+id/name_restaurant_ET"
-        app:layout_constraintTop_toBottomOf="@+id/name_restaurant_ET" />
-
-    <RatingBar
-        android:id="@+id/ratingBar_price"
-        style="@style/dollarSignBar"
-        android:layout_width="114dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="6dp"
-        android:isIndicator="false"
-        android:scaleX="0.7"
-        android:scaleY="0.7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/website_ET" />
-
-    <RatingBar
-        android:id="@+id/ratingBar_stars"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="82dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
-        android:isIndicator="false"
-        android:scaleX="1.3"
-        android:scaleY="1.3"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar_price"
-        app:layout_constraintTop_toBottomOf="@+id/website_ET" />
-
-    <EditText
-        android:id="@+id/review"
-        android:layout_width="342dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="Be the first to leave a review"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/food_cb" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_google_places"
+
+        <ImageView
+            android:id="@+id/image_restaurant_IV"
+            android:layout_width="122dp"
+            android:layout_height="117dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_photo_camera_black_24dp"
+            android:contentDescription="Picture of restaurant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/website_ET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autofillHints=""
+            android:hint="Website"
+            android:inputType="textUri"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/phone_number_ET"
+            app:layout_constraintStart_toStartOf="@+id/phone_number_ET"
+            app:layout_constraintTop_toBottomOf="@+id/phone_number_ET" />
+
+        <EditText
+            android:id="@+id/phone_number_ET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autofillHints=""
+            android:hint="Phone number"
+            android:inputType="textPostalAddress|phone"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/location_ET"
+            app:layout_constraintStart_toStartOf="@+id/location_ET"
+            app:layout_constraintTop_toBottomOf="@+id/location_ET" />
+
+        <EditText
+            android:id="@+id/location_ET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autofillHints=""
+            android:hint="Address"
+            android:inputType="textPostalAddress"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/name_restaurant_ET"
+            app:layout_constraintStart_toStartOf="@+id/name_restaurant_ET"
+            app:layout_constraintTop_toBottomOf="@+id/name_restaurant_ET" />
+
+        <RatingBar
+            android:id="@+id/ratingBar_price"
+            style="@style/dollarSignBar"
+            android:layout_width="114dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="6dp"
+            android:isIndicator="false"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:theme="@style/dollarSignBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
+
+        <RatingBar
+            android:id="@+id/ratingBar_stars"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="82dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="11dp"
+            android:isIndicator="false"
+            android:scaleX="1.3"
+            android:scaleY="1.3"
+            android:theme="@style/RatingBar"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar_price"
+            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
+
+        <EditText
+            android:id="@+id/review"
+            android:layout_width="342dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Be the first to leave a review"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/food_cb" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/review">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_google_places"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                app:backgroundTint="@color/coolBackground"
+                app:fabSize="normal"
+                app:layout_constraintStart_toStartOf="@+id/review"
+                app:layout_constraintTop_toBottomOf="@+id/review"
+                app:srcCompat="@drawable/googleg_standard_color_18" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/gallery_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                app:backgroundTint="@color/coolBackground"
+                app:fabSize="normal"
+                app:layout_constraintStart_toEndOf="@+id/fab_google_places"
+                app:layout_constraintTop_toBottomOf="@+id/review"
+                app:srcCompat="@drawable/ic_upload_img" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/capture_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                app:backgroundTint="@color/coolBackground"
+                app:fabSize="normal"
+                app:layout_constraintStart_toEndOf="@+id/gallery_btn"
+                app:layout_constraintTop_toBottomOf="@+id/review"
+                app:srcCompat="@drawable/ic_camera" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                app:backgroundTint="@color/coolBackground"
+                app:fabSize="normal"
+                app:layout_constraintEnd_toEndOf="@+id/review"
+                app:layout_constraintStart_toEndOf="@+id/capture_btn"
+                app:layout_constraintTop_toBottomOf="@+id/review"
+                app:srcCompat="@drawable/ic_add" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/drink_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            app:backgroundTint="@color/coolBackground"
-            app:fabSize="normal"
-            app:layout_constraintStart_toStartOf="@+id/review"
-            app:layout_constraintTop_toBottomOf="@+id/review"
-            app:srcCompat="@drawable/googleg_standard_color_18" />
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Drink"
+            app:layout_constraintEnd_toEndOf="@+id/website_ET"
+            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/gallery_btn"
+        <CheckBox
+            android:id="@+id/food_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            app:backgroundTint="@color/coolBackground"
-            app:fabSize="normal"
-            app:layout_constraintStart_toEndOf="@+id/fab_google_places"
-            app:layout_constraintTop_toBottomOf="@+id/review"
-            app:srcCompat="@drawable/ic_photo_gallery_black_24dp" />
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="4dp"
+            android:text="Food"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar_stars"
+            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/capture_btn"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/name_restaurant_ET"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            app:backgroundTint="@color/coolBackground"
-            app:fabSize="normal"
-            app:layout_constraintStart_toEndOf="@+id/gallery_btn"
-            app:layout_constraintTop_toBottomOf="@+id/review"
-            app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/save_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            app:backgroundTint="@color/coolBackground"
-            app:fabSize="normal"
-            app:layout_constraintEnd_toEndOf="@+id/review"
-            app:layout_constraintStart_toEndOf="@+id/capture_btn"
-            app:layout_constraintTop_toBottomOf="@+id/review"
-            app:srcCompat="@drawable/baseline_add_circle_black_24dp" />
-    </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/drink_cb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="30dp"
-        android:text="Drink"
-        app:layout_constraintEnd_toEndOf="@+id/website_ET"
-        app:layout_constraintTop_toBottomOf="@+id/website_ET" />
-
-    <CheckBox
-        android:id="@+id/food_cb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="30dp"
-        android:text="Food"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar_stars"
-        app:layout_constraintTop_toBottomOf="@+id/website_ET" />
-
-    <EditText
-        android:id="@+id/name_restaurant_ET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_restaurant_IV" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_restaurant_IV" />
 
 
-
-
-
-
-
-</android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
