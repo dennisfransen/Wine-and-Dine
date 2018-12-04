@@ -1,5 +1,7 @@
 package grupp3.iths.se.wineanddineparalell;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,7 +49,6 @@ public class RestaurantFragment extends Fragment {
         final String restName = getArguments().getString("REST_NAME");
         final float starRating = getArguments().getFloat("STAR_RATING");
         final float priceRating = getArguments().getFloat("PRICE_RATING");
-
         mRestaurantName = view.findViewById(R.id.restuarant_name_tv);
         mRestaurantAddress = view.findViewById(R.id.address_tv);
         mRestaurantNumber = view.findViewById(R.id.phone_nr_tv);
@@ -101,7 +102,12 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setAdapter(reviewAdapter);
 
         return view;
+
+
+
     }
+
+
     //Starts to listen for changes in database (added/removed items in database)
     @Override
     public void onStart() {
