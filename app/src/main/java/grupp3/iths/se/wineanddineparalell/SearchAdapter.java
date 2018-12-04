@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +39,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private CollectionReference isFavorite = firebaseFirestore.collection("users")
+            .document(user.getUid()).collection("wishlist");
 
     public SearchAdapter(Context context, List<ItemInfo> restaurantList){
         mRestaurantList = restaurantList;
