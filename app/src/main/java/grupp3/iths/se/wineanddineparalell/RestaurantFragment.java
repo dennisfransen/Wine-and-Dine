@@ -1,5 +1,7 @@
 package grupp3.iths.se.wineanddineparalell;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,6 +58,8 @@ public class RestaurantFragment extends Fragment {
         mFood = view.findViewById(R.id.food_cb);
         mStarRating = view.findViewById(R.id.average_score_rb);
         mPriceRating = view.findViewById(R.id.average_price_rb);
+        
+        view.findViewById(R.id.address_tv).setOnClickListener(this::addressClick);
 
         restaurantRef = mFireStore.collection("restaurant/" + restName + "/reviews");
 
@@ -101,6 +105,8 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setAdapter(reviewAdapter);
 
         return view;
+
+
     }
     //Starts to listen for changes in database (added/removed items in database)
     @Override
@@ -115,5 +121,15 @@ public class RestaurantFragment extends Fragment {
     public void onStop() {
         super.onStop();
         reviewAdapter.stopListening();
+    }
+
+    public void addressClick(View view){
+        Uri addr = Uri.parse("geo:0,0?q="+((TextView)view).getText());
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, addr);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if(mapIntent.resolveActivity(getActivity().getPackageManager()) != null)
+        {
+            startActivity(mapIntent);
+        }
     }
 }
