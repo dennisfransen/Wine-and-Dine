@@ -58,8 +58,8 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         //Holders for cardview in SearchFragment
         holder.imgView.setImageResource(R.drawable.restaurant);
         holder.textName.setText(model.getRestaurant_name());
-        holder.textPrice.setRating(model.getRestaurant_cost_rating());
-        holder.textScore.setRating(model.getRestaurant_star_rating());
+        holder.textPrice.setRating((float) model.getRestaurant_cost_rating());
+        holder.textScore.setRating((float) model.getRestaurant_star_rating());
 
         holder.favHeart.setOnClickListener(new View.OnClickListener() {
             @Override

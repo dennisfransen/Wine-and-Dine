@@ -6,7 +6,8 @@ import android.widget.ImageView;
 public class ItemInfo {
     public ImageView image;
     private String restaurant_name, restaurant_address, restaurant_phone_number, restaurant_website;
-    private float restaurant_star_rating, restaurant_cost_rating;
+    double restaurant_star_rating, restaurant_cost_rating;
+    int restaurant_number_of_reviews,restaurant_number_of_cost_reviews;
     private boolean restaurant_food_type, restaurant_drink_type, restaurant_add_to_wishlist;
 
     public ItemInfo(){
@@ -54,11 +55,11 @@ public class ItemInfo {
         return restaurant_address;
     }
 
-    public float getRestaurant_star_rating() {
+    public double getRestaurant_star_rating() {
         return restaurant_star_rating;
     }
 
-    public float getRestaurant_cost_rating() {
+    public double getRestaurant_cost_rating() {
         return restaurant_cost_rating;
     }
 

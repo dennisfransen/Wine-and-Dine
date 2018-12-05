@@ -45,23 +45,22 @@
         <RatingBar
             android:id="@+id/average_price_rb"
             style="@style/dollarSignBar"
-            android:theme="@style/dollarSignBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="22dp"
             android:layout_below="@+id/webbsite_tv"
             android:layout_alignParentStart="true"
             android:layout_marginTop="8dp"
             android:isIndicator="true"
-            android:numStars="5"
+            android:numStars="3"
             android:scaleX="0.8"
             android:scaleY="0.8"
-            android:stepSize="0.5"
+            android:stepSize="1"
+            android:theme="@style/dollarSignBar"
             android:visibility="visible" />
 
         <RatingBar
             android:id="@+id/average_score_rb"
             style="@style/Widget.AppCompat.RatingBar.Small"
-            android:theme="@style/RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/webbsite_tv"
@@ -72,7 +71,8 @@
             android:numStars="5"
             android:scaleX="1.3"
             android:scaleY="1.3"
-            android:stepSize="0.5"
+            android:stepSize="1"
+            android:theme="@style/RatingBar"
             android:visibility="visible" />
 
         <TextView
@@ -83,7 +83,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/img_view"
-            tools:text="Address" />
+            tools:text="Address"
+            />
 
         <TextView
             android:id="@+id/phone_nr_tv"

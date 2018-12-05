@@ -72,8 +72,7 @@ public class AddFragment extends Fragment {
     static final String TAG = "AddFragment";
     
     private ImageView mImageRestaurant;
-    private EditText mNameRestaurant, mAddress, mPhoneNumber, mWebsite, mReview;
-    private RatingBar mCost, mStar;
+    private EditText mNameRestaurant, mAddress, mPhoneNumber, mWebsite;
     private CheckBox mFood, mDrink;
     private FloatingActionButton mGooglePlacesBtn, mCaptureBtn, mSaveBtn, mImageGalleryBtn;
 
@@ -105,42 +104,33 @@ public class AddFragment extends Fragment {
         mAddress = view.findViewById(R.id.location_ET);
         mPhoneNumber = view.findViewById(R.id.phone_number_ET);
         mWebsite = view.findViewById(R.id.website_ET);
-        mCost = view.findViewById(R.id.ratingBar_price);
-        mStar = view.findViewById(R.id.ratingBar_stars);
         mFood = view.findViewById(R.id.food_cb);
         mDrink = view.findViewById(R.id.drink_cb);
-        mReview = view.findViewById(R.id.review);
 
         // Saving user input into database collection: reviews under restaurants collection.
         mSaveBtn = view.findViewById(R.id.save_btn);
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadRestaurantToDatabase();
+
                 // TODO: Check if username is already in use.
                 String restaurantName = mNameRestaurant.getText().toString();
                 String restaurantAdress = mAddress.getText().toString();
                 String phoneNumber = mPhoneNumber.getText().toString();
                 String webSite = mWebsite.getText().toString();
-                float star = mStar.getRating();
-                float cost = mCost.getRating();
                 boolean food = mFood.isChecked();
                 boolean drink = mDrink.isChecked();
 
                 boolean wishList = false;
-
-                String review = mReview.getText().toString();
 
                 Map<String, Object> restaurantMap = new HashMap<>();
                 restaurantMap.put("restaurant_name", restaurantName);
                 restaurantMap.put("restaurant_address", restaurantAdress);
                 restaurantMap.put("restaurant_phone_number", phoneNumber);
                 restaurantMap.put("restaurant_website", webSite);
-                restaurantMap.put("restaurant_star_rating", star);
-                restaurantMap.put("restaurant_cost_rating", cost);
                 restaurantMap.put("restaurant_food_type", food);
                 restaurantMap.put("restaurant_drink_type", drink);
-                restaurantMap.put("restaurant_image", mImageUri);
+                //restaurantMap.put("restaurant_image", mImageUri);
 
 
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -156,28 +146,7 @@ public class AddFragment extends Fragment {
                     }
                 });
 
-                Map<String, Object> reviewMap = new HashMap<>();
-                reviewMap.put("user_name", user.getEmail());
-                reviewMap.put("user_rating", star);
-                reviewMap.put("user_review", review);
-
-                firebaseFirestore.collection("restaurant").document(restaurantName)
-                        .collection("reviews").document().set(reviewMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                        // TODO: Send user to SearchFragment
-                        Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String error = e.getMessage();
-                        Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
+                /*final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
                 final Context context = getContext();
                 final ImageView imageView = mImageRestaurant;
 
@@ -193,7 +162,7 @@ public class AddFragment extends Fragment {
                         String error = e.getMessage();
                         Toast.makeText(getActivity(), "Error" + error, Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
             }
         });
 
@@ -229,9 +198,6 @@ public class AddFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void uploadRestaurantToDatabase() {
     }
 
     /**

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/wishlist_background_screen">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView"
@@ -33,7 +32,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:numStars="5"
-        android:stepSize="0.5"
+        android:stepSize="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leave_cost_rb" />
@@ -41,17 +40,15 @@
     <RatingBar
         android:id="@+id/leave_cost_rb"
         style="@style/dollarSignBar"
-        android:layout_width="wrap_content"
+        android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/leave_rating_rb"
-        android:layout_alignParentStart="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:numStars="5"
+        android:numStars="3"
         android:scaleX="2"
         android:scaleY="2"
-        android:stepSize="0.5"
+        android:stepSize="1"
         android:theme="@style/dollarSignBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

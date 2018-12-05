@@ -127,6 +127,8 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Welcome the end user. Registration complete.
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(userName).build();
+                        user.updateProfile(profileUpdates);
                         Toast.makeText(getActivity(), "You successfully updated your profile", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

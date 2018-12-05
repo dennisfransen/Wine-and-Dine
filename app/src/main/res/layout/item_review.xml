@@ -16,17 +16,34 @@
         android:paddingBottom="8dp">
 
         <RatingBar
-            android:id="@+id/user_score_rb"
-            style="?android:attr/ratingBarStyleSmall"
+            android:id="@+id/user_price_rb"
+            style="@style/dollarSignBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="9dp"
+            android:isIndicator="true"
+            android:numStars="3"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:stepSize="1"
+            android:theme="@style/dollarSignBar"
+            android:visibility="visible" />
+
+        <RatingBar
+            android:id="@+id/user_score_rb"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_price_rb"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:isIndicator="true"
             android:numStars="5"
-            android:stepSize="0.5"
+            android:stepSize="1"
             android:theme="@style/RatingBar"
             android:visibility="visible" />
 
@@ -57,12 +74,13 @@
 
         <TextView
             android:id="@+id/review_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="226dp"
+            android:layout_height="35dp"
             android:layout_below="@+id/username_review_tv"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_toStartOf="@+id/user_score_rb"
             android:layout_toEndOf="@+id/profile_pic_img"
             android:text="Ok restaurant, to much babies and much noise, but food was good!" />
 

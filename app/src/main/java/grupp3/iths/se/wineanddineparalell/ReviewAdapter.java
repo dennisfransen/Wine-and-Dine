@@ -21,6 +21,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewInfo, ReviewAd
     @Override
     protected void onBindViewHolder(@NonNull ReviewHolder holder, int position, @NonNull ReviewInfo model) {
 
+        holder.ratingCost.setRating(model.getUser_cost_rating());
         holder.ratingStar.setRating(model.getUser_rating());
         holder.userName.setText(model.getUser_name());
         holder.commet.setText(model.getUser_review());
@@ -38,13 +39,14 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewInfo, ReviewAd
     public class ReviewHolder extends RecyclerView.ViewHolder {
 
         private ImageView profilePic;
-        private RatingBar ratingStar;
+        private RatingBar ratingStar, ratingCost;
         private TextView userName, commet, commetDate;
 
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
 
+            ratingCost = itemView.findViewById(R.id.user_price_rb);
             ratingStar = itemView.findViewById(R.id.user_score_rb);
             userName = itemView.findViewById(R.id.username_review_tv);
             commet = itemView.findViewById(R.id.review_tv);
