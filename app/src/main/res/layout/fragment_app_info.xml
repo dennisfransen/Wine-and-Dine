@@ -28,13 +28,12 @@
 
     <TextView
         android:id="@+id/info_text_Tv"
-        android:layout_width="368dp"
-        android:layout_height="149dp"
+        android:layout_width="311dp"
+        android:layout_height="151dp"
         android:layout_below="@+id/infoTitle_Tv"
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="15dp"
         android:fontFamily="@font/news_cycle"
         android:text="@string/med_wine_dine_hittar_du_dem_b_sta_matst_llen_i_staden_du_befinner_dig_i_dem_restaurangen_du_diggar_mest_kan_du_l_gga_till_i_din_favoritlista_och_ge_platsen_betyg_du_kan_sj_lv_l_gga_till_en_restaurang_som_du_kan_dela_med_dina_v_nner"
         android:textColor="#000000"
