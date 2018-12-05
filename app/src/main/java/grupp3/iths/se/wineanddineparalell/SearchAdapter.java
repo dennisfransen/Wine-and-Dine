@@ -52,8 +52,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         final ItemInfo restaurantObj = mRestaurantList.get(i);
 
         customViewHolder.mTextView.setText(restaurantObj.getRestaurant_name());
-        customViewHolder.mTextPrice.setRating(restaurantObj.getRestaurant_cost_rating());
-        customViewHolder.mTextScore.setRating(restaurantObj.getRestaurant_star_rating());
+        customViewHolder.mTextPrice.setRating((float) restaurantObj.getRestaurant_cost_rating());
+        customViewHolder.mTextScore.setRating((float) restaurantObj.getRestaurant_star_rating());
         customViewHolder.mImageView.setImageResource(R.drawable.restaurant);
 
         customViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
@@ -126,8 +126,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             data.putString("REST_ADDRESS", restaurant.getRestaurant_address());
             data.putString("REST_PHONE", restaurant.getRestaurant_phone_number());
             data.putString("REST_WEBBSITE", restaurant.getRestaurant_website());
-            data.putFloat("STAR_RATING", restaurant.getRestaurant_star_rating());
-            data.putFloat("PRICE_RATING", restaurant.getRestaurant_cost_rating());
+            data.putFloat("STAR_RATING", (float) restaurant.getRestaurant_star_rating());
+            data.putFloat("PRICE_RATING", (float) restaurant.getRestaurant_cost_rating());
             data.putBoolean("REST_FOOD", restaurant.isRestaurant_food_type());
             data.putBoolean("REST_DRINK", restaurant.isRestaurant_drink_type());
 

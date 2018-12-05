@@ -1,11 +1,8 @@
 package grupp3.iths.se.wineanddineparalell;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +11,16 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,10 +80,53 @@ public class MakeReviewFragment extends Fragment {
                         Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                DocumentReference doc = firebaseFirestore.collection("restaurant").document(restName);
+
+                addRating(doc, star);
             }
         });
 
         return view;
+    }
+
+    private Task<Void> addRating(final DocumentReference restaurantRef, final float rating) {
+// Create reference for new rating, for use inside the transaction
+
+        final DocumentReference ratingRef = restaurantRef.collection("reviews").document();
+
+
+        // In a transaction, add the new rating and update the aggregate totals
+        return firebaseFirestore.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+
+                ItemInfo itemInfo = new ItemInfo();
+
+                itemInfo = transaction.get(restaurantRef).toObject(ItemInfo.class);
+
+                // Compute new number of ratings
+                int newNumRatings = itemInfo.restaurant_number_of_reviews + 1;
+
+                // Compute new average rating
+                double oldRatingTotal = itemInfo.restaurant_star_rating * itemInfo.restaurant_number_of_reviews;
+                double newAvgRating = (oldRatingTotal + rating) / newNumRatings;
+
+                // Set new restaurant info
+                itemInfo.restaurant_number_of_reviews = newNumRatings;
+                itemInfo.restaurant_star_rating = newAvgRating;
+
+                // Update restaurant
+                transaction.set(restaurantRef, itemInfo);
+
+                // Update rating
+                Map<String, Object> data = new HashMap<>();
+                data.put("rating", rating);
+                transaction.set(ratingRef, data, SetOptions.merge());
+
+                return null;
+            }
+        });
     }
 
 }
