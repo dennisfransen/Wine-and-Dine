@@ -83,7 +83,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/img_view"
-            tools:text="Address" />
+            tools:text="Address"
+            />
 
         <TextView
             android:id="@+id/phone_nr_tv"
