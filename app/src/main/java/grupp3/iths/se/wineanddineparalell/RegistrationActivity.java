@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -67,6 +68,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Welcome the end user. Registration complete.
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(userName).build();
+
+                        user.updateProfile(profileUpdates);
+
                         Toast.makeText(RegistrationActivity.this, "You successfully added your account, welcome!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

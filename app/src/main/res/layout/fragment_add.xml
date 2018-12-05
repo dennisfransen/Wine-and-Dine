@@ -65,49 +65,6 @@
             app:layout_constraintStart_toStartOf="@+id/name_restaurant_ET"
             app:layout_constraintTop_toBottomOf="@+id/name_restaurant_ET" />
 
-        <RatingBar
-            android:id="@+id/ratingBar_price"
-            style="@style/dollarSignBar"
-            android:layout_width="70dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="6dp"
-            android:isIndicator="false"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
-            android:stepSize="1"
-            android:theme="@style/dollarSignBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
-
-        <RatingBar
-            android:id="@+id/ratingBar_stars"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="82dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="11dp"
-            android:isIndicator="false"
-            android:scaleX="1.3"
-            android:scaleY="1.3"
-            android:theme="@style/RatingBar"
-            app:layout_constraintStart_toEndOf="@+id/ratingBar_price"
-            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
-
-        <EditText
-            android:id="@+id/review"
-            android:layout_width="342dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="Be the first to leave a review"
-            android:inputType="textMultiLine"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/food_cb" />
-
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -117,7 +74,7 @@
             android:orientation="horizontal"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/review">
+            app:layout_constraintTop_toBottomOf="@+id/food_cb">
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_google_places"
@@ -186,8 +143,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Food"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/drink_cb" />
+            app:layout_constraintEnd_toStartOf="@+id/drink_cb"
+            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
 
         <EditText
             android:id="@+id/name_restaurant_ET"

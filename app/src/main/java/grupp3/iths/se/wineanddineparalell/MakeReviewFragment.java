@@ -59,7 +59,7 @@ public class MakeReviewFragment extends Fragment {
                 String review = mReview.getText().toString();
 
                 Map<String, Object> reviewMap = new HashMap<>();
-                reviewMap.put("user_name", user.getEmail());
+                reviewMap.put("user_name", user.getDisplayName());
                 reviewMap.put("user_rating", star);
                 reviewMap.put("user_cost_rating", cost);
                 reviewMap.put("user_review", review);
