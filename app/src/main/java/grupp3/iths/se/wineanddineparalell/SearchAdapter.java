@@ -2,12 +2,15 @@ package grupp3.iths.se.wineanddineparalell;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.PlacePhotoMetadata;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
+import com.google.android.gms.location.places.PlacePhotoMetadataResponse;
+import com.google.android.gms.location.places.PlacePhotoResponse;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,8 +45,12 @@ import java.util.Map;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomViewHolder> {
 
+    public static final String TAG = "SearchAdapter";
+
     private List<ItemInfo> mRestaurantList;
+    private List<String> mPlaceIds;
     private Context mContext;
+    private GeoDataClient mGeoDataClient;
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -47,6 +60,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
     public SearchAdapter(Context context, List<ItemInfo> restaurantList){
         mRestaurantList = restaurantList;
         mContext = context;
+        mGeoDataClient = Places.getGeoDataClient(context);
     }
 
     @NonNull
@@ -64,6 +78,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         customViewHolder.mTextPrice.setRating((float) restaurantObj.getRestaurant_cost_rating());
         customViewHolder.mTextScore.setRating((float) restaurantObj.getRestaurant_star_rating());
         customViewHolder.mImageView.setImageResource(R.drawable.restaurant);
+
+        if(restaurantObj.getRestaurant_place_id() != null){
+           setImageView(customViewHolder, restaurantObj);
+        }
 
         customViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +208,26 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frame, makeReviewFragment);
         transaction.commit();
+    }
+
+    private void setImageView(final CustomViewHolder customViewHolder, ItemInfo restaurantObj){
+        mGeoDataClient.getPlacePhotos(restaurantObj.getRestaurant_place_id())
+                .addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
+                    @Override
+                    public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
+                        PlacePhotoMetadataResponse photos =  task.getResult();
+                        PlacePhotoMetadataBuffer placePhotoMetadataBuffer = photos.getPhotoMetadata();
+                        PlacePhotoMetadata metadata = placePhotoMetadataBuffer.get(0);
+                        mGeoDataClient.getPhoto(metadata).addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
+                            @Override
+                            public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
+                                PlacePhotoResponse response = task.getResult();
+                                Bitmap bitmap = response.getBitmap();
+                                customViewHolder.mImageView.setImageBitmap(bitmap);
+                            }
+                        });
+                    }
+                });
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
