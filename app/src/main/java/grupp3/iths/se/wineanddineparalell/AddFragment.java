@@ -116,7 +116,7 @@ public class AddFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadRestaurantToDatabase();
+
                 // TODO: Check if username is already in use.
                 String restaurantName = mNameRestaurant.getText().toString();
                 String restaurantAdress = mAddress.getText().toString();
@@ -140,7 +140,7 @@ public class AddFragment extends Fragment {
                 restaurantMap.put("restaurant_cost_rating", cost);
                 restaurantMap.put("restaurant_food_type", food);
                 restaurantMap.put("restaurant_drink_type", drink);
-                restaurantMap.put("restaurant_image", mImageUri);
+                //restaurantMap.put("restaurant_image", mImageUri);
 
 
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -229,9 +229,6 @@ public class AddFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void uploadRestaurantToDatabase() {
     }
 
     /**
