@@ -65,14 +65,12 @@ import static android.app.Activity.RESULT_OK;
 import static android.provider.MediaStore.EXTRA_OUTPUT;
 
 public class AddFragment extends Fragment {
-
-
+    
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int IMAGE_GALLERY_REQUEST = 2;
     static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
     static final String TAG = "AddFragment";
-
-
+    
     private ImageView mImageRestaurant;
     private EditText mNameRestaurant, mAddress, mPhoneNumber, mWebsite, mReview;
     private RatingBar mCost, mStar;
@@ -118,7 +116,7 @@ public class AddFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                uploadRestaurantToDatabase();
                 // TODO: Check if username is already in use.
                 String restaurantName = mNameRestaurant.getText().toString();
                 String restaurantAdress = mAddress.getText().toString();
@@ -231,6 +229,9 @@ public class AddFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void uploadRestaurantToDatabase() {
     }
 
     /**

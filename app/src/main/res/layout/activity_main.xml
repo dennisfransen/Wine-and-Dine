@@ -8,7 +8,6 @@
     tools:context=".MainActivity">
 
 
-
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="0dp"
@@ -22,10 +21,9 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/app_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toTopOf="@+id/main_frame"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,59 +31,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
         <ImageView
             android:id="@+id/app_logo_iv"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:layout_gravity="start"
             android:contentDescription="@string/company_logo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_logo"
-            tools:layout_conversion_absoluteHeight="56dp"
-            tools:layout_conversion_absoluteWidth="200dp" />
+            app:srcCompat="@drawable/wd_logo" />
 
-        <TextView
-            android:id="@+id/app_title_tv"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/info_ib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/wine_dine"
-            android:textColor="@color/colorWhite"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/app_logo_iv"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_conversion_absoluteHeight="27dp"
-            tools:layout_conversion_absoluteWidth="106dp" />
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/info"
+            android:elevation="4dp"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/info_ib"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="2dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:contentDescription="@string/info"
-                android:elevation="3dp"
-                app:backgroundTint="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_dialog_info"
-                tools:layout_conversion_absoluteHeight="52dp"
-                tools:layout_conversion_absoluteWidth="56dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/bentham"
+            android:text="@string/wine_n_dine_toolbar"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="19dp" />
 
-        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.BottomNavigationView

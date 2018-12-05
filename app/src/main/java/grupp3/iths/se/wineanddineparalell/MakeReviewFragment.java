@@ -1,11 +1,8 @@
 package grupp3.iths.se.wineanddineparalell;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +11,11 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,10 +29,7 @@ public class MakeReviewFragment extends Fragment {
     private EditText mReview;
     private Button mSendReviewBtn;
 
-    private ReviewAdapter reviewAdapter;
-
     public MakeReviewFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -47,7 +37,6 @@ public class MakeReviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_make_review, container, false);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-
 
         // Bound Variables from MakeReviewFragment
         mReview = view.findViewById(R.id.write_review_et);
