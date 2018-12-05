@@ -21,7 +21,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewInfo, ReviewAd
     @Override
     protected void onBindViewHolder(@NonNull ReviewHolder holder, int position, @NonNull ReviewInfo model) {
 
-        holder.ratingCost.setRating(model.getUser_cost());
+        holder.ratingCost.setRating(model.getUser_cost_rating());
         holder.ratingStar.setRating(model.getUser_rating());
         holder.userName.setText(model.getUser_name());
         holder.commet.setText(model.getUser_review());
