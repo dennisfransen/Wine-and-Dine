@@ -136,7 +136,8 @@ public class AddFragment extends Fragment {
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        //Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
+                        switchFragment(searchFragment);
+                        Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -198,6 +199,13 @@ public class AddFragment extends Fragment {
         });
 
         return view;
+    }
+
+    //Method to return to searchfragment after adding a new review
+    private void switchFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.commit();
     }
 
     /**

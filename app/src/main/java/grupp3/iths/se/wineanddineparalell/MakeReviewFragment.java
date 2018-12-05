@@ -3,6 +3,7 @@ package grupp3.iths.se.wineanddineparalell;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,8 @@ public class MakeReviewFragment extends Fragment {
                         .collection("reviews").document().set(reviewMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        SearchFragment searchFragment = new SearchFragment();
+                        switchFragment(searchFragment);
                         Toast.makeText(getActivity(), "Review successfully added", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -88,6 +91,13 @@ public class MakeReviewFragment extends Fragment {
         });
 
         return view;
+    }
+
+    //Method to return to searchfragment after adding a new review
+    private void switchFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.commit();
     }
 
     private Task<Void> addCostAvgReview(final DocumentReference restaurantRef, final float rating) {

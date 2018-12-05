@@ -33,6 +33,7 @@ public class AppInfoFragment extends Fragment {
 
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
             }
         });
 

@@ -43,8 +43,6 @@ public class RestaurantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_restaurant, container, false);
 
-        //TODO: connect boolean/image values to RestaurantFragment/Checkbox
-
         //Handle Bundled information from RestaurantAdapter
         final String restName = getArguments().getString("REST_NAME");
         final float starRating = getArguments().getFloat("STAR_RATING");
