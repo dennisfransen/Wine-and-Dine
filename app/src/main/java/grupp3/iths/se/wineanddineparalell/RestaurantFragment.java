@@ -49,6 +49,7 @@ public class RestaurantFragment extends Fragment {
         final String restName = getArguments().getString("REST_NAME");
         final float starRating = getArguments().getFloat("STAR_RATING");
         final float priceRating = getArguments().getFloat("PRICE_RATING");
+
         mRestaurantName = view.findViewById(R.id.restuarant_name_tv);
         mRestaurantAddress = view.findViewById(R.id.address_tv);
         mRestaurantNumber = view.findViewById(R.id.phone_nr_tv);
@@ -57,6 +58,8 @@ public class RestaurantFragment extends Fragment {
         mFood = view.findViewById(R.id.food_cb);
         mStarRating = view.findViewById(R.id.average_score_rb);
         mPriceRating = view.findViewById(R.id.average_price_rb);
+
+        view.findViewById(R.id.address_tv).setOnClickListener(this::addressClick);
 
         restaurantRef = mFireStore.collection("restaurant/" + restName + "/reviews");
 
@@ -106,8 +109,6 @@ public class RestaurantFragment extends Fragment {
 
 
     }
-
-
     //Starts to listen for changes in database (added/removed items in database)
     @Override
     public void onStart() {
@@ -121,5 +122,15 @@ public class RestaurantFragment extends Fragment {
     public void onStop() {
         super.onStop();
         reviewAdapter.stopListening();
+    }
+
+    public void addressClick(View view){
+        Uri addr = Uri.parse("geo:0,0?q="+((TextView)view).getText());
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, addr);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if(mapIntent.resolveActivity(getActivity().getPackageManager()) != null)
+        {
+            startActivity(mapIntent);
+        }
     }
 }
