@@ -68,12 +68,13 @@
         <RatingBar
             android:id="@+id/ratingBar_price"
             style="@style/dollarSignBar"
-            android:layout_width="114dp"
-            android:layout_height="28dp"
+            android:layout_width="70dp"
+            android:layout_height="22dp"
             android:layout_marginTop="6dp"
             android:isIndicator="false"
             android:scaleX="0.7"
             android:scaleY="0.7"
+            android:stepSize="1"
             android:theme="@style/dollarSignBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/website_ET" />
@@ -172,21 +173,21 @@
             android:id="@+id/drink_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Drink"
-            app:layout_constraintEnd_toEndOf="@+id/website_ET"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/website_ET" />
 
         <CheckBox
             android:id="@+id/food_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Food"
-            app:layout_constraintStart_toEndOf="@+id/ratingBar_stars"
-            app:layout_constraintTop_toBottomOf="@+id/website_ET" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/drink_cb" />
 
         <EditText
             android:id="@+id/name_restaurant_ET"
