@@ -7,7 +7,7 @@ public class ItemInfo {
     public ImageView image;
     private String restaurant_name, restaurant_address, restaurant_phone_number, restaurant_website;
     double restaurant_star_rating, restaurant_cost_rating;
-    int restaurant_number_of_reviews;
+    int restaurant_number_of_reviews,restaurant_number_of_cost_reviews;
     private boolean restaurant_food_type, restaurant_drink_type, restaurant_add_to_wishlist;
 
     public ItemInfo(){

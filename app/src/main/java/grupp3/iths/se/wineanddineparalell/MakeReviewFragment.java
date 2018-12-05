@@ -30,7 +30,7 @@ public class MakeReviewFragment extends Fragment {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore firebaseFirestore;
 
-    private RatingBar mStar;
+    private RatingBar mStar, mCost;
     private EditText mReview;
     private Button mSendReviewBtn;
 
@@ -46,6 +46,7 @@ public class MakeReviewFragment extends Fragment {
         // Bound Variables from MakeReviewFragment
         mReview = view.findViewById(R.id.write_review_et);
         mStar = view.findViewById(R.id.leave_rating_rb);
+        mCost = view.findViewById(R.id.leave_cost_rb);
 
         // Saving user input into database collection: reviews under restaurants collection.
         mSendReviewBtn = view.findViewById(R.id.send_review_btn);
@@ -54,11 +55,13 @@ public class MakeReviewFragment extends Fragment {
             public void onClick(View v) {
 
                 float star = mStar.getRating();
+                float cost = mCost.getRating();
                 String review = mReview.getText().toString();
 
                 Map<String, Object> reviewMap = new HashMap<>();
                 reviewMap.put("user_name", user.getEmail());
                 reviewMap.put("user_rating", star);
+                reviewMap.put("user_cost_rating", cost);
                 reviewMap.put("user_review", review);
 
                 String restName = getArguments().getString("REST_NAME");
@@ -79,14 +82,54 @@ public class MakeReviewFragment extends Fragment {
 
                 DocumentReference doc = firebaseFirestore.collection("restaurant").document(restName);
 
-                addRating(doc, star);
+                addStarAvgReview(doc, star);
+                addCostAvgReview(doc, cost);
             }
         });
 
         return view;
     }
 
-    private Task<Void> addRating(final DocumentReference restaurantRef, final float rating) {
+    private Task<Void> addCostAvgReview(final DocumentReference restaurantRef, final float rating) {
+// Create reference for new rating, for use inside the transaction
+
+        final DocumentReference ratingRef = restaurantRef.collection("reviews").document();
+
+
+        // In a transaction, add the new rating and update the aggregate totals
+        return firebaseFirestore.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+
+                ItemInfo itemInfo = new ItemInfo();
+
+                itemInfo = transaction.get(restaurantRef).toObject(ItemInfo.class);
+
+                // Compute new number of ratings
+                int newNumRatings = itemInfo.restaurant_number_of_cost_reviews + 1;
+
+                // Compute new average rating
+                double oldRatingTotal = itemInfo.restaurant_cost_rating * itemInfo.restaurant_number_of_cost_reviews;
+                double newAvgRating = (oldRatingTotal + rating) / newNumRatings;
+
+                // Set new restaurant info
+                itemInfo.restaurant_number_of_cost_reviews = newNumRatings;
+                itemInfo.restaurant_cost_rating = newAvgRating;
+
+                // Update restaurant
+                transaction.set(restaurantRef, itemInfo);
+
+                // Update rating
+                Map<String, Object> data = new HashMap<>();
+                data.put("rating", rating);
+                transaction.set(ratingRef, data, SetOptions.merge());
+
+                return null;
+            }
+        });
+    }
+
+    private Task<Void> addStarAvgReview(final DocumentReference restaurantRef, final float rating) {
 // Create reference for new rating, for use inside the transaction
 
         final DocumentReference ratingRef = restaurantRef.collection("reviews").document();
