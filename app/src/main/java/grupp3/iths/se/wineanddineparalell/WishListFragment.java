@@ -89,7 +89,6 @@ public class WishListFragment extends Fragment {
 
                     });
                 }
-               // adapter.notifyDataSetChanged();
             }
         });
     }
