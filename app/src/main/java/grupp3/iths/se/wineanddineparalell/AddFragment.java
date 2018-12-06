@@ -61,8 +61,7 @@ public class AddFragment extends Fragment {
     static final int IMAGE_GALLERY_REQUEST = 2;
     static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
 
-    
-    private ImageView mImageRestaurant;
+    private ImageView mImageRestaurant, mLogoApp;
     private EditText mNameRestaurant, mAddress, mPhoneNumber, mWebsite;
     private CheckBox mFood, mDrink;
     private FloatingActionButton mGooglePlacesBtn, mCaptureBtn, mSaveBtn, mImageGalleryBtn;
@@ -95,6 +94,7 @@ public class AddFragment extends Fragment {
 
         // Bound Variables from AddFragment
         mImageRestaurant = view.findViewById(R.id.image_restaurant_IV);
+        mLogoApp = view.findViewById(R.id.logo_IV);
         mNameRestaurant = view.findViewById(R.id.name_restaurant_ET);
         mAddress = view.findViewById(R.id.location_ET);
         mPhoneNumber = view.findViewById(R.id.phone_number_ET);
@@ -216,11 +216,13 @@ public class AddFragment extends Fragment {
         if (requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
             mImageRestaurant.setImageURI(mImageUri);
+            mLogoApp.setVisibility(View.INVISIBLE);
+
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             File imgFile = new File(mCurrentPhotoPath);
             if (imgFile.exists()) {
                 mImageRestaurant.setImageURI(mImageUri);
-
+                mLogoApp.setVisibility(View.INVISIBLE);
             }
         } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(getActivity(), data);
@@ -253,6 +255,7 @@ public class AddFragment extends Fragment {
                 });
 
                 mPlaceIdForImage = place.getId();
+                mLogoApp.setVisibility(View.INVISIBLE);
 
             } else {
                 Toast.makeText(getActivity(), "Please select a restaurant!", Toast.LENGTH_SHORT).show();
@@ -270,8 +273,6 @@ public class AddFragment extends Fragment {
         String webSite = mWebsite.getText().toString();
         boolean food = mFood.isChecked();
         boolean drink = mDrink.isChecked();
-
-        boolean wishList = false;
 
         Map<String, Object> restaurantMap = new HashMap<>();
         restaurantMap.put("restaurant_name", restaurantName);

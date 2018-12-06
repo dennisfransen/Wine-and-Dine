@@ -14,17 +14,28 @@
 
         <ImageView
             android:id="@+id/image_restaurant_IV"
-            android:layout_width="122dp"
-            android:layout_height="117dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/ic_photo_camera_black_24dp"
             android:contentDescription="Picture of restaurant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/logo_IV"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/wd_logo"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/website_ET"
@@ -84,8 +95,6 @@
                 android:clickable="true"
                 app:backgroundTint="@color/coolBackground"
                 app:fabSize="normal"
-                app:layout_constraintStart_toStartOf="@+id/review"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/googleg_standard_color_18" />
 
             <android.support.design.widget.FloatingActionButton
@@ -97,7 +106,6 @@
                 app:backgroundTint="@color/coolBackground"
                 app:fabSize="normal"
                 app:layout_constraintStart_toEndOf="@+id/fab_google_places"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/ic_upload_img" />
 
             <android.support.design.widget.FloatingActionButton
@@ -109,7 +117,6 @@
                 app:backgroundTint="@color/coolBackground"
                 app:fabSize="normal"
                 app:layout_constraintStart_toEndOf="@+id/gallery_btn"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/ic_camera" />
 
             <android.support.design.widget.FloatingActionButton
@@ -120,9 +127,7 @@
                 android:clickable="true"
                 app:backgroundTint="@color/coolBackground"
                 app:fabSize="normal"
-                app:layout_constraintEnd_toEndOf="@+id/review"
                 app:layout_constraintStart_toEndOf="@+id/capture_btn"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/ic_add" />
         </LinearLayout>
 
