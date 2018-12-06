@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <ImageView
             android:id="@+id/image_restaurant_IV"
             android:layout_width="120dp"
@@ -93,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
                 app:srcCompat="@drawable/googleg_standard_color_18" />
 
@@ -103,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
                 app:layout_constraintStart_toEndOf="@+id/fab_google_places"
                 app:srcCompat="@drawable/ic_upload_img" />
@@ -114,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
                 app:layout_constraintStart_toEndOf="@+id/gallery_btn"
                 app:srcCompat="@drawable/ic_camera" />
@@ -125,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
                 app:layout_constraintStart_toEndOf="@+id/capture_btn"
                 app:srcCompat="@drawable/ic_add" />
