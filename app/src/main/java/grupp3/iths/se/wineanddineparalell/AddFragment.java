@@ -140,7 +140,12 @@ public class AddFragment extends Fragment {
                 restaurantMap.put("restaurant_website", webSite);
                 restaurantMap.put("restaurant_food_type", food);
                 restaurantMap.put("restaurant_drink_type", drink);
-                restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
+                if(mImageUri == null){
+                    restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
+                } else {
+                    restaurantMap.put("restaurant_image_uri", mImageUri.getLastPathSegment());
+                }
+
 
 
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -337,5 +342,11 @@ public class AddFragment extends Fragment {
         } catch (GooglePlayServicesNotAvailableException e) {
 
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mImageUri = null; 
     }
 }

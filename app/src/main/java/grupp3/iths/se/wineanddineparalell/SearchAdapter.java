@@ -3,6 +3,7 @@ package grupp3.iths.se.wineanddineparalell;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
 import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
@@ -38,6 +40,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +84,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         customViewHolder.mImageView.setImageResource(R.drawable.restaurant);
 
         if(restaurantObj.getRestaurant_place_id() != null){
-           setImageView(customViewHolder, restaurantObj);
+           setImageViewWithPlaceId(customViewHolder, restaurantObj);
+        } else if(restaurantObj.getRestaurant_image_uri() != null){
+            setImageViewWithImageUri(customViewHolder, restaurantObj);
         }
 
         customViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +216,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         transaction.commit();
     }
 
-    private void setImageView(final CustomViewHolder customViewHolder, ItemInfo restaurantObj){
+    private void setImageViewWithPlaceId(final CustomViewHolder customViewHolder, ItemInfo restaurantObj){
         mGeoDataClient.getPlacePhotos(restaurantObj.getRestaurant_place_id())
                 .addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
                     @Override
@@ -228,6 +234,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
                         });
                     }
                 });
+    }
+
+    private void setImageViewWithImageUri(final CustomViewHolder customViewHolder, ItemInfo restaurantObj){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference().child("Photos/" + restaurantObj.getRestaurant_image_uri() + ".jpg");
+        storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                Glide.with(mContext).load(task.getResult()).into(customViewHolder.mImageView);
+            }
+        });
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
