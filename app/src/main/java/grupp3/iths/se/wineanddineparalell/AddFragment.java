@@ -151,10 +151,10 @@ public class AddFragment extends Fragment {
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-<<<<<<< HEAD
+
                         switchFragment(searchFragment);
-=======
->>>>>>> ibrahim
+
+
                         Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
