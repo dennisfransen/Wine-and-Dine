@@ -1,8 +1,10 @@
 package grupp3.iths.se.wineanddineparalell;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private FrameLayout frameLayout;
+
     private EditText mEmail, mPassword;
     private Button mLogin, mRegister;
 
@@ -32,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
-
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
@@ -45,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        frameLayout = findViewById(R.id.main_frame);
         mEmail = findViewById(R.id.email_et);
         mPassword = findViewById(R.id.password_et);
 
@@ -110,8 +115,20 @@ public class LoginActivity extends AppCompatActivity {
                     // User is successfully registered and logged in.
                     Toast.makeText(LoginActivity.this, "Nice, let's complete the registration.", Toast.LENGTH_LONG).show();
                     // Go to Registration Activity to complete registration with user information.
-                    Intent gotoRegActivity = new Intent(LoginActivity.this, RegistrationActivity.class);
-                    startActivity(gotoRegActivity);
+
+                    // Check if we're running on Android 5.0 or higher
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    } else {
+                        Intent gotoRegActivity = new Intent(LoginActivity.this, RegistrationActivity.class);
+                        startActivity(gotoRegActivity);
+                    }
+
+
+
+
+
+                    //startActivity(gotoRegActivity);
                 } else {
                     Toast.makeText(LoginActivity.this, "Sorry, registration failed. Please try again.", Toast.LENGTH_LONG).show();
                 }
