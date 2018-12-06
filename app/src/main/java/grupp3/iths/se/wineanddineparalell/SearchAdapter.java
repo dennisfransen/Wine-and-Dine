@@ -185,7 +185,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             data.putFloat("PRICE_RATING", (float) restaurant.getRestaurant_cost_rating());
             data.putBoolean("REST_FOOD", restaurant.isRestaurant_food_type());
             data.putBoolean("REST_DRINK", restaurant.isRestaurant_drink_type());
-
+//TODO add restaurantimage here as well
             return data;
     }
 

@@ -1,11 +1,9 @@
 package grupp3.iths.se.wineanddineparalell;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,27 +13,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.AutocompletePrediction;
-import com.google.android.gms.location.places.AutocompletePredictionBufferResponse;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
@@ -53,16 +42,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
@@ -122,66 +107,8 @@ public class AddFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploadImagesToFirebase();
 
-                // TODO: Check if username is already in use.
-                String restaurantName = mNameRestaurant.getText().toString();
-                String restaurantAdress = mAddress.getText().toString();
-                String phoneNumber = mPhoneNumber.getText().toString();
-                String webSite = mWebsite.getText().toString();
-                boolean food = mFood.isChecked();
-                boolean drink = mDrink.isChecked();
-
-                boolean wishList = false;
-
-                Map<String, Object> restaurantMap = new HashMap<>();
-                restaurantMap.put("restaurant_name", restaurantName);
-                restaurantMap.put("restaurant_address", restaurantAdress);
-                restaurantMap.put("restaurant_phone_number", phoneNumber);
-                restaurantMap.put("restaurant_website", webSite);
-                restaurantMap.put("restaurant_food_type", food);
-                restaurantMap.put("restaurant_drink_type", drink);
-                if(mImageUri == null){
-                    restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
-                } else {
-                    restaurantMap.put("restaurant_image_uri", mImageUri.getLastPathSegment());
-                }
-
-
-
-                firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                        switchFragment(searchFragment);
-
-
-                        Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String error = e.getMessage();
-                        Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                /*final StorageReference filepath = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
-                final Context context = getContext();
-                final ImageView imageView = mImageRestaurant;
-
-                filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Glide.with(context).load(filepath).into(imageView).onLoadFailed(context.getDrawable(R.drawable.app_logo));
-                        Toast.makeText(getActivity(), "Upload restaurant successful", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String error = e.getMessage();
-                        Toast.makeText(getActivity(), "Error" + error, Toast.LENGTH_SHORT).show();
-                    }
-                });*/
             }
         });
 
@@ -334,11 +261,48 @@ public class AddFragment extends Fragment {
 
     }
 
-    public void setFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame, fragment);
-        fragmentTransaction.commit();
-    } // TODO: See if we can use this after add to database function is done. (On Success)
+    private void uploadImagesToFirebase() {
+
+        // TODO: Check if username is already in use.
+        String restaurantName = mNameRestaurant.getText().toString();
+        String restaurantAdress = mAddress.getText().toString();
+        String phoneNumber = mPhoneNumber.getText().toString();
+        String webSite = mWebsite.getText().toString();
+        boolean food = mFood.isChecked();
+        boolean drink = mDrink.isChecked();
+
+        boolean wishList = false;
+
+        Map<String, Object> restaurantMap = new HashMap<>();
+        restaurantMap.put("restaurant_name", restaurantName);
+        restaurantMap.put("restaurant_address", restaurantAdress);
+        restaurantMap.put("restaurant_phone_number", phoneNumber);
+        restaurantMap.put("restaurant_website", webSite);
+        restaurantMap.put("restaurant_food_type", food);
+        restaurantMap.put("restaurant_drink_type", drink);
+        if(mImageUri == null){
+            restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
+        } else {
+            restaurantMap.put("restaurant_image_uri", mImageUri.getLastPathSegment());
+        }
+
+        firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                switchFragment(searchFragment);
+
+                Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                String error = e.getMessage();
+                Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     void openGooglePlaces() {
         try {
