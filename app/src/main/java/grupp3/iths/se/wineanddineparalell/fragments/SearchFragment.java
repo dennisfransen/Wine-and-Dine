@@ -65,6 +65,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mSearchAdapter);
+        mSearchAdapter.notifyDataSetChanged();
     }
 
     void populateRestaurantList(){

@@ -36,12 +36,12 @@
 
         <TextView
             android:id="@+id/rest_name_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="192dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="17dp"
             android:layout_toStartOf="@+id/favourite_heart_img"
             android:layout_toEndOf="@+id/image_view"
             app:layout_constraintStart_toEndOf="@+id/image_view"
