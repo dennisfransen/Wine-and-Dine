@@ -1,8 +1,11 @@
 package grupp3.iths.se.wineanddineparalell;
 
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -16,8 +19,18 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.PlacePhotoMetadata;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
+import com.google.android.gms.location.places.PlacePhotoMetadataResponse;
+import com.google.android.gms.location.places.PlacePhotoResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, RestaurantAdapter.RestaurantHolder> {
     private FragmentManager mcontext;
@@ -32,6 +45,9 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
     private float restaurangAvrPrice;
     private boolean restaurantFoodCB;
     private boolean restaurantDrinkCB;
+
+    // private GeoDataClient mGeoDataClient;
+
 
 
     /**
@@ -60,6 +76,14 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
         holder.textName.setText(model.getRestaurant_name());
         holder.textPrice.setRating((float) model.getRestaurant_cost_rating());
         holder.textScore.setRating((float) model.getRestaurant_star_rating());
+
+
+        //TODO Images don't change, get from Google or firebase Storage
+//        if(model.getRestaurant_place_id() != null){
+//            setImageViewWithPlaceId(holder.imgView, model);
+//        } else if(model.getRestaurant_image_uri() != null){
+//            setImageViewWithImageUri(holder, model);
+//        }
 
         holder.favHeart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +154,39 @@ public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, Restau
             }
         });
     }
+
+//    private void setImageViewWithPlaceId(final RestaurantAdapter customViewHolder, ItemInfo restaurantObj){
+//        mGeoDataClient.getPlacePhotos(restaurantObj.getRestaurant_place_id())
+//                .addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
+//                        PlacePhotoMetadataResponse photos =  task.getResult();
+//                        PlacePhotoMetadataBuffer placePhotoMetadataBuffer = photos.getPhotoMetadata();
+//                        PlacePhotoMetadata metadata = placePhotoMetadataBuffer.get(0);
+//                        mGeoDataClient.getPhoto(metadata).addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
+//                                PlacePhotoResponse response = task.getResult();
+//                                Bitmap bitmap = response.getBitmap();
+//                                customViewHolder.restaurantImage.setImageBitmap(bitmap);
+//                            }
+//                        });
+//                    }
+//                });
+//    }
+//
+//    private void setImageViewWithImageUri(final RestaurantAdapter customViewHolder, ItemInfo restaurantObj){
+//        FirebaseStorage storage = FirebaseStorage.getInstance();
+//        StorageReference storageReference = storage.getReference().child("Photos/" + restaurantObj.getRestaurant_image_uri() + ".jpg");
+//        storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Uri> task) {
+//                Glide.with(mcontext).load(task.getResult()).into(customViewHolder.restaurantImage);
+//            }
+//        });
+//    }
+
+
 
     //Inflates a new item in recyclerview
     @NonNull

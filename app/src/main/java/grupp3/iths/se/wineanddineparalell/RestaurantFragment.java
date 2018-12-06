@@ -48,6 +48,7 @@ public class RestaurantFragment extends Fragment {
         final float starRating = getArguments().getFloat("STAR_RATING");
         final float priceRating = getArguments().getFloat("PRICE_RATING");
 
+
         mRestaurantName = view.findViewById(R.id.restuarant_name_tv);
         mRestaurantAddress = view.findViewById(R.id.address_tv);
         mRestaurantNumber = view.findViewById(R.id.phone_nr_tv);
