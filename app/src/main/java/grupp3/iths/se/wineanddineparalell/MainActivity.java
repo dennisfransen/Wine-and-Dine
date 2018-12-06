@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: Delete when LoginActivity sends you to SearchFragment after checked current user status.
         // Set so it will start the SearchFragment and not MainActivity when logged in.
-        setFragment(searchFragment);
+
+
+        openFragmentWithAnimation(searchFragment);
 
         // Setup all navigation buttons to redirect to chosen fragment.
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragment(appInfoFragment);
+                openFragmentWithAnimation(appInfoFragment);
             }
         });
 
@@ -98,6 +100,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
         fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.add(R.id.main_frame, fragment, "BLANK_FRAGMENT").commit();
+        fragmentTransaction.replace(R.id.main_frame, fragment).commit();
     }
 }

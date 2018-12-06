@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity"
+    android:background="@drawable/reg_background_screen"
     android:padding="20dp"
-    android:background="@drawable/reg_background_screen">
+    tools:context=".RegistrationActivity">
 
     <EditText
         android:id="@+id/user_name_pt"
@@ -15,10 +14,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/username"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/first_name_pt"
@@ -26,10 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_name_pt"
         android:layout_marginTop="24dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/firstname"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/last_name_pt"
@@ -37,10 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/first_name_pt"
         android:layout_marginTop="34dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/lastname"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/finish_btn"
@@ -57,8 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/last_name_pt"
         android:layout_marginTop="24dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/phone_number"
-        android:inputType="number|phone"
-        android:autofillHints="" />
+        android:inputType="number|phone" />
 </RelativeLayout>

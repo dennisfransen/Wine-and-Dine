@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background_screen"
+    android:background="@drawable/gradient_info_bg"
     tools:context=".AppInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
