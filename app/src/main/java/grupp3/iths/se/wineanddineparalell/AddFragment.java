@@ -291,6 +291,13 @@ public class AddFragment extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
 
+                mNameRestaurant.setText("Name");
+                mAddress.setText("Address ");
+                mPhoneNumber.setText("Phone number");
+                mWebsite.setText("Website");
+                mFood.setChecked(false);
+                mDrink.setChecked(false);
+
                 switchFragment(searchFragment);
 
                 Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
