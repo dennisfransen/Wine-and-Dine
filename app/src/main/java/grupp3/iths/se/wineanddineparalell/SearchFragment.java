@@ -78,7 +78,8 @@ public class SearchFragment extends Fragment {
     }
 
     void populateRestaurantList(){
-        mRestaurantList = new ArrayList<ItemInfo>();
+        mRestaurantList = new ArrayList<>();
+        final List<String> placeIds = new ArrayList<>();
         restaurantRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -38,6 +38,10 @@ import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBufferResponse;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlacePhotoMetadata;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
+import com.google.android.gms.location.places.PlacePhotoMetadataResponse;
+import com.google.android.gms.location.places.PlacePhotoResponse;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -65,11 +69,13 @@ import static android.app.Activity.RESULT_OK;
 import static android.provider.MediaStore.EXTRA_OUTPUT;
 
 public class AddFragment extends Fragment {
-    
+
+    static final String TAG = "AddFragment";
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int IMAGE_GALLERY_REQUEST = 2;
     static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
-    static final String TAG = "AddFragment";
+
     
     private ImageView mImageRestaurant;
     private EditText mNameRestaurant, mAddress, mPhoneNumber, mWebsite;
@@ -77,6 +83,7 @@ public class AddFragment extends Fragment {
     private FloatingActionButton mGooglePlacesBtn, mCaptureBtn, mSaveBtn, mImageGalleryBtn;
 
     private Uri mImageUri = null;
+    private String mPlaceIdForImage;
     private String mCurrentPhotoPath;
 
     private FirebaseFirestore firebaseFirestore;
@@ -84,6 +91,7 @@ public class AddFragment extends Fragment {
     private StorageReference mStorageRef;
 
     SearchFragment searchFragment;
+    private GeoDataClient mGeoDataClient;
 
     public AddFragment() {
         // Required empty public constructor
@@ -95,6 +103,8 @@ public class AddFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        mGeoDataClient = Places.getGeoDataClient(getActivity());
 
         searchFragment = new SearchFragment();
 
@@ -130,13 +140,21 @@ public class AddFragment extends Fragment {
                 restaurantMap.put("restaurant_website", webSite);
                 restaurantMap.put("restaurant_food_type", food);
                 restaurantMap.put("restaurant_drink_type", drink);
-                //restaurantMap.put("restaurant_image", mImageUri);
+                if(mImageUri == null){
+                    restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
+                } else {
+                    restaurantMap.put("restaurant_image_uri", mImageUri.getLastPathSegment());
+                }
+
 
 
                 firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+<<<<<<< HEAD
                         switchFragment(searchFragment);
+=======
+>>>>>>> ibrahim
                         Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -281,11 +299,34 @@ public class AddFragment extends Fragment {
             Place place = PlaceAutocomplete.getPlace(getActivity(), data);
 
             if (place.getPlaceTypes().contains(79)) {
+
                 mNameRestaurant.setText(place.getName());
                 mAddress.setText(place.getAddress());
                 mPhoneNumber.setText(place.getPhoneNumber());
                 mWebsite.setText(place.getWebsiteUri().toString());
                 mImageRestaurant.setImageResource(R.drawable.restaurant);
+
+                mGeoDataClient.getPlacePhotos(place.getId()).addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
+                    @Override
+                    public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
+                        if(task.isSuccessful()){
+                            PlacePhotoMetadataResponse photos = task.getResult();
+                            PlacePhotoMetadataBuffer placePhotoMetadataBuffer = photos.getPhotoMetadata();
+                            PlacePhotoMetadata metadata = placePhotoMetadataBuffer.get(0);
+                            mGeoDataClient.getPhoto(metadata).addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
+                                @Override
+                                public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
+                                    PlacePhotoResponse response = task.getResult();
+                                    Bitmap bitmap = response.getBitmap();
+                                    mImageRestaurant.setImageBitmap(bitmap);
+                                }
+                            });
+                        }
+                    }
+                });
+
+                mPlaceIdForImage = place.getId();
+
             } else {
                 Toast.makeText(getActivity(), "Please select a restaurant!", Toast.LENGTH_SHORT).show();
             }
@@ -312,5 +353,11 @@ public class AddFragment extends Fragment {
         } catch (GooglePlayServicesNotAvailableException e) {
 
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mImageUri = null; 
     }
 }

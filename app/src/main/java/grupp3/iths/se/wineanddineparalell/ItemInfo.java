@@ -5,7 +5,7 @@ import android.widget.ImageView;
 // Model class for Restaurant
 public class ItemInfo {
     public ImageView image;
-    private String restaurant_name, restaurant_address, restaurant_phone_number, restaurant_website;
+    private String restaurant_name, restaurant_address, restaurant_phone_number, restaurant_website, restaurant_place_id, restaurant_image_uri;
     double restaurant_star_rating, restaurant_cost_rating;
     int restaurant_number_of_reviews,restaurant_number_of_cost_reviews;
     private boolean restaurant_food_type, restaurant_drink_type, restaurant_add_to_wishlist;
@@ -77,5 +77,21 @@ public class ItemInfo {
 
     public void setRestaurant_add_to_wishlist(boolean restaurant_add_to_wishlist) {
         this.restaurant_add_to_wishlist = restaurant_add_to_wishlist;
+    }
+
+    public void setRestaurant_place_id(String restaurant_place_id) {
+        this.restaurant_place_id = restaurant_place_id;
+    }
+
+    public String getRestaurant_place_id() {
+        return restaurant_place_id;
+    }
+
+    public void setRestaurant_image_uri(String restaurant_image_uri) {
+        this.restaurant_image_uri = restaurant_image_uri;
+    }
+
+    public String getRestaurant_image_uri() {
+        return restaurant_image_uri;
     }
 }

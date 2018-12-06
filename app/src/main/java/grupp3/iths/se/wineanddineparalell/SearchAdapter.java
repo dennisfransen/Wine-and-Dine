@@ -2,12 +2,16 @@ package grupp3.iths.se.wineanddineparalell;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.PlacePhotoMetadata;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
+import com.google.android.gms.location.places.PlacePhotoMetadataResponse;
+import com.google.android.gms.location.places.PlacePhotoResponse;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +40,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +49,12 @@ import java.util.Map;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomViewHolder> {
 
+    public static final String TAG = "SearchAdapter";
+
     private List<ItemInfo> mRestaurantList;
+    private List<String> mPlaceIds;
     private Context mContext;
+    private GeoDataClient mGeoDataClient;
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -47,6 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
     public SearchAdapter(Context context, List<ItemInfo> restaurantList){
         mRestaurantList = restaurantList;
         mContext = context;
+        mGeoDataClient = Places.getGeoDataClient(context);
     }
 
     @NonNull
@@ -64,6 +82,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         customViewHolder.mTextPrice.setRating((float) restaurantObj.getRestaurant_cost_rating());
         customViewHolder.mTextScore.setRating((float) restaurantObj.getRestaurant_star_rating());
         customViewHolder.mImageView.setImageResource(R.drawable.restaurant);
+
+        if(restaurantObj.getRestaurant_place_id() != null){
+           setImageViewWithPlaceId(customViewHolder, restaurantObj);
+        } else if(restaurantObj.getRestaurant_image_uri() != null){
+            setImageViewWithImageUri(customViewHolder, restaurantObj);
+        }
 
         customViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +214,37 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         FragmentTransaction transaction = mainActivity.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frame, makeReviewFragment);
         transaction.commit();
+    }
+
+    private void setImageViewWithPlaceId(final CustomViewHolder customViewHolder, ItemInfo restaurantObj){
+        mGeoDataClient.getPlacePhotos(restaurantObj.getRestaurant_place_id())
+                .addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
+                    @Override
+                    public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
+                        PlacePhotoMetadataResponse photos =  task.getResult();
+                        PlacePhotoMetadataBuffer placePhotoMetadataBuffer = photos.getPhotoMetadata();
+                        PlacePhotoMetadata metadata = placePhotoMetadataBuffer.get(0);
+                        mGeoDataClient.getPhoto(metadata).addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
+                            @Override
+                            public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
+                                PlacePhotoResponse response = task.getResult();
+                                Bitmap bitmap = response.getBitmap();
+                                customViewHolder.mImageView.setImageBitmap(bitmap);
+                            }
+                        });
+                    }
+                });
+    }
+
+    private void setImageViewWithImageUri(final CustomViewHolder customViewHolder, ItemInfo restaurantObj){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference().child("Photos/" + restaurantObj.getRestaurant_image_uri() + ".jpg");
+        storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                Glide.with(mContext).load(task.getResult()).into(customViewHolder.mImageView);
+            }
+        });
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
