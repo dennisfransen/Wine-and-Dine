@@ -1,4 +1,4 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +25,10 @@ import com.google.firebase.firestore.Transaction;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import grupp3.iths.se.wineanddineparalell.R;
+import grupp3.iths.se.wineanddineparalell.fragments.SearchFragment;
+import grupp3.iths.se.wineanddineparalell.models.ItemInfo;
 
 public class MakeReviewFragment extends Fragment {
 
@@ -116,15 +120,15 @@ public class MakeReviewFragment extends Fragment {
                 itemInfo = transaction.get(restaurantRef).toObject(ItemInfo.class);
 
                 // Compute new number of ratings
-                int newNumRatings = itemInfo.restaurant_number_of_cost_reviews + 1;
+                int newNumRatings = itemInfo.getRestaurant_number_of_cost_reviews() + 1;
 
                 // Compute new average rating
-                double oldRatingTotal = itemInfo.restaurant_cost_rating * itemInfo.restaurant_number_of_cost_reviews;
+                double oldRatingTotal = itemInfo.getRestaurant_cost_rating() * itemInfo.getRestaurant_number_of_cost_reviews();
                 double newAvgRating = (oldRatingTotal + rating) / newNumRatings;
 
                 // Set new restaurant info
-                itemInfo.restaurant_number_of_cost_reviews = newNumRatings;
-                itemInfo.restaurant_cost_rating = newAvgRating;
+                itemInfo.setRestaurant_number_of_cost_reviews(newNumRatings);
+                itemInfo.setRestaurant_cost_rating(newAvgRating);
 
                 // Update restaurant
                 transaction.set(restaurantRef, itemInfo);
@@ -155,15 +159,15 @@ public class MakeReviewFragment extends Fragment {
                 itemInfo = transaction.get(restaurantRef).toObject(ItemInfo.class);
 
                 // Compute new number of ratings
-                int newNumRatings = itemInfo.restaurant_number_of_reviews + 1;
+                int newNumRatings = itemInfo.getRestaurant_number_of_reviews() + 1;
 
                 // Compute new average rating
-                double oldRatingTotal = itemInfo.restaurant_star_rating * itemInfo.restaurant_number_of_reviews;
+                double oldRatingTotal = itemInfo.getRestaurant_star_rating() * itemInfo.getRestaurant_number_of_reviews();
                 double newAvgRating = (oldRatingTotal + rating) / newNumRatings;
 
                 // Set new restaurant info
-                itemInfo.restaurant_number_of_reviews = newNumRatings;
-                itemInfo.restaurant_star_rating = newAvgRating;
+                itemInfo.setRestaurant_number_of_reviews(newNumRatings);
+                itemInfo.setRestaurant_star_rating(newAvgRating);
 
                 // Update restaurant
                 transaction.set(restaurantRef, itemInfo);

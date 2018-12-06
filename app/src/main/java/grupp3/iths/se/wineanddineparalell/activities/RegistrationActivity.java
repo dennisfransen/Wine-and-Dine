@@ -1,4 +1,4 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -22,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import grupp3.iths.se.wineanddineparalell.R;
 
 public class RegistrationActivity extends AppCompatActivity {
 

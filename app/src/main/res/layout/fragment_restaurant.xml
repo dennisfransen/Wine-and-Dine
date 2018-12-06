@@ -7,7 +7,7 @@
     android:background="@drawable/wishlist_background_screen"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".RestaurantFragment">
+    tools:context=".fragments.RestaurantFragment">
 
     <RelativeLayout
         android:id="@+id/relative_layout"

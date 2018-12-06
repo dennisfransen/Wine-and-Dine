@@ -1,4 +1,4 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import grupp3.iths.se.wineanddineparalell.R;
 
 public class ProfileFragment extends Fragment {
 

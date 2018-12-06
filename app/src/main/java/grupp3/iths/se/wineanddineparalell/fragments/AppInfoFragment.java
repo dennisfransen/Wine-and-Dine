@@ -1,4 +1,4 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import grupp3.iths.se.wineanddineparalell.activities.LoginActivity;
+import grupp3.iths.se.wineanddineparalell.R;
 
 public class AppInfoFragment extends Fragment {
 

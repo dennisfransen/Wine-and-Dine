@@ -1,4 +1,4 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.fragments;
 
 
 import android.content.Intent;
@@ -49,6 +49,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import grupp3.iths.se.wineanddineparalell.R;
 
 import static android.app.Activity.RESULT_OK;
 import static android.provider.MediaStore.EXTRA_OUTPUT;

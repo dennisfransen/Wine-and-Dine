@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background_screen"
-    tools:context=".Splash_screen">
+    tools:context=".splash.Splash_screen">
 
 
     <ImageView

@@ -1,4 +1,4 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -18,11 +17,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+
+import grupp3.iths.se.wineanddineparalell.R;
+import grupp3.iths.se.wineanddineparalell.adapter.ReviewAdapter;
+import grupp3.iths.se.wineanddineparalell.models.ReviewInfo;
 
 public class RestaurantFragment extends Fragment {
 

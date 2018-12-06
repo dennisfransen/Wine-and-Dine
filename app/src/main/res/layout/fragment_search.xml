@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_search_bg"
     android:focusableInTouchMode="true"
-    tools:context=".SearchFragment">
+    tools:context=".fragments.SearchFragment">
 
 
     <EditText

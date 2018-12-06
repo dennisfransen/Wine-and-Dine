@@ -1,6 +1,5 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.activities;
 
-import android.icu.text.IDNA;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -10,9 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+
+import grupp3.iths.se.wineanddineparalell.fragments.ProfileFragment;
+import grupp3.iths.se.wineanddineparalell.R;
+import grupp3.iths.se.wineanddineparalell.fragments.SearchFragment;
+import grupp3.iths.se.wineanddineparalell.fragments.WishListFragment;
+import grupp3.iths.se.wineanddineparalell.fragments.AddFragment;
+import grupp3.iths.se.wineanddineparalell.fragments.AppInfoFragment;
 
 public class MainActivity extends AppCompatActivity {
 

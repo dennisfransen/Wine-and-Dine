@@ -1,11 +1,8 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.adapter;
 
 
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -19,18 +16,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.PlacePhotoMetadata;
-import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
-import com.google.android.gms.location.places.PlacePhotoMetadataResponse;
-import com.google.android.gms.location.places.PlacePhotoResponse;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+
+import grupp3.iths.se.wineanddineparalell.fragments.MakeReviewFragment;
+import grupp3.iths.se.wineanddineparalell.R;
+import grupp3.iths.se.wineanddineparalell.fragments.RestaurantFragment;
+import grupp3.iths.se.wineanddineparalell.models.ItemInfo;
 
 public class RestaurantAdapter extends FirestoreRecyclerAdapter<ItemInfo, RestaurantAdapter.RestaurantHolder> {
     private FragmentManager mcontext;
