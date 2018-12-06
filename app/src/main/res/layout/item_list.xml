@@ -91,12 +91,12 @@
 
         <ToggleButton
             android:id="@+id/favourite_heart_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="37dp"
+            android:layout_height="35dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/fav_checked"
             android:focusable="false"
             android:focusableInTouchMode="false"
