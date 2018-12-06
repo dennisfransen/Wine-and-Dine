@@ -37,9 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.058"
             app:layout_constraintStart_toEndOf="@+id/image_view"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="RESTAURANT NAME" />
@@ -49,6 +46,7 @@
             style="@style/dollarSignBar"
             android:layout_width="70dp"
             android:layout_height="22dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:isIndicator="true"
             android:numStars="3"
