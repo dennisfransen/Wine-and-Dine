@@ -1,4 +1,4 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+
+import grupp3.iths.se.wineanddineparalell.R;
+import grupp3.iths.se.wineanddineparalell.models.ReviewInfo;
 
 public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewInfo, ReviewAdapter.ReviewHolder> {
 

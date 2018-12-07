@@ -1,17 +1,23 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.activities;
 
-import android.icu.text.IDNA;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+
+import grupp3.iths.se.wineanddineparalell.fragments.ProfileFragment;
+import grupp3.iths.se.wineanddineparalell.R;
+import grupp3.iths.se.wineanddineparalell.fragments.SearchFragment;
+import grupp3.iths.se.wineanddineparalell.fragments.WishListFragment;
+import grupp3.iths.se.wineanddineparalell.fragments.AddFragment;
+import grupp3.iths.se.wineanddineparalell.fragments.AppInfoFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: Delete when LoginActivity sends you to SearchFragment after checked current user status.
         // Set so it will start the SearchFragment and not MainActivity when logged in.
-        setFragment(searchFragment);
+
+
+        openFragmentWithAnimation(searchFragment);
 
         // Setup all navigation buttons to redirect to chosen fragment.
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,18 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_search:
-                        setFragment(searchFragment);
-                        // Change background color of the button you have chosen. If wanted to:
-                        // mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                        openFragmentWithAnimation(searchFragment);
                         return true;
                     case R.id.nav_profile:
-                        setFragment(profileFragment);
+                        openFragmentWithAnimation(profileFragment);
                         return true;
                     case R.id.nav_wishlist:
-                        setFragment(wishListFragment);
+                        openFragmentWithAnimation(wishListFragment);
                         return true;
                     case R.id.nav_add:
-                        setFragment(addFragment);
+                        openFragmentWithAnimation(addFragment);
                         return true;
                     default:
                         return false;
@@ -80,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragment(appInfoFragment);
+                openFragmentWithAnimation(appInfoFragment);
             }
         });
 
@@ -91,5 +97,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void openFragmentWithAnimation(Fragment fragment) {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.main_frame, fragment).commit();
     }
 }

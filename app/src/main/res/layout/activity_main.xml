@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
 
     <FrameLayout
@@ -37,7 +37,7 @@
             android:layout_height="56dp"
             android:layout_gravity="start"
             android:contentDescription="@string/company_logo"
-            app:srcCompat="@drawable/wd_logo" />
+            app:srcCompat="@drawable/new_logo" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/info_ib"

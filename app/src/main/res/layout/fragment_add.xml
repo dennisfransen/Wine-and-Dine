@@ -4,27 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/reg_background_screen"
-    tools:context=".AddFragment">
+    android:background="@drawable/gradient_add_bg"
+    tools:context=".fragments.AddFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <ImageView
             android:id="@+id/image_restaurant_IV"
-            android:layout_width="122dp"
-            android:layout_height="117dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/ic_photo_camera_black_24dp"
             android:contentDescription="Picture of restaurant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/logo_IV"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/new_logo"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/website_ET"
@@ -82,10 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
-                app:layout_constraintStart_toStartOf="@+id/review"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/googleg_standard_color_18" />
 
             <android.support.design.widget.FloatingActionButton
@@ -94,10 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
                 app:layout_constraintStart_toEndOf="@+id/fab_google_places"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/ic_upload_img" />
 
             <android.support.design.widget.FloatingActionButton
@@ -106,10 +113,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
                 app:layout_constraintStart_toEndOf="@+id/gallery_btn"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/ic_camera" />
 
             <android.support.design.widget.FloatingActionButton
@@ -118,11 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                app:backgroundTint="@color/coolBackground"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
-                app:layout_constraintEnd_toEndOf="@+id/review"
                 app:layout_constraintStart_toEndOf="@+id/capture_btn"
-                app:layout_constraintTop_toBottomOf="@+id/review"
                 app:srcCompat="@drawable/ic_add" />
         </LinearLayout>
 

@@ -1,27 +1,17 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.fragments;
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,19 +19,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.app.Activity.RESULT_OK;
+import grupp3.iths.se.wineanddineparalell.R;
 
 public class ProfileFragment extends Fragment {
 
@@ -60,14 +44,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore firebaseFirestore;
 
-
-    private static final int GALLERY_INTENT = 2;
     private String mUserId;
-
-    private StorageReference storageReference;
-    private static final int IMAGE_REUQEST = 1;
-    private Uri imageUri;
-    private StorageTask uplaodTask;
 
 
     @Override
@@ -162,146 +139,16 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        // Creating instance of StorageReference
-        storageReference = FirebaseStorage.getInstance().getReference("UserPhotos");
-
         // Bind mProfilePicture to image view on profile_fragment.xml
         mProfilePicture = view.findViewById(R.id.user_avatar_im);
         mProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openImage();
             }
         });
 
         return view;
     }
-
-
-    // https://www.youtube.com/watch?v=ZHmVNst_Rnc
-
-    private void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_PICK);
-        startActivityForResult(intent, IMAGE_REUQEST);
-
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContext().getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadImage() {
-        final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage("Uploading");
-        pd.show();
-
-        if (imageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()
-                    + "." + getFileExtension(imageUri));
-
-            uplaodTask = fileReference.getFile(imageUri);
-            uplaodTask.continueWith(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        String mUri = downloadUri.toString();
-
-
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("image_url", mUri);
-                        mFireStore.collection("users").document(user.getUid()).update(map);
-                        // TODO: Fix something here 9.53
-
-                        pd.dismiss();
-                    } else {
-                        Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
-                        pd.dismiss();
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    pd.dismiss();
-                }
-            });
-
-        } else {
-            Toast.makeText(getActivity(), "No image selected", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == IMAGE_REUQEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-
-            if (uplaodTask != null && uplaodTask.isInProgress()) {
-                Toast.makeText(getActivity(), "Upload in progress", Toast.LENGTH_SHORT).show();
-            } else {
-                uploadImage();
-            }
-        }
-    }
-
-
-//    // Upload file that are picked in gallery to storage database under UserPhotos location.
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
-//
-//            Uri uri = data.getData();
-//
-//            // Get user Id and place in imageName String variable.
-//            String imageName = user.getUid();
-//
-//            // Upload image to UserPhotos collection and name the file the same as current user id.
-//            final StorageReference filepath = mStorageRef.child("UserPhotos").child(imageName);
-//            final Context context = getContext();
-//            final ImageView profilePicture = mProfilePicture;
-//
-//            // Check if file was uploaded successfully. Prompt the user with a Toast message saying: "Upload successful".
-//            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Glide.with(context).load(filepath).into(profilePicture).onLoadFailed(context.getDrawable(R.drawable.app_logo));
-//                    Toast.makeText(getActivity(), "Upload Successful", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                // If the upload fails. Prompt the user with a Toast message saying: "Error: + error message type".
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Toast.makeText(getActivity(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    }
-//
-//    private void openGalleryOnPhone() {
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-//        intent.setType("image/*");
-//        startActivityForResult(intent, GALLERY_INTENT);
-//    }
-
 
 }
 

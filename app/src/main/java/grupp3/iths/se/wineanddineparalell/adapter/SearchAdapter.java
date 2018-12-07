@@ -1,21 +1,17 @@
-package grupp3.iths.se.wineanddineparalell;
+package grupp3.iths.se.wineanddineparalell.adapter;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -45,7 +41,12 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import grupp3.iths.se.wineanddineparalell.fragments.MakeReviewFragment;
+import grupp3.iths.se.wineanddineparalell.R;
+import grupp3.iths.se.wineanddineparalell.activities.MainActivity;
+import grupp3.iths.se.wineanddineparalell.fragments.RestaurantFragment;
+import grupp3.iths.se.wineanddineparalell.models.ItemInfo;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomViewHolder> {
 
@@ -185,7 +186,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
             data.putFloat("PRICE_RATING", (float) restaurant.getRestaurant_cost_rating());
             data.putBoolean("REST_FOOD", restaurant.isRestaurant_food_type());
             data.putBoolean("REST_DRINK", restaurant.isRestaurant_drink_type());
-
+//TODO add restaurantimage here as well
             return data;
     }
 
