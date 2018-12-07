@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -109,7 +111,63 @@ public class AddFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImagesToFirebase();
+                String restaurantName = mNameRestaurant.getText().toString();
+                String restaurantAdress = mAddress.getText().toString();
+                String phoneNumber = mPhoneNumber.getText().toString();
+                String webSite = mWebsite.getText().toString();
+                boolean food = mFood.isChecked();
+                boolean drink = mDrink.isChecked();
+
+                Map<String, Object> restaurantMap = new HashMap<>();
+                restaurantMap.put("restaurant_name", restaurantName);
+                restaurantMap.put("restaurant_address", restaurantAdress);
+                restaurantMap.put("restaurant_phone_number", phoneNumber);
+                restaurantMap.put("restaurant_website", webSite);
+                restaurantMap.put("restaurant_food_type", food);
+                restaurantMap.put("restaurant_drink_type", drink);
+
+                if(mImageUri == null){
+                    restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
+                } else {
+                    restaurantMap.put("restaurant_image_uri", mImageUri.getLastPathSegment());
+                }
+
+                firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        mNameRestaurant.setText("Name");
+                        mAddress.setText("Address ");
+                        mPhoneNumber.setText("Phone number");
+                        mWebsite.setText("Website");
+                        mFood.setChecked(false);
+                        mDrink.setChecked(false);
+
+                        switchFragment(searchFragment);
+
+                        Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        String error = e.getMessage();
+                        Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                if(mImageUri != null){
+                    Log.d(TAG, "Image name is " + mImageUri.getLastPathSegment());
+                    mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg").putFile(mImageUri)
+                            .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                    if (task.isSuccessful()){
+                                        Log.d(TAG, task.toString());
+                                    }
+                                }
+                            });
+                }
+
 
             }
         });
@@ -269,48 +327,8 @@ public class AddFragment extends Fragment {
     private void uploadImagesToFirebase() {
 
         // TODO: Check if username is already in use.
-        String restaurantName = mNameRestaurant.getText().toString();
-        String restaurantAdress = mAddress.getText().toString();
-        String phoneNumber = mPhoneNumber.getText().toString();
-        String webSite = mWebsite.getText().toString();
-        boolean food = mFood.isChecked();
-        boolean drink = mDrink.isChecked();
 
-        Map<String, Object> restaurantMap = new HashMap<>();
-        restaurantMap.put("restaurant_name", restaurantName);
-        restaurantMap.put("restaurant_address", restaurantAdress);
-        restaurantMap.put("restaurant_phone_number", phoneNumber);
-        restaurantMap.put("restaurant_website", webSite);
-        restaurantMap.put("restaurant_food_type", food);
-        restaurantMap.put("restaurant_drink_type", drink);
-        if(mImageUri == null){
-            restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
-        } else {
-            restaurantMap.put("restaurant_image_uri", mImageUri.getLastPathSegment());
-        }
 
-        firebaseFirestore.collection("restaurant").document(restaurantName).set(restaurantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-
-                mNameRestaurant.setText("Name");
-                mAddress.setText("Address ");
-                mPhoneNumber.setText("Phone number");
-                mWebsite.setText("Website");
-                mFood.setChecked(false);
-                mDrink.setChecked(false);
-
-                switchFragment(searchFragment);
-
-                Toast.makeText(getActivity(), "Added restaurant successfully", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                String error = e.getMessage();
-                Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
