@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import grupp3.iths.se.wineanddineparalell.R;
-import grupp3.iths.se.wineanddineparalell.adapter.RestaurantAdapter;
 import grupp3.iths.se.wineanddineparalell.adapter.SearchAdapter;
 import grupp3.iths.se.wineanddineparalell.models.ItemInfo;
 
@@ -36,8 +35,6 @@ public class SearchFragment extends Fragment {
     public static final String TAG = "SearchFragment";
 
     private EditText mSearchEditText;
-
-    private RestaurantAdapter adapter;
     private SearchAdapter mSearchAdapter;
     private List<ItemInfo> mRestaurantList;
     private List<ItemInfo> mFilteredList;
