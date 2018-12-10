@@ -4,6 +4,7 @@ package grupp3.iths.se.wineanddineparalell.fragments;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -45,6 +46,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.File;
@@ -61,6 +65,7 @@ public class AddFragment extends Fragment {
 
     static final String TAG = "AddFragment";
 
+    //constant fields
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int IMAGE_GALLERY_REQUEST = 2;
     static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 3;
@@ -84,6 +89,7 @@ public class AddFragment extends Fragment {
     public AddFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -128,7 +134,7 @@ public class AddFragment extends Fragment {
 
                 if(mImageUri == null){
                     restaurantMap.put("restaurant_place_id", mPlaceIdForImage);
-                } else {
+                } else if (mImageUri != null){
                     restaurantMap.put("restaurant_image_uri", mImageUri.getLastPathSegment());
                 }
 
@@ -155,9 +161,12 @@ public class AddFragment extends Fragment {
                     }
                 });
 
+
                 if(mImageUri != null){
+
                     Log.d(TAG, "Image name is " + mImageUri.getLastPathSegment());
-                    mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg").putFile(mImageUri)
+                    StorageReference storageReference = mStorageRef.child("Photos").child(mImageUri.getLastPathSegment() + ".jpg");
+                    storageReference.putFile(mImageUri)
                             .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -167,8 +176,6 @@ public class AddFragment extends Fragment {
                                 }
                             });
                 }
-
-
             }
         });
 
@@ -240,6 +247,7 @@ public class AddFragment extends Fragment {
         }
     }
 
+
     public File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -253,6 +261,48 @@ public class AddFragment extends Fragment {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
+    /*
+    Get the dimensions of the picture in the Imageview and save size of picture
+     */
+    private void setPic() {
+        //TODO  hela koden skulle sättas i Jobscheduler för att undvika jobba hela grafiska gränsnittet
+
+        int targetW = mImageRestaurant.getWidth();
+        int targetH = mImageRestaurant.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mImageRestaurant.setImageBitmap(bitmap);
+
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50, bos);
+        try {
+            FileOutputStream fos = new FileOutputStream(mCurrentPhotoPath);
+            fos.write(bos.toByteArray());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * Choose picture from gallery when clicked on mImageRestaurant
@@ -279,11 +329,10 @@ public class AddFragment extends Fragment {
             mLogoApp.setVisibility(View.INVISIBLE);
 
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            File imgFile = new File(mCurrentPhotoPath);
-            if (imgFile.exists()) {
-                mImageRestaurant.setImageURI(mImageUri);
+                setPic();
+                //mImageRestaurant.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
+                mImageUri = Uri.fromFile(new File(mCurrentPhotoPath));
                 mLogoApp.setVisibility(View.INVISIBLE);
-            }
         } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(getActivity(), data);
 
