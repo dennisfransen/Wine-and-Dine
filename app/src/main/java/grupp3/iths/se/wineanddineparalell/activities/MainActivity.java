@@ -93,12 +93,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Take an instance of a fragment and replace the fragment currently showing with the called one.
+     * @param fragment
+     */
     public void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     }
 
+    /**
+     * Change fragment using an animation. Called with the help of enter_from_right and exit_to_right.xml files.
+     * @param fragment
+     */
     public void openFragmentWithAnimation(Fragment fragment) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();

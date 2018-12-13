@@ -205,6 +205,12 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    /**
+     * When image is clicked. Check if the request code matches 1. Replace image in fragment.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
